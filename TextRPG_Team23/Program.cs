@@ -37,19 +37,19 @@
         {
             switch (input)
             {
-                case "1":
+                case "1": // 상태 보기
 
                     break;
-                case "2":
+                case "2": // 인벤토리
 
                     break;
-                case "3":
+                case "3": // 상점
 
                     break;
-                case "4":
+                case "4": // 던전
 
                     break;
-                case "5":
+                case "5": // 휴식 or 여관
 
                     break;
                 case "0":
@@ -80,7 +80,7 @@
                     break;
 
                 default:
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("\n잘못된 입력입니다.");
                     break;
             }
 
