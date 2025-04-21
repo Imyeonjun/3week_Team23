@@ -9,8 +9,8 @@ public abstract class Job
     public abstract int BaseDefence { get; }
     public abstract void PrintSkillInfo();
 
-    public abstract void SkillA(GreenMonster enemy);
-    public abstract void SkillB(List<GreenMonster> enemy);
+    //public abstract void SkillA(GreenMonster enemy);
+    //public abstract void SkillB(List<GreenMonster> enemy);
 
 }
 
@@ -25,14 +25,14 @@ public class Warrior : Job
         // 1, 2 스킬설명 출력
     }
 
-    public override void SkillA(GreenMonster enemy)
-    {
+    //public override void SkillA(GreenMonster enemy)
+    //{
         
-    }
-    public override void SkillB(List<GreenMonster> enemy)
-    { 
+    //}
+    //public override void SkillB(List<GreenMonster> enemy)
+    //{ 
         
-    }
+    //}
 
 }
 
@@ -47,10 +47,10 @@ public class Magician : Job
 
     }
 
-    public override void SkillA(GreenMonster enemy)
-    {
-    }
-    public override void SkillB(List<GreenMonster> enemy)
-    {
-    }
+    //public override void SkillA(GreenMonster enemy)
+    //{
+    //}
+    //public override void SkillB(List<GreenMonster> enemy)
+    //{
+    //}
 }
