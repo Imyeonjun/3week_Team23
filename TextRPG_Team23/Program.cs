@@ -1,13 +1,16 @@
-﻿namespace TextRPG_Team23
+﻿using TextRPG_Team_private;
+
+namespace TextRPG_Team23
 {
     internal class Program
     {
         //게임 종료를 위한 변수
         static private bool isRunning = true;
+
         static void Main(string[] args)
         {
             //여기서 인트로 (또는 캐릭터 생성) 호출
-            CreateCharacter();
+            //CreateCharacter();
             ShowMainMenu();
 
             //isRunning = false;가 되면 while 조건에 벗어나면서 프로그램 중단 = 게임 종료
@@ -94,7 +97,7 @@
         }
 
 
-        static void CreateCharacter()
+        /*static void CreateCharacter()
         {
             Console.WriteLine("이름을 입력하세요.");
             string name = Console.ReadLine();
@@ -115,9 +118,7 @@
                     job = new Warrior();
                     break;
             }
-
-            //Player player = new Player(name, job);
-
-        }
+            Player player = new Player(name, job);
+        }*/
     }
 }
