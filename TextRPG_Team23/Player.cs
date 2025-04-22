@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Threading;
 
 namespace TextRPG_Team23
 {
@@ -19,18 +20,17 @@ namespace TextRPG_Team23
 
         public int Level { get => level; set => level = value; }
         public string Name { get => name; set => name = value; }
-        public float AtkDmg { get => atkDmg; set => atkDmg = value; }
-        public int Defence { get => defence; set => defence = value; }
+        public float Atk { get => atkDmg; set => atkDmg = value; }
+        public int Def { get => defence; set => defence = value; }
         public float TotalAtk { get; set; }
         public int TotalDef { get; set; }
         public int CurrentHp { get => currentHp; set => currentHp = value; }
         public int MaxHp { get => maxHp; set => maxHp = value; }
-        public int CurrentMP { get => currentMp; set => currentMp = value; }
+        public int CurrentMp { get => currentMp; set => currentMp = value; }
         public int MaxMp { get => maxMp; set => maxMp = value; }
         public int Gold { get => gld; set => gld = value; }
-        //public Inventory Inventory { get; private set; }
+        public Inventory Inventory { get; private set; }
 
-        public Item[] Slots = new Item[2]; // 추후 변경
 
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정
@@ -47,7 +47,7 @@ namespace TextRPG_Team23
             this.currentMp = maxMp;
             this.gld = 500;
 
-            //Inventory = new Inventory();
+            Inventory = new Inventory();
 
             RecalculateStats();
         }
@@ -87,83 +87,83 @@ namespace TextRPG_Team23
             job.PrintSkillInfo();
         }
 
-        /* public void PlayerDoing(List<GreenMonster> monBox)
-         {
-             foreach (GreenMonster mon in monBox)
-             {
-                 mon.MobInfo(false);
-             }
-             PrintStatusInDungeon();
-             string input = Console.ReadLine();
+        public void PlayerDoing(List<Monster> monBox)
+        {
+            foreach (Monster mon in monBox)
+            {
+                mon.MobInfo(false);
+            }
+            PrintStatusInDungeon();
+            string input = Console.ReadLine();
 
-             switch (input)
-             {
-                 case "1":
-                     // 몬스터 목록 출력
-                     foreach (GreenMonster mon in monBox)
-                     {
-                         mon.MobInfo(true);
-                     }
+            switch (input)
+            {
+                case "1":
+                    // 몬스터 목록 출력
+                    foreach (Monster mon in monBox)
+                    {
+                        mon.MobInfo(true);
+                    }
 
-                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
-                     if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
-                     {
-                         //공격 로직 작성
-                         job.Attack(monBox[tgIndex - 1], TotalAtk);
-                     }
-                     else
-                     {
-                         PlayerDoing(monBox);
-                         Console.WriteLine("잘못된 입력입니다.");
-                     }
-                     break;
+                    Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
+                    if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
+                    {
+                        //공격 로직 작성
+                        job.Attack(monBox[targetIndex - 1], TotalAtk);
+                    }
+                    else
+                    {
+                        PlayerDoing(monBox);
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
+                    break;
 
-                 case "2":
-                     // 몬스터 목록 출력
-                     foreach (GreenMonster mon in monBox)
-                     {
-                         mon.MobInfo(false);
-                     }
-                     PrintSkillStatus();
-                     Console.Write(">>> ");
-                     string skillInput = Console.ReadLine();
+                case "2":
+                    // 몬스터 목록 출력
+                    foreach (Monster mon in monBox)
+                    {
+                        mon.MobInfo(false);
+                    }
+                    PrintSkillStatus();
+                    Console.Write(">>> ");
+                    string skillInput = Console.ReadLine();
 
-                     if (skillInput == "1")
-                     {
-                         foreach (GreenMonster mon in monBox)
-                         {
-                             mon.MobInfo(true);
-                         }
-                         if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
-                         {
-                             //공격 로직 작성(단일딜)
-                             job.SkillA(monBox[tgIndex - 1], TotalAtk);
-                         }
-                         else
-                         {
-                             PlayerDoing(monBox);
-                             Console.WriteLine("잘못된 입력입니다.");
-                         }
-                     }
-                     else if (skillInput == "2")
-                     {
-                         // 공격 로직 작성 (광역딜)
-                         job.SkillB(monBox, TotalAtk);
-                     }
-                     else
-                     {
-                         PlayerDoing(monBox);
-                         Console.WriteLine("잘못된 스킬 선택입니다.");
-                     }
-                     break;
+                    if (skillInput == "1")
+                    {
+                        foreach (Monster mon in monBox)
+                        {
+                            mon.MobInfo(true);
+                        }
+                        if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
+                        {
+                            //공격 로직 작성(단일딜)
+                            job.SkillA(monBox[tgIndex - 1], TotalAtk);
+                        }
+                        else
+                        {
+                            PlayerDoing(monBox);
+                            Console.WriteLine("잘못된 입력입니다.");
+                        }
+                    }
+                    else if (skillInput == "2")
+                    {
+                        // 공격 로직 작성 (광역딜)
+                        job.SkillB(monBox, TotalAtk);
+                    }
+                    else
+                    {
+                        PlayerDoing(monBox);
+                        Console.WriteLine("잘못된 스킬 선택입니다.");
+                    }
+                    break;
 
-                 default:
-                     PlayerDoing(monBox);
-                     Console.WriteLine("잘못된 입력입니다.");
-                     break;
-             }
+                default:
+                    PlayerDoing(monBox);
+                    Console.WriteLine("잘못된 입력입니다.");
+                    break;
+            }
 
-         }*/ // 던전 행동 로직
+        } // 던전 행동 로직
 
         public int ItemAttack()
         {
