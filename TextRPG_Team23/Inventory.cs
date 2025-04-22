@@ -15,14 +15,19 @@ namespace TextRPG_Team23
 
         public void Add(int amount = 1) => Quantity += amount;
 
-        public bool Use(Player player)
+        public bool Use(Player player) 
         {
-            if (Item is Consumable consumable)
+            if (Item.Use(player)) //아이템 사용 시도 성공 시
             {
-                consumable.Use(player);
-                Quantity--;
+                if (Item is Consumable) //사용하는 아이템이 소모품일시
+                {
+                    Quantity--; 
+                    
+                }
                 return Quantity > 0;
+                
             }
+            Console.WriteLine($"{Item.Name}은 사용할수 없는 아이템입니다.");
             return true;
         }
 
@@ -144,6 +149,39 @@ namespace TextRPG_Team23
             {
                 Console.WriteLine("숫자를 입력해주세요.");
             }
+        }
+        public void UseItemPhase(Player player)//아이템 사용 페이즈
+        {
+            var usableItems = Items.Where(i => i.Item is Consumable).ToList();
+
+            if (usableItems.Count == 0)
+            {
+                Console.WriteLine("사용 가능한 소비 아이템이 없습니다.");
+                return;
+            }
+            Console.WriteLine("사용 가능한 아이템 목록:");
+            for (int i = 0; i < usableItems.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {usableItems[i]}");
+            }
+            Console.WriteLine("0: 나가기\n사용할 아이템 번호를 선택하세요: ");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out int selected) && selected > 0 && selected <= usableItems.Count)
+            {
+                var selectedItem = usableItems[selected - 1];
+                bool isExists = selectedItem.Use(player);
+
+                if (!isExists)
+                {
+                    Items.Remove(selectedItem);
+                    Console.WriteLine($"{selectedItem.Item.Name}을 모두 사용했습니다.");
+                }
+            }
+            else if (selected != 0 )
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+
         }
     }
 }

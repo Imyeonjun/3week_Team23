@@ -20,13 +20,16 @@ namespace TextRPG_Team23
             MaxDurability = durability;
         }
 
-        public virtual void Use()
+        public virtual void ReduceDurability() //내구도 감소 로직 아직은 미사용중
         {
             if (Durability > 0)
                 Durability--;
         }
 
-        public bool IsBroken => Durability == 0;
+        public bool IsBroken => Durability == 0;  //내구도 0일때의 로직은 아직 미완성
+
+        public virtual bool Use (Player player) => false;
+        
     }
 
     public interface IEquipable
@@ -96,16 +99,16 @@ namespace TextRPG_Team23
         private Action<Player> effect;
 
         public Consumable(string name, int price, string description, Action<Player> effect)
-            : base(name, price, description, durability: 1)
+            : base(name, price, description)
         {
             this.effect = effect;
         }
 
-        public override void Use()
+        public override bool Use(Player player) //소비 아이템 
         {
-            base.Use();
-            effect?.Invoke(Player._player); // 또는 외부에서 player 전달
+            effect?.Invoke(player); 
             Console.WriteLine($"{Name}을 사용했습니다. {Description}");
+            return true;
         }
 
         public override string ToString()
