@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
+﻿
 
 namespace TextRPG_Team23
 {
@@ -22,13 +20,16 @@ namespace TextRPG_Team23
             MaxDurability = durability;
         }
 
-        public virtual void Use()
+        public virtual void ReduceDurability() //내구도 감소 로직 아직은 미사용중
         {
             if (Durability > 0)
                 Durability--;
         }
 
-        public bool IsBroken => Durability == 0;
+        public bool IsBroken => Durability == 0;  //내구도 0일때의 로직역시 아직 미사용
+
+        public virtual bool Use (Player player) => false;
+        
     }
 
     public interface IEquipable
@@ -57,8 +58,14 @@ namespace TextRPG_Team23
 
         public void Equip(Player player)
         {
+           if (player.Inventory.Slots[(int)SlotType] is Weapon oldWeapon)
+            {
+                player.Atk -= oldWeapon.Atk;
+            }
             player.Inventory.Slots[(int)SlotType] = this;
+            player.Atk += Atk;
             Console.WriteLine($"{Name}을 장착했습니다. (공격력 +{Atk})");
+            
         }
 
         public override string ToString()
@@ -82,7 +89,12 @@ namespace TextRPG_Team23
 
         public void Equip(Player player)
         {
+            if (player.Inventory.Slots[(int)SlotType] is Clothes oldClothes)
+            {
+                player.Def -= oldClothes.Def;
+            }
             player.Inventory.Slots[(int)SlotType] = this;
+            player.Def += Def;
             Console.WriteLine($"{Name}을 장착했습니다. (방어력 +{Def})");
         }
 
@@ -98,16 +110,16 @@ namespace TextRPG_Team23
         private Action<Player> effect;
 
         public Consumable(string name, int price, string description, Action<Player> effect)
-            : base(name, price, description, durability: 1)
+            : base(name, price, description)
         {
             this.effect = effect;
         }
 
-        public override void Use()
+        public override bool Use(Player player) //소비 아이템 
         {
-            base.Use();
-            effect?.Invoke(Player._player); // 또는 외부에서 player 전달
+            effect?.Invoke(player); 
             Console.WriteLine($"{Name}을 사용했습니다. {Description}");
+            return true;
         }
 
         public override string ToString()
