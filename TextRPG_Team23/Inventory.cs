@@ -2,7 +2,7 @@
 
 namespace TextRPG_Team23
 {
-    public class ItemStack
+    public class ItemStack //아이템 수량정보
     {
         public Item Item { get; private set; }
         public int Quantity { get; private set; }
@@ -33,12 +33,12 @@ namespace TextRPG_Team23
         }
     }
 
-    public class Inventory
+    public class Inventory //아이템 목록, 장비슬롯
     {
         public List<ItemStack> Items { get; private set; } = new List<ItemStack>();
         public Item[] Slots = new Item[2]; // 무기, 방어구
 
-        public void AddItem(Item newItem)
+        public void AddItem(Item newItem) //아이템 추가 로직
         {
             var existing = Items.FirstOrDefault(i => i.Item.Name == newItem.Name);
             if (existing != null)
@@ -47,14 +47,14 @@ namespace TextRPG_Team23
                 Items.Add(new ItemStack(newItem));
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(Item item) //아이템 삭제 로직
         {
             var target = Items.FirstOrDefault(i => i.Item == item);
             if (target != null)
                 Items.Remove(target);
         }
 
-        public void PrintInventory(Player player) //인벤토리 화면 출력
+        public void PrintInventory(Player player) //인벤토리 UI 출력
         {
             while (true)
             {
@@ -88,7 +88,7 @@ namespace TextRPG_Team23
             }
         }
 
-        public void ManageEquipment(Player player, List<ItemStack> sortedItems)//장비 관리 화면 및 시스템
+        public void ManageEquipment(Player player, List<ItemStack> sortedItems)//장비 관리 UI 및 시스템
         {
             List<IEquipable> equipables = new List<IEquipable>();
             foreach (var invItem in sortedItems)
