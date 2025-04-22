@@ -4,7 +4,7 @@ using System.Numerics;
 namespace TextRPG_Team23
 {
     public class Shop
-	{
+    {
         private Player player;
 
         public Shop(Player player)
@@ -42,7 +42,7 @@ namespace TextRPG_Team23
 
                 }
             }
-    }
+        }
         private void BuyItem()
         {
             while (true)
@@ -133,12 +133,13 @@ namespace TextRPG_Team23
                 Console.Write("판매할 아이템 번호를 입력하세요: ");
                 string input = Console.ReadLine();
 
-                if(int.TryParse(input, out int selected) && selected > 0 && selected <= items.Count)
+                if (int.TryParse(input, out int selected) && selected > 0 && selected <= items.Count)
                 {
-                    
+
                 }
 
 
             }
         }
+    }
 }
