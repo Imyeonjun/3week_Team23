@@ -136,8 +136,8 @@ namespace TextRPG_Team23
             new Weapon("은검", 200, "은으로 제작된 검이다.", 20, 15),
             new Clothes("낡은 옷", 50, "낡은 방어구입니다.", 5, 8),
             new Clothes("가죽 갑옷", 150, "튼튼한 가죽 방어구입니다.", 10, 12),
-            new Consumable("체력 포션", 50, "체력을 30 회복합니다.", p => p.Hp = Math.Min(p.MaxHp, p.Hp + 30)),
-            new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.Mp = Math.Min(p.MaxMp, p.Mp + 30))
+            new Consumable("체력 포션", 50, "체력을 30 회복합니다.", p => p.CurrentHp = Math.Min(p.MaxHp, p.CurrentHp + 30)),
+            new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 30))
         };
     }
 }
