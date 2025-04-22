@@ -1,21 +1,37 @@
-﻿using System;
+﻿using Battle_Results_Screen;
+using System;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+
 
 namespace Battle_Results_Screen
 {
 
+    
 
-    public class BattleResult
+    class BattleResult
     {
-        public void BattleResultUI(Player player, bool Victory, int dungeonMonsterCount, int dungeonExp, List<Item> droppedItems)
+
+
+        public static void BattleResultUI(Player player, int dungeonMonsterCount, List<Monster> monsters)  // int dungeonExp 받아와야함(1)
         {
             // 적용 전 
             int oldLevel = player.Level;
             int oldExp = player.Exp;
-            int totalExp = oldExp + dungeonExp;
+            int monsterLevelSum = 0;
 
-            if (Victory)
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                monsterLevelSum += monsters[i].Level;
+            }
+
+            int totalExp = monsterLevelSum + player.Exp;
+            int plyerGold = player.Gold;
+
+            bool isVictory = player.CurrentHp > 0;
+
+            if (isVictory)
             {
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result");
@@ -23,8 +39,8 @@ namespace Battle_Results_Screen
 
 
 
-                // 새 레벨, 경험치 계산
-                int newLevel = LevelUp.GetNewLevel(oldLevel, totalExp, out int remainingExp);
+                // 레벨, 경험치 
+                int newLevel = LevelUp.NewLevel(oldLevel, totalExp, out int remainingExp);
 
                 //플레이어 정보 업데이트
                 player.Level = newLevel;
@@ -42,17 +58,8 @@ namespace Battle_Results_Screen
                 Console.WriteLine($"HP: {player.MaxHp} → {player.CurrentHp}");
 
 
-                Console.WriteLine("[획득 아이템]");
 
 
-
-
-
-                foreach (var item in droppedItems)
-                {
-                    Console.WriteLine($"{item.Name} -{item.Value}");
-                    
-                }
 
 
                 Console.WriteLine("\n0. 다음");
@@ -61,30 +68,33 @@ namespace Battle_Results_Screen
                 int choiceNumber = CheckInput(0, 0);
                 switch (choiceNumber)
                 {
-                    case 1:
+                    case 0:
 
                         break;
 
 
                 }
             }
-            else 
+            else
             {
                 Console.Clear();
+                Console.WriteLine("Battle!! - Result");
+                Console.WriteLine("");
                 Console.WriteLine("You Lose");
+                Console.WriteLine("");
 
-                
-                Console.WriteLine($"Lv. {oldLevel} {player.Name}");
-                Console.WriteLine($"{player.MaxHp} → 0");
+                Console.WriteLine($"Lv. {oldLevel}  {player.Name}");
+                Console.WriteLine($"HP {player.MaxHp} → 0");
+                Console.WriteLine("");
 
                 Console.WriteLine("0. 다음");                        // 엔딩 크레딧으로 연결
                 Console.Write(">> ");
-                
+
                 int choiceNumber = CheckInput(0, 0);
                 switch (choiceNumber)
                 {
-                    case 1:
-
+                    case 0:
+                        End.Eending();
                         break;
 
 
@@ -114,7 +124,7 @@ namespace Battle_Results_Screen
     public static class LevelUp
     {
 
-        public static int GetRequiredExp(int level)
+        public static int MaxExp(int level)
         {
             if (level == 1)
             {
@@ -138,15 +148,15 @@ namespace Battle_Results_Screen
             }
         }
 
-        // 레벨업 계산: 새 레벨과 남은 경험치를 반환     
-        public static int GetNewLevel(int currentLevel, int totalExp, out int remainingExp)
+           
+        public static int NewLevel(int currentLevel, int totalExp, out int remainingExp)
         {
             int exp = totalExp;
             int level = currentLevel;
 
-            while (exp >= GetRequiredExp(level))
+            while (exp >= MaxExp(level))
             {
-                exp -= GetRequiredExp(level);
+                exp -= MaxExp(level);
                 level++;
             }
 
@@ -155,6 +165,46 @@ namespace Battle_Results_Screen
         }
     }
 
+    public class End
+    {
+
+        public static void Eending()
+        {
+
+
+            Console.Clear();
+            Console.WriteLine("               게임이 종료되었습니다. ");
+            Console.WriteLine("");
+            Console.WriteLine("                    팀   :  23조 ");
+            Console.WriteLine("");
+            Console.WriteLine("                       제작 ");
+            Console.WriteLine("");
+            Console.WriteLine("메인 메뉴                             : 임연준 (팀장)");
+            Console.WriteLine("던전, 몬스터, 전투시스템              : 이명준");
+            Console.WriteLine("Player 클래스, 상태보기, Quest 클래스 : 문승준");
+            Console.WriteLine("아이템, 인벤토리, 상점                : 박지환");
+            Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
+            Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
+
+
+
+
+        }
+
+    }
+
+
+    internal class Battle_Results_Screen
+    {
+        static void Main(string[] args)
+        {
+           
+              
+            
+        }
+    }
+
+    
     //class LevelUp2
     //{
     //    public static int GetRequiredExp(int level)
@@ -228,28 +278,7 @@ namespace Battle_Results_Screen
 
 
 
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            BattleResult.BattleResultUI();
-        }
-    }
-
-
-
-
-
-
+    
 
 
 }
-
-
-
-
-
-
-
-
-
