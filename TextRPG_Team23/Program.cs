@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System;
 
 namespace TextRPG_Team23
 {
@@ -9,6 +10,7 @@ namespace TextRPG_Team23
 
         static void Main(string[] args)
         {
+            CreateCharacter();
             ShowMainMenu();
 
             //isRunning = false;가 되면 while 조건에 벗어나면서 프로그램 중단 = 게임 종료
@@ -18,7 +20,9 @@ namespace TextRPG_Team23
                 string input = Console.ReadLine();
                 //MenuSelect(input);
             }
+
         }
+
         static private void ShowMainMenu()
         {
             Console.Clear();
