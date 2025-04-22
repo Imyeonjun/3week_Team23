@@ -1,12 +1,14 @@
-﻿namespace TextRPG_Team23
+﻿using System.Numerics;
+
+namespace TextRPG_Team23
 {
     internal class Program
     {
         //게임 종료를 위한 변수
         static private bool isRunning = true;
+
         static void Main(string[] args)
         {
-            //여기서 인트로 (또는 캐릭터 생성) 호출
             ShowMainMenu();
 
             //isRunning = false;가 되면 while 조건에 벗어나면서 프로그램 중단 = 게임 종료
@@ -14,26 +16,15 @@
             {
                 Console.Write("메뉴 선택 > ");
                 string input = Console.ReadLine();
-                MenuSelect(input);
+                //MenuSelect(input);
             }
         }
         static private void ShowMainMenu()
         {
             Console.Clear();
-
-            Console.WriteLine
-                ("=== 현재 위치 : 마을 ===" +
-                "\n" +
-                "\n1. 스테이터스" +
-                "\n2. 인벤토리" +
-                "\n3. 상점" +
-                "\n4. 던전" +
-                "\n5. 휴식 (여관)" +
-                "\n" +
-                "\n0. 게임 저장");
         }
 
-        static private void MenuSelect(string input)
+        /*static private void MenuSelect(string input)
         {
             switch (input)
             {
@@ -90,6 +81,49 @@
                 Console.ReadKey();
                 ShowMainMenu();
             }
+        }*/
+
+    }
+
+    public class BranchManager //선택지 생성기
+    {
+        //Branch 함수는 ReturnSelect를 위한 보조 함수. 호출은 ReturnSelect 권장.
+        public void Branch(string[] options, bool isCancel, string cancelText) // 선택지 내용, 취소문 유무, 취소문 텍스트
+        {
+            for (int i = 0; i < options.Length; i++)
+            {
+                // i를 번호로 지정하고, 뒤쪽에 가져온 선택지 불러오기
+                Console.WriteLine($"{i + 1}. {options[i]}");
+            }
+            if (isCancel)
+            {
+                Console.WriteLine("\n0. " + cancelText);
+            }
+        }
+
+        public int ReturnSelect(string[] options, bool isCancel, string cancelTex)
+        {
+            //선택지 출력
+            Branch(options, isCancel, cancelTex);
+
+            //사용자 입력 받기
+            Console.Write("\n선택 >> ");
+            string input = Console.ReadLine();
+
+            //입력값 판단
+            if (int.TryParse(input, out int result))
+            {
+                int maxOptions = options.Length;
+
+                if (isCancel && result == 0)
+                    return 0;
+
+                else if (result >= 1 && result <= maxOptions)
+                    return result;
+
+                return -1;
+            }
+            return -1;
         }
     }
 }
