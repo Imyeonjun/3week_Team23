@@ -169,7 +169,7 @@ namespace TextRPG_Team23
         {
 
             int equipAtk = 0;
-            if (Slots[(int)EquipSlot.Weapon] is Weapon weapon)
+            if (Inventory.Slots[(int)EquipSlot.Weapon] is Weapon weapon)
             {
                 equipAtk = weapon.Atk;
             }
@@ -180,7 +180,7 @@ namespace TextRPG_Team23
         {
 
             int equipDef = 0;
-            if (Slots[(int)EquipSlot.Clothes] is Clothes clothes)
+            if (Inventory.Slots[(int)EquipSlot.Clothes] is Clothes clothes)
             {
                 equipDef = clothes.Def;
             }
