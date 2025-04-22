@@ -28,9 +28,9 @@ namespace TextRPG_Team23
         public int CurrentMP { get => currentMp; set => currentMp = value; }
         public int MaxMp { get => maxMp; set => maxMp = value; }
         public int Gold { get => gld; set => gld = value; }
-        //public Inventory Inventory { get; set; } 인벤토리 구현되면 추가 예정
-        public List<Item> inventory = new List<Item>();
-        public Item[] Slots = new Item[2];
+        //public Inventory Inventory { get; private set; }
+
+        public Item[] Slots = new Item[2]; // 추후 변경
 
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정
@@ -47,7 +47,7 @@ namespace TextRPG_Team23
             this.currentMp = maxMp;
             this.gld = 500;
 
-            //Inventory = inventory;
+            //Inventory = new Inventory();
 
             RecalculateStats();
         }
@@ -78,7 +78,7 @@ namespace TextRPG_Team23
 
         }
 
-        public void PrintSkillStatus()
+        private void PrintSkillStatus()
         {
             Console.WriteLine("[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
