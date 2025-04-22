@@ -20,7 +20,6 @@ namespace TextRPG_Team23
                 string input = Console.ReadLine();
                 //MenuSelect(input);
             }
-
         }
 
         static private void ShowMainMenu()
@@ -87,6 +86,30 @@ namespace TextRPG_Team23
             }
         }*/
 
+        static Player player;
+        static void CreateCharacter()
+        {
+            Console.WriteLine("이름을 입력하세요.");
+            string name = Console.ReadLine();
+            Console.WriteLine("직업을 선택하세요. (0: 전사, 1: 마법사)");
+            int jobChoice = int.Parse(Console.ReadLine());
+            Job job;
+
+            switch (jobChoice)
+            {
+                case 0:
+                    job = new Warrior();
+                    break;
+                case 1:
+                    job = new Magician();
+                    break;
+                default:
+                    Console.WriteLine("잘못된 선택입니다. 기본 직업으로 전사를 선택합니다.");
+                    job = new Warrior();
+                    break;
+            }
+            player = new Player(name, job);
+        }
     }
 
     public class BranchManager //선택지 생성기
