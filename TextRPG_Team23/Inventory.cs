@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+﻿
 
 namespace TextRPG_Team23
 {
-    public class InventoryItem
+    public class ItemStack
     {
         public Item Item { get; private set; }
         public int Quantity { get; private set; }
 
-        public InventoryItem(Item item, int quantity = 1)
+        public ItemStack(Item item, int quantity = 1)
         {
             Item = item;
             Quantity = quantity;
@@ -38,7 +35,7 @@ namespace TextRPG_Team23
 
     public class Inventory
     {
-        public List<InventoryItem> Items { get; private set; } = new List<InventoryItem>();
+        public List<ItemStack> Items { get; private set; } = new List<ItemStack>();
         public Item[] Slots = new Item[2]; // 무기, 방어구
 
         public void AddItem(Item newItem)
@@ -47,7 +44,7 @@ namespace TextRPG_Team23
             if (existing != null)
                 existing.Add();
             else
-                Items.Add(new InventoryItem(newItem));
+                Items.Add(new ItemStack(newItem));
         }
 
         public void RemoveItem(Item item)
@@ -91,7 +88,7 @@ namespace TextRPG_Team23
             }
         }
 
-        public void ManageEquipment(Player player, List<InventoryItem> sortedItems)//장비 관리 화면 및 시스템
+        public void ManageEquipment(Player player, List<ItemStack> sortedItems)//장비 관리 화면 및 시스템
         {
             List<IEquipable> equipables = new List<IEquipable>();
             foreach (var invItem in sortedItems)
