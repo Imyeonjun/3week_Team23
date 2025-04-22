@@ -30,7 +30,7 @@ namespace TextRPG_Team23
         public int MaxMp { get => maxMp; set => maxMp = value; }
         public int Gold { get => gld; set => gld = value; }
         public Inventory Inventory { get; private set; }
-        public List<Quest> Quests;
+        public List<Quest>? Quests;
 
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정

@@ -82,7 +82,3 @@ public class Magician : Job
 
     
 }
-public class Monster
-{
-
-}

@@ -44,6 +44,7 @@ namespace TextRPG_Team23
                 if (Item != null)
                 {
                     // 플레이어 인벤토리에 아이템 추가 
+                    player.Inventory.AddItem(Item);
                 }
             }
         }
@@ -67,7 +68,7 @@ namespace TextRPG_Team23
         }
     }
 
-    public class QuestMenu
+    public class QuestMenu // 게임 시작시 퀘스트메뉴 초기화 해야됨
     {
         private List<Quest> allQuests;
 
