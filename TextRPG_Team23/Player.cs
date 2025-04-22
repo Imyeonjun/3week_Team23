@@ -109,6 +109,7 @@ namespace TextRPG_Team23
                      if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
                      {
                          //공격 로직 작성
+                         job.Attack(monBox[tgIndex - 1], TotalAtk);
                      }
                      else
                      {
@@ -136,7 +137,7 @@ namespace TextRPG_Team23
                          if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                          {
                              //공격 로직 작성(단일딜)
-                             job.SkillA(monBox[tgIndex - 1]);
+                             job.SkillA(monBox[tgIndex - 1], TotalAtk);
                          }
                          else
                          {
@@ -147,7 +148,7 @@ namespace TextRPG_Team23
                      else if (skillInput == "2")
                      {
                          // 공격 로직 작성 (광역딜)
-                         job.SkillB(monBox);
+                         job.SkillB(monBox, TotalAtk);
                      }
                      else
                      {
@@ -194,21 +195,21 @@ namespace TextRPG_Team23
         }
 
 
-        public void AddDungeonClear()
-        {
+        //public void AddDungeonClear()
+        //{
 
-            UpdateLevel();
+        //    UpdateLevel();
 
-        }
+        //}
 
-        void UpdateLevel()
-        {
-            Level++;
-            AtkDmg += 0.5f;
-            Defence += 1;
+        //void UpdateLevel()
+        //{
+        //    Level++;
+        //    AtkDmg += 0.5f;
+        //    Defence += 1;
 
-            RecalculateStats();
-        }
+        //    RecalculateStats();
+        //}
     }
 
 
