@@ -26,7 +26,7 @@ namespace TextRPG_Team23
                 Durability--;
         }
 
-        public bool IsBroken => Durability == 0;  //내구도 0일때의 로직은 아직 미완성
+        public bool IsBroken => Durability == 0;  //내구도 0일때의 로직역시 아직 미사용
 
         public virtual bool Use (Player player) => false;
         
