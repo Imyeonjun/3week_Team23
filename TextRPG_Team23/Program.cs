@@ -1,9 +1,12 @@
-﻿namespace TextRPG_Team23
+﻿using System.Xml.Linq;
+
+namespace TextRPG_Team23
 {
     internal class Program
     {
         //게임 종료를 위한 변수
         static private bool isRunning = true;
+        
         static void Main(string[] args)
         {
             //여기서 인트로 (또는 캐릭터 생성) 호출
@@ -41,6 +44,7 @@
 
                     break;
                 case "2": // 인벤토리
+                    
 
                     break;
                 case "3": // 상점
