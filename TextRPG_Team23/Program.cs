@@ -4,8 +4,14 @@
     {
         //게임 종료를 위한 변수
         static private bool isRunning = true;
+        static Player player;
         static void Main(string[] args)
         {
+
+            CreateCharacter();
+            
+
+
             //여기서 인트로 (또는 캐릭터 생성) 호출
             ShowMainMenu();
 
@@ -17,6 +23,34 @@
                 MenuSelect(input);
             }
         }
+
+        static void CreateCharacter()
+        {
+            Console.WriteLine("이름을 입력하세요.");
+            string name = Console.ReadLine();
+            Console.WriteLine("직업을 선택하세요. (0: 전사, 1: 마법사)");
+            int jobChoice = int.Parse(Console.ReadLine());
+            Job job;
+
+            switch (jobChoice)
+            {
+                case 0:
+                    job = new Warrior();
+                    break;
+                case 1:
+                    job = new Magician();
+                    break;
+                default:
+                    Console.WriteLine("잘못된 선택입니다. 기본 직업으로 전사를 선택합니다.");
+                    job = new Warrior();
+                    break;
+            }
+
+            player = new Player(name, job);
+
+        }
+
+
         static private void ShowMainMenu()
         {
             Console.Clear();
@@ -47,7 +81,8 @@
 
                     break;
                 case "4": // 던전
-
+                    DungeonMaganer d = new DungeonMaganer();
+                    d.BattleStart(player);
                     break;
                 case "5": // 휴식 or 여관
 

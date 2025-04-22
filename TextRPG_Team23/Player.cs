@@ -30,7 +30,7 @@ namespace TextRPG_Team23
         public int Gold { get => gld; set => gld = value; }
         //public Inventory Inventory { get; private set; }
 
-        public Item[] Slots = new Item[2]; // 추후 변경
+        //public Item[] Slots = new Item[2]; // 추후 변경
 
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정
@@ -49,7 +49,7 @@ namespace TextRPG_Team23
 
             //Inventory = new Inventory();
 
-            RecalculateStats();
+            //RecalculateStats();
         }
 
         public void PrintStatus()
@@ -59,8 +59,8 @@ namespace TextRPG_Team23
             Console.WriteLine($"직업: {jobName}");
             Console.WriteLine($"레벨: {level}");
             Console.WriteLine($"체력: {currentHp}");
-            Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()})");
-            Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})");
+            //Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()})");
+            //Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})");
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
 
@@ -87,11 +87,11 @@ namespace TextRPG_Team23
             job.PrintSkillInfo();
         }
 
-        /* public void PlayerDoing(List<GreenMonster> monBox)
+         public void PlayerDoing(List<Monster> monBox)
          {
-             foreach (GreenMonster mon in monBox)
+             foreach (Monster mon in monBox)
              {
-                 mon.MobInfo(false);
+                 mon.MonsterInfo(false);
              }
              PrintStatusInDungeon();
              string input = Console.ReadLine();
@@ -100,16 +100,16 @@ namespace TextRPG_Team23
              {
                  case "1":
                      // 몬스터 목록 출력
-                     foreach (GreenMonster mon in monBox)
+                     foreach (Monster mon in monBox)
                      {
-                         mon.MobInfo(true);
+                         mon.MonsterInfo(true);
                      }
 
                      Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
                      if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
                      {
                          //공격 로직 작성
-                         job.Attack(monBox[tgIndex - 1], TotalAtk);
+                         job.Attack(monBox[targetIndex - 1], TotalAtk);
                      }
                      else
                      {
@@ -120,9 +120,9 @@ namespace TextRPG_Team23
 
                  case "2":
                      // 몬스터 목록 출력
-                     foreach (GreenMonster mon in monBox)
+                     foreach (Monster mon in monBox)
                      {
-                         mon.MobInfo(false);
+                         mon.MonsterInfo(false);
                      }
                      PrintSkillStatus();
                      Console.Write(">>> ");
@@ -130,9 +130,9 @@ namespace TextRPG_Team23
 
                      if (skillInput == "1")
                      {
-                         foreach (GreenMonster mon in monBox)
+                         foreach (Monster mon in monBox)
                          {
-                             mon.MobInfo(true);
+                             mon.MonsterInfo(true);
                          }
                          if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                          {
@@ -163,36 +163,36 @@ namespace TextRPG_Team23
                      break;
              }
 
-         }*/ // 던전 행동 로직
+         } // 던전 행동 로직
 
-        public int ItemAttack()
-        {
+        //public int ItemAttack()
+        //{
 
-            int equipAtk = 0;
-            if (Slots[(int)EquipSlot.Weapon] is Weapon weapon)
-            {
-                equipAtk = weapon.Atk;
-            }
-            return equipAtk;
-        }
+        //    int equipAtk = 0;
+        //    if (Slots[(int)EquipSlot.Weapon] is Weapon weapon)
+        //    {
+        //        equipAtk = weapon.Atk;
+        //    }
+        //    return equipAtk;
+        //}
 
-        public int ItemDefense()
-        {
+        //public int ItemDefense()
+        //{
 
-            int equipDef = 0;
-            if (Slots[(int)EquipSlot.Clothes] is Clothes clothes)
-            {
-                equipDef = clothes.Def;
-            }
-            return equipDef;
-        } 
+        //    int equipDef = 0;
+        //    if (Slots[(int)EquipSlot.Clothes] is Clothes clothes)
+        //    {
+        //        equipDef = clothes.Def;
+        //    }
+        //    return equipDef;
+        //} 
 
 
-        public void RecalculateStats()
-        {
-            TotalAtk = atkDmg + ItemAttack();
-            TotalDef = defence + ItemDefense();
-        }
+        //public void RecalculateStats()
+        //{
+        //    TotalAtk = atkDmg + ItemAttack();
+        //    TotalDef = defence + ItemDefense();
+        //}
 
 
         //public void AddDungeonClear()

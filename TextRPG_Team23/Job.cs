@@ -9,9 +9,9 @@ public abstract class Job
     public abstract int BaseDefence { get; }
     public abstract void PrintSkillInfo();
 
-    //public abstract void Attack(GreenMonster enemy, float atkDmg);
-    //public abstract void SkillA(GreenMonster enemy, float atkDmg);
-    //public abstract void SkillB(List<GreenMonster> enemy, float atkDmg);
+    public abstract void Attack(Monster enemy, float atkDmg);
+    public abstract void SkillA(Monster enemy, float atkDmg);
+    public abstract void SkillB(List<Monster> enemy, float atkDmg);
 
 }
 
@@ -27,24 +27,26 @@ public class Warrior : Job
         Console.WriteLine("2. 더블 스트라이크 - MP 10\n공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
     }
 
-    //public override void Attack(GreenMonster enemy, float atkDmg)
-    //{
-    //치명타 or 회피 결정 
-    //enemy에게 데미지 주기
-    //결과창 출력
-    //}
-    //public override void SkillA(GreenMonster enemy, float atkDmg)
-    //{
-    //마나 계산
-    //enemy에게 데미지 주기
-    //결과창 출력
-    //}
-    //public override void SkillB(List<GreenMonster> enemy, float atkDmg)
-    //{
-    //마나 계산
-    //enemy들중 랜덤한 두마리 선별 해서 데미지 주기
-    //결과창 출력
-    //}
+    public override void Attack(Monster enemy, float atkDmg)
+    {
+        Console.WriteLine("용사의 공격!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        /*치명타 or 회피 결정
+    enemy에게 데미지 주기
+    //결과창 출력*/
+    }
+    public override void SkillA(Monster enemy, float atkDmg)
+    {
+        /*마나 계산
+    enemy에게 데미지 주기
+    결과창 출력*/
+    }
+    public override void SkillB(List<Monster> enemy, float atkDmg)
+    {
+        /*마나 계산
+    enemy들중 랜덤한 두마리 선별 해서 데미지 주기
+    결과창 출력*/
+    }
 
 }
 
@@ -61,22 +63,22 @@ public class Magician : Job
 
     }
 
-    //public override void Attack(GreenMonster enemy, float atkDmg)
-    //{
-    //치명타 or 회피 결정 
-    //enemy에게 데미지 주기
-    //결과창 출력
-    //}
-    //public override void SkillA(GreenMonster enemy, float atkDmg)
-    //{
-    //마나 계산
-    //enemy에게 데미지 주기
-    //결과창 출력
-    //}
-    //public override void SkillB(List<GreenMonster> enemy, float atkDmg)
-    //{
-    //마나 계산
-    //enemy들중 랜덤한 두마리 선별 해서 데미지 주기
-    //결과창 출력
-    //}
+    public override void Attack(Monster enemy, float atkDmg)
+    {
+        /*치명타 or 회피 결정
+    enemy에게 데미지 주기
+    //결과창 출력*/
+    }
+    public override void SkillA(Monster enemy, float atkDmg)
+    {
+        /*마나 계산
+    enemy에게 데미지 주기
+    결과창 출력*/
+    }
+    public override void SkillB(List<Monster> enemy, float atkDmg)
+    {
+        /*마나 계산
+    enemy들중 랜덤한 두마리 선별 해서 데미지 주기
+    결과창 출력*/
+    }
 }
