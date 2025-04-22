@@ -58,8 +58,10 @@ namespace TextRPG_Team23
 
         public void Equip(Player player)
         {
+           //if (player.Inventory.Slots[(int)SlotType] is )
             player.Inventory.Slots[(int)SlotType] = this;
             Console.WriteLine($"{Name}을 장착했습니다. (공격력 +{Atk})");
+            
         }
 
         public override string ToString()
