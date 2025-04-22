@@ -2,8 +2,10 @@
 
 namespace TextRPG_Team23
 {
+
     internal class Program
     {
+        static private Player player;
         //게임 종료를 위한 변수
         static private bool isRunning = true;
         
@@ -44,11 +46,10 @@ namespace TextRPG_Team23
 
                     break;
                 case "2": // 인벤토리
-                    
-
+                    player.Inventory.PrintInventory(player);
                     break;
                 case "3": // 상점
-
+                    new Shop(player).ShopPhase();
                     break;
                 case "4": // 던전
 
