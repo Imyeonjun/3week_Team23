@@ -264,6 +264,10 @@ public class Magician : Job
         int finalDamage = (int)finalAtkDmg;
         int originalHp = enemy.CurrentHp;
         enemy.CurrentHp -= finalDamage;
+        if(enemy is TakeDamage a)
+        {
+            a.TakeDamage(finalDamage);
+        }
         if (enemy.CurrentHp < 0) enemy.CurrentHp = 0;
 
         DisplayAttackResult(player, enemy, originalHp, finalDamage, "알파 스트라이크");
