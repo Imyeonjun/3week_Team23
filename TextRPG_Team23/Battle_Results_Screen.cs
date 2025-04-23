@@ -69,7 +69,7 @@ namespace TextRPG_Team23
                 switch (choiceNumber)
                 {
                     case 0:
-
+                        Program.ShowMainMenu();
                         break;
 
 
