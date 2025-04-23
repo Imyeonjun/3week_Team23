@@ -18,6 +18,7 @@ namespace TextRPG_Team23
         private int gld;
         private Job job;
         private string jobName;
+        private int killingMonsterCnt = 0;
 
         public int Level { get => level; set => level = value; }
         public int Exp { get => exp; set => exp = value; }
@@ -31,8 +32,10 @@ namespace TextRPG_Team23
         public int CurrentMp { get => currentMp; set => currentMp = value; }
         public int MaxMp { get => maxMp; set => maxMp = value; }
         public int Gold { get => gld; set => gld = value; }
+        public int KillMon { get => killingMonsterCnt; set => killingMonsterCnt = value; }
+        public bool MonsterQuest { get; set; }
         public Inventory Inventory { get; private set; }
-        public List<Quest>? Quests;
+        public List<Quest>? Quests = new List<Quest>();
 
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정
@@ -198,6 +201,29 @@ namespace TextRPG_Team23
             TotalDef = defence + ItemDefense();
         }
 
+        public void PlayerTakeDamage(int dmg)
+        {
+            int realDamage = 0;
+
+            if (TotalDef > dmg)
+            {
+                realDamage = 0;
+            }
+            else
+            {
+                realDamage = dmg - TotalDef;
+            }
+
+            if (CurrentHp > realDamage)
+            {
+                CurrentHp -= realDamage;
+            }
+            else
+            {
+                CurrentHp = 0;
+                // Die 로직실행
+            }
+        }
 
         //public void AddDungeonClear()
         //{
@@ -248,17 +274,53 @@ namespace TextRPG_Team23
 
             RecalculateStats();
         }
-        public void AddQuest(Quest q)
-        {
-            // 이미 같은 제목의 퀘스트가 존재하는지 확인
-            foreach (Quest quest in Quests)
+
+        public bool QuestCheck(Quest q) {
+            if (Quests != null)
             {
-                if (quest.Title == q.Title)
+                foreach (Quest quest in Quests)
                 {
-                    Console.WriteLine($"이미 '{q.Title}' 퀘스트를 수락했습니다.");
-                    return;
+                    if (quest.Title == q.Title)
+                    {
+                        Console.WriteLine($"플레이어가 수락한 '{q.Title}' 퀘스트 출력");
+                        return true;
+                    }
                 }
             }
+
+            return false;
+        }
+
+        public Quest? ReturnQuest(Quest q)
+        {
+            if (Quests != null)
+            {
+                foreach (Quest quest in Quests)
+                {
+                    if (quest.Title == q.Title)
+                        return quest;
+                }
+            }
+
+            return null;
+        }
+
+
+        public void AddQuest(Quest q)
+        {
+            if (Quests != null)
+            {
+                foreach (Quest quest in Quests)
+                {
+                    if (quest.Title == q.Title)
+                    {
+                        Console.WriteLine($"이미 '{q.Title}' 퀘스트를 수락했습니다.");
+                        return;
+                    }
+                }
+            }
+
+           
             q.IsActive = true;
             Quests.Add(q);
             Console.WriteLine($"'{q.Title}' 퀘스트를 수락했습니다!");
@@ -266,12 +328,49 @@ namespace TextRPG_Team23
 
         public void CheckAllQuests()
         {
+            if (Quests == null || Quests.Count == 0)
+            {
+                return;
+            }
+
             foreach (var quest in Quests)
             {
                 quest.CheckCompletion(this);
             }
         }
-        //더미
+
+        public bool HasEquippedAnyItem()
+        {
+            if (Inventory.Slots[(int)EquipSlot.Weapon] is Weapon weapon)
+            {
+                return true;
+            }
+            else if (Inventory.Slots[(int)EquipSlot.Clothes] is Clothes clothes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool HasLevel5()
+        {
+            return Level >= 5;
+        }
+        public bool HasKillMonster()
+        {
+            return KillMon >= 5;
+        }
+
+        public void PlusKillMonsterCnt()
+        {
+            if(MonsterQuest)
+            {
+                KillMon++;
+            }
+        }
     }
 
 }

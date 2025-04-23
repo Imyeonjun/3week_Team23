@@ -39,7 +39,7 @@ namespace TextRPG_Team23
             if (!IsCompleted && comepleteCheck(player))
             {
                 IsCompleted = true;
-                Console.WriteLine($"퀘스트 완료! 보상으로 {RewardGold} 골드를 획득했습니다.");
+                Console.WriteLine($"{Title} 퀘스트 완료! 보상으로 {RewardGold} 골드를 획득했습니다.");
                 player.Gold += RewardGold;
                 if (Item != null)
                 {
@@ -56,11 +56,11 @@ namespace TextRPG_Team23
             Console.WriteLine($"- 보상: {RewardGold} G");
             Console.WriteLine($"- 상태: {(IsCompleted ? "완료" : "미완료")}");
             Console.WriteLine();
-            if(IsActive)
+            if (IsActive)
             {
                 Console.WriteLine("이미 수령한 퀘스트 입니다.");
-
-            } else
+            }
+            else
             {
                 Console.WriteLine("1. 수락");
             }
@@ -75,11 +75,11 @@ namespace TextRPG_Team23
         public QuestMenu()
         {
             allQuests = new List<Quest>
-        {
-            new Quest("마을을 위협하는 몬스터 처치", "몬스터 5마리를 처치하세요.", 300, null/*(player)=>{player.~~~}*/),
-            new Quest("장비를 장착해보자", "인벤토리에서 장비를 장착해보세요.", 150, null/*(player)=>{player.~~~}*/),
-            new Quest("더욱 강해지기", "5레벨을 달성하세요.", 500, null/*(player)=>{player.~~~}*/),
-        };
+            {
+            new Quest("마을을 위협하는 몬스터 처치", "몬스터 5마리를 처치하세요.", 300, (player)=>player.HasKillMonster()),
+            new Quest("장비를 장착해보자", "인벤토리에서 장비를 장착해보세요.", 150, (player)=>player.HasEquippedAnyItem() ),
+            new Quest("더욱 강해지기", "5레벨을 달성하세요.", 500, (player)=>player.HasLevel5()),
+            };
         }
 
         // 플레이어에게 퀘스트 제공
@@ -88,14 +88,67 @@ namespace TextRPG_Team23
             return new List<Quest>(allQuests);
         }
 
-        public void ShowAllQuests()
+        public void ShowAllQuests(Player player)
         {
             Console.WriteLine("\n==== [전체 퀘스트 목록] ====");
             for (int i = 0; i < allQuests.Count; i++)
             {
                 Console.WriteLine($"[{i + 1}] {allQuests[i].Title}");
             }
+
+            Console.Write("\n자세히 볼 퀘스트 번호를 입력하세요 (0: 취소): ");
+            if (int.TryParse(Console.ReadLine(), out int input))
+            {
+                if (input == 0)
+                {
+                    Console.WriteLine("취소되었습니다.");
+                    return;
+                }
+
+                if (input >= 1 && input <= allQuests.Count)
+                {
+                    var selectedQuest = allQuests[input - 1];
+                    if(player.QuestCheck(selectedQuest))
+                    {
+                        player.CheckAllQuests();
+                        player.ReturnQuest(selectedQuest).ShowQuestInfo();
+                    }
+                    else
+                    {
+                        selectedQuest.ShowQuestInfo();
+                    }
+
+                    int answer = int.Parse(Console.ReadLine());
+
+                    switch (answer)
+                    {
+                        case 0:
+                            Console.WriteLine("나가기 입력");
+                            break;
+                        case 1:
+                            if(selectedQuest.Title == "더욱 강해지기")
+                            {
+                                player.MonsterQuest = true;
+                            }
+                            player.AddQuest(selectedQuest); // 이미 있는지 확인하는 검사가 포함된 AddQuest 사용
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 번호입니다.");
+                            break;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 번호입니다.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("숫자를 입력해주세요.");
+            }
         }
+
 
         public Quest GetQuestByIndex(int index)
         {
