@@ -8,8 +8,6 @@ namespace TextRPG_Team23
 {
     public class Town
     {
-        // 인스턴스 생성
-        private BranchManager menu = new BranchManager();
         private GameManager gameManager;
 
         DungeonTest gate = new DungeonTest();
@@ -32,7 +30,7 @@ namespace TextRPG_Team23
         {
             Console.Clear();
             Console.WriteLine("== 메인 메뉴 ==");
-            int selected = menu.ReturnSelect(mainMenuOptions, true, "게임 종료");
+            int selected = BranchManager.ReturnSelect(mainMenuOptions, true, "게임 종료");
 
             switch (selected)
             {

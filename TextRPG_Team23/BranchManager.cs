@@ -9,7 +9,7 @@ namespace TextRPG_Team23
     public class BranchManager //선택지 생성기
     {
         //Branch 함수는 ReturnSelect를 위한 보조 함수. 호출은 ReturnSelect 권장.
-        public void Branch(string[] options, bool isCancel, string cancelText) // 선택지 내용, 취소문 유무, 취소문 텍스트
+        public static void Branch(string[] options, bool isCancel, string cancelText) // 선택지 내용, 취소문 유무, 취소문 텍스트
         {
             for (int i = 0; i < options.Length; i++)
             {
@@ -22,7 +22,7 @@ namespace TextRPG_Team23
             }
         }
 
-        public int ReturnSelect(string[] options, bool isCancel, string cancelTex)
+        public static int ReturnSelect(string[] options, bool isCancel, string cancelTex)
         {
             //선택지 출력
             Branch(options, isCancel, cancelTex);

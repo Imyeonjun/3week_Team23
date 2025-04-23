@@ -43,8 +43,6 @@ namespace TextRPG_Team23
 
     public class DungeonTest // 해당 클래스 or 메서드는 던전 관련 클래스로 이동 예정.
     {
-        private BranchManager choice = new BranchManager();
-
         public string[] gateOptions = {
                 "하급 던전",
                 "중급 던전",
@@ -54,7 +52,7 @@ namespace TextRPG_Team23
         public void Gate()
         {
             Console.WriteLine("== 던전 선택 ==");
-            int selected = choice.ReturnSelect(gateOptions, true, "돌아가기");
+            int selected = BranchManager.ReturnSelect(gateOptions, true, "돌아가기");
 
             switch (selected)
             {

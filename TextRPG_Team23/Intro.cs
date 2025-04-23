@@ -10,8 +10,6 @@ namespace TextRPG_Team23
     {
         static Player player;
 
-        private BranchManager selectJob = new BranchManager();
-
         public string[] jobOptions = {
                 "전사",
                 "마법사"
@@ -28,7 +26,7 @@ namespace TextRPG_Team23
             while (!selected)
             {
                 Console.WriteLine("\n직업을 선택하세요.");
-                int result = selectJob.ReturnSelect(jobOptions, false, " ");
+                int result = BranchManager.ReturnSelect(jobOptions, false, " ");
 
 
                 switch (result)
