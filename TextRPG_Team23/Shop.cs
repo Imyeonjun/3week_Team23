@@ -57,7 +57,7 @@ namespace TextRPG_Team23
 
                     if (alreadyOwned)
                     {
-                        Console.WriteLine($"{i + 1}. {item.Name} | {item.Description} | 구매완료");
+                        Console.WriteLine($"{i + 1}. {item.Name} | {item.Description} | 보유중");
                     }
                     else
                     {
