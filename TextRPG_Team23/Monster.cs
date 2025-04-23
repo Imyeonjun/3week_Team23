@@ -108,23 +108,12 @@ namespace TextRPG_Team23
         public void AttackPlayer()
         {
             condition.Attack(Atk);
+            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
         }
 
         public void TakeDamage(int Damage)
         {
-            int beforeHp = Hp;
-            int beforeShield = Shield;
-
-            Hp -= (Damage - ((Def + BuffDef) / 3));
-            if ((Damage - ((Def + BuffDef) / 3)) > Shield)
-            {
-                Shield = 0;
-                Console.Write($"<재생 보호막 파괴>");
-            }
-            Hp += Shield;
-
-            Console.Write($"\n-{Name}- Hp: {beforeHp} -> {CurrentHp} Shield: {beforeShield} -> {Shield}\n" +
-                          $"신비한 등껍질은 {Name}을 회복시킨다. Heal: {Shield}");
+            Hp -= (Damage - (Def / 3));
         }
     }
 
@@ -152,11 +141,12 @@ namespace TextRPG_Team23
         public void AttackPlayer()
         {
             condition.Attack(Atk);
+            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
         }
 
         public void TakeDamage(int Damage)
         {
-            
+            Hp -= (Damage - (Def / 3));
         }
     }
 
@@ -185,11 +175,12 @@ namespace TextRPG_Team23
         public void AttackPlayer()
         {
             condition.Attack(Atk);
+            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
         }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - Def);
+            Hp -= (Damage - (Def / 3));
         }
     }
 
@@ -218,11 +209,12 @@ namespace TextRPG_Team23
         public void AttackPlayer()
         {
             condition.Attack(Atk);
+            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
         }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - Def);
+            Hp -= (Damage - (Def / 3));
         }
     }
 
@@ -251,11 +243,12 @@ namespace TextRPG_Team23
         public void AttackPlayer()
         {
             condition.Attack(Atk);
+            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
         }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - Def);
+            Hp -= (Damage - (Def / 3));
         }
     }
 
@@ -284,11 +277,12 @@ namespace TextRPG_Team23
         public void AttackPlayer()
         {
             condition.Attack(Atk);
+            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
         }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - Def);
+            Hp -= (Damage - (Def / 3));
         }
     }
 }

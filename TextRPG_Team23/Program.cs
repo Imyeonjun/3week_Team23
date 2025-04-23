@@ -41,15 +41,11 @@ namespace TextRPG_Team23
 
             Battle battle = new Battle(condition);
 
-            condition.BattleConnect(_player, monsterBox, ui, battle);
-
-
             MonsterFactory factory = new MonsterFactory(monsterBox, condition);
 
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
-            
-
+            condition.BattleConnect(_player, monsterBox, ui, battle);
 
 
             _menu = new QuestMenu();
