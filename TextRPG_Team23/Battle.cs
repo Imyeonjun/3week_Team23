@@ -14,7 +14,7 @@ namespace TextRPG_Team23
         public BattleUi ui { get; private set; }
         public Battle battle { get; private set; }
 
-        public void BattleConnect(Player player,List<Monster> monsterBox,BattleUi ui, Battle battle)
+        public void BattleConnect(Player player,List<Monster> monsterBox, BattleUi ui, Battle battle)
         {
             this.player = player;
             this.monsterBox = monsterBox;
@@ -22,25 +22,24 @@ namespace TextRPG_Team23
             this.battle = battle;
         }
 
+        public void Attack(int damage)
+        {
+            player.PlayerTakeDamage(damage);
+        }
 
     }
 
 
     class Battle // 턴제루프만 맡는 녀석
     {
-        private List<Monster> monsterBox;
-        private BattleUi ui;
-
 
         int turnCount;
+        Battlecondition condition;
+        public Battle(Battlecondition condition)
+        {
+            this.condition = condition;
+        }
 
-        //public Battle(Person p, List<Monster> monsterBox, BattleUi ui)
-        //{
-        //    this.p = p;
-        //    this.monsterBox = monsterBox;
-        //    this.ui = ui;
-
-        //}
 
         public void EnterBattle()
         {
@@ -53,26 +52,38 @@ namespace TextRPG_Team23
 
             Console.ReadKey();
 
-            //while (monsterBox.Count > 0 && p.hp > 0)
-/*            {
+            while (condition.monsterBox.Count > 0 &&  condition.player.CurrentHp> 0)
+            {
                 Console.Clear();
 
-                ui.PrintMonster(true);
+                condition.ui.PrintMonster(true);
                 Console.ReadKey();
                 StartMonsterTurn();
                 Console.ReadKey();
 
-                //monsterBox.Clear();
-                //Console.WriteLine(string.Join(", ", monsterBox));
-            }*/
+
+
+                condition.player.PlayerDoing(condition.monsterBox, condition.player);
+            }
         }
 
         public void StartMonsterTurn()
         {
-            foreach (Monster m in monsterBox)
+            foreach (Monster m in condition.monsterBox)
             {
                 m.UseSkill(turnCount);
+                
             }
+            foreach (Monster m in condition.monsterBox)
+            {
+                if (m is Attack a)
+                {
+                    a.AttackPlayer();
+                }
+            }
+
+
+
             turnCount += 1;
         }
 
@@ -81,18 +92,18 @@ namespace TextRPG_Team23
 
     class BattleUi
     {
-        private List<Monster> monsterBox;
+        Battlecondition condition;
 
-        //public BattleUi(List<Monster> monsterBox)
-        //{
-        //    this.monsterBox = monsterBox;
-        //}
+        public BattleUi(Battlecondition condition)
+        {
+            this.condition = condition;
+        }
 
         public void PrintMonster(bool playerTurn)
         {
             int num = 1;
 
-            foreach (Monster m in monsterBox)
+            foreach (Monster m in condition.monsterBox)
             {
                 m.MonsterInfo(playerTurn, num);
                 num++;
