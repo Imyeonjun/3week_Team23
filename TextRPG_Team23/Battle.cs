@@ -8,13 +8,15 @@ namespace TextRPG_Team23
 {
     class Battlecondition
     {
+
+        public Player player;
         public List<Monster> monsterBox { get; private set; }
         public BattleUi ui { get; private set; }
         public Battle battle { get; private set; }
 
-        public void BattleConnect(List<Monster> monsterBox,BattleUi ui, Battle battle)
+        public void BattleConnect(Player player,List<Monster> monsterBox,BattleUi ui, Battle battle)
         {
-
+            this.player = player;
             this.monsterBox = monsterBox;
             this.ui = ui;
             this.battle = battle;
