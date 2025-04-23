@@ -12,7 +12,7 @@ namespace TextRPG_Team23
         private BranchManager menu = new BranchManager();
         private GameManager gameManager;
 
-        Dungeon gate = new Dungeon();
+        DungeonTest gate = new DungeonTest();
 
         public Town(GameManager gm)
         {

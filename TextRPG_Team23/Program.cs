@@ -41,7 +41,7 @@ namespace TextRPG_Team23
         }
     }
 
-    public class Dungeon
+    public class DungeonTest // 해당 클래스 or 메서드는 던전 관련 클래스로 이동 예정.
     {
         private BranchManager choice = new BranchManager();
 
