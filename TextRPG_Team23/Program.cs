@@ -6,10 +6,33 @@ namespace TextRPG_Team23
     internal class Program
     {
         public static Random random = new Random();
+         
 
         static void Main(string[] args)
         {
-            /*List<Monster> monsterBox = new List<Monster>();
+            Player player;
+            Intro intro = new Intro();
+            intro.CreateCharacter(out player);
+
+            GameManager gameManager = new GameManager(player);
+            gameManager.StartGame();
+        }
+
+    }
+
+    public class GameManager
+    {
+        private bool isRunning = true;
+        private Player _player;
+        private Town town;
+
+        public GameManager(Player player)
+        {
+            _player = player;
+            
+            town = new Town(this);
+
+            List<Monster> monsterBox = new List<Monster>();
 
             BattleUi ui = new BattleUi();
 
@@ -21,34 +44,15 @@ namespace TextRPG_Team23
 
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
-            condition.BattleConnect(monsterBox, ui, battle);*/
-
-            GameManager gameManager = new GameManager();
-            gameManager.StartGame();
-        }
-
-    }
-
-    public class GameManager
-    {
-        private bool isRunning = true;
-        private Player player;
-
-        private Intro intro = new Intro();
-        private Town town;
-
-        public GameManager()
-        {
-            town = new Town(this);
+            condition.BattleConnect(monsterBox, ui, battle, _player);
         }
 
         public void StartGame()
         {
-            intro.CreateCharacter(out player);
 
             while (isRunning)
             {
-                town.MainMenu(player);
+                town.MainMenu(_player);
             }
         }
 
