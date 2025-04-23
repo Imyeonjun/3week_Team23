@@ -54,9 +54,8 @@ namespace TextRPG_Team23
 
             while (condition.monsterBox.Count > 0 &&  condition.player.CurrentHp> 0)
             {
-                Console.Clear();
 
-                condition.ui.PrintMonster(true);
+                condition.ui.PrintMonster(false);
                 Console.ReadKey();
                 StartMonsterTurn();
                 Console.ReadKey();
