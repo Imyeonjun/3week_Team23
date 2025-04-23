@@ -50,8 +50,8 @@ namespace TextRPG_Team23
 
             _menu = new QuestMenu();
 
-            dungeon.WorkFactory();
-            dungeon.Start();
+            //dungeon.WorkFactory();
+            //dungeon.Start();
 
 
         }
