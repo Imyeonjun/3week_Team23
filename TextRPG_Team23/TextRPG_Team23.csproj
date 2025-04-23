@@ -7,4 +7,39 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net6.0\TextRPG_Team23.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net6.0\TextRPG_Team23.GlobalUsings.g.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net6.0\TextRPG_Team23.deps.json" />
+    <Content Include="bin\Debug\net6.0\TextRPG_Team23.runtimeconfig.json" />
+    <Content Include="obj\Debug\net6.0\TextRPG_Team23.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\net6.0\TextRPG_Team23.sourcelink.json" />
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\TextRPG_Team23.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net6.0\TextRPG_Team23.dll" />
+    <None Include="bin\Debug\net6.0\TextRPG_Team23.exe" />
+    <None Include="bin\Debug\net6.0\TextRPG_Team23.pdb" />
+    <None Include="obj\Debug\net6.0\apphost.exe" />
+    <None Include="obj\Debug\net6.0\refint\TextRPG_Team23.dll" />
+    <None Include="obj\Debug\net6.0\ref\TextRPG_Team23.dll" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.assets.cache" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.csproj.BuildWithSkipAnalyzers" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.dll" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.genruntimeconfig.cache" />
+    <None Include="obj\Debug\net6.0\TextRPG_Team23.pdb" />
+    <None Include="obj\project.nuget.cache" />
+    <None Include="obj\TextRPG_Team23.csproj.nuget.g.props" />
+    <None Include="obj\TextRPG_Team23.csproj.nuget.g.targets" />
+  </ItemGroup>
+
 </Project>
