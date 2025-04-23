@@ -203,12 +203,28 @@ namespace TextRPG_Team23
 
         public void PlayerTakeDamage(int dmg)
         {
-            if(TotalDef > dmg)
-            {
+            int realDamage = 0;
 
+            if (TotalDef > dmg)
+            {
+                realDamage = 0;
             }
-            CurrentHp = TotalDef - dmg;
+            else
+            {
+                realDamage = dmg - TotalDef;
+            }
+
+            if (CurrentHp > realDamage)
+            {
+                CurrentHp -= realDamage;
+            }
+            else
+            {
+                CurrentHp = 0;
+                // Die 로직실행
+            }
         }
+
         //public void AddDungeonClear()
         //{
 
