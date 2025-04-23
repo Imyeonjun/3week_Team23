@@ -69,7 +69,7 @@ namespace TextRPG_Team23
                 switch (choiceNumber)
                 {
                     case 0:
-                        Program.ShowMainMenu();
+                        //Program.ShowMainMenu();
                         break;
 
 
@@ -196,12 +196,12 @@ namespace TextRPG_Team23
 
     internal class Battle_Results_Screen
     {
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
            
               
             
-        }
+        }*/
     }
 
     
