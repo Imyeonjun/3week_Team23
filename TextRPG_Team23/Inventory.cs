@@ -14,7 +14,10 @@ namespace TextRPG_Team23
         }
 
         public void Add(int amount = 1) => Quantity += amount;
-
+        public void Decrease(int amount = 1)
+        {
+            Quantity = Math.Max(Quantity - amount, 0);
+        }
         public bool Use(Player player) 
         {
             if (Item.Use(player)) //아이템 사용 시도 성공 시
