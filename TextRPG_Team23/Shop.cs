@@ -89,7 +89,7 @@ namespace TextRPG_Team23
                         else if (player.Gold >= item.Price)
                         {
                             player.Gold -= item.Price;
-                            player.Inventory.AddItem(item);
+                            player.Inventory.AddItem(item.Clone());
                             Console.WriteLine($"{item.Name}을 구매했습니다!");
                         }
                         else

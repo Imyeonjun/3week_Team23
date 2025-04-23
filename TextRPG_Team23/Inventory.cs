@@ -188,5 +188,22 @@ namespace TextRPG_Team23
             }
 
         }
+        public void CheckEquipmentDurability(Player player)//전투시에 장비중인 아이템 내구 감소 및 내구0일때 장착해제 기능
+        {
+            for (int i = 0; i < Slots.Length; i++)
+            {
+                if (Slots[i] is Item equiped && equiped.Durability > 0)
+                {
+                    equiped.ReduceDurability();
+
+                    if (equiped.IsBroken)
+                    {
+                        Console.WriteLine($"{equiped.Name}의 내구도가 0이되어 장비가 망가졌습니다.");
+                        Slots[i] = null;
+                        player.RecalculateStats();
+                    }
+                }
+            }
+        }
     }
 }
