@@ -157,7 +157,7 @@ namespace TextRPG_Team23
 
             if (roll <= upGradeChance[selectedItem.Upgrade])
             {
-                selectedItem.UpUpgrade();
+                //selectedItem.UpUpgrade();
                 Console.WriteLine(" - Success - ");
                 Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 Console.WriteLine("Enter를 눌러서 계속...");
@@ -169,7 +169,7 @@ namespace TextRPG_Team23
                 Console.WriteLine(" 강화에 실패...\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
-                    selectedItem.DonwUpgrade();
+                    //selectedItem.DonwUpgrade();
                     Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
