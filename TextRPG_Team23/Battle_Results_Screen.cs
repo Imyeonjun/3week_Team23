@@ -70,7 +70,7 @@ namespace Team23_Dungeon
                 switch (choiceNumber)
                 {
                     case 0:
-
+                        Program.ShowMainMenu();
                         break;
 
 
