@@ -17,7 +17,7 @@ namespace TextRPG_Team23
     }
 
 
-    public abstract class Monster
+    public class Monster
     {
         public static int NextCode;
         public int MobCode { get; set; } //고유번호
@@ -60,7 +60,10 @@ namespace TextRPG_Team23
             }
         }
 
-        public abstract void UseSkill(int Turn);
+        public virtual void UseSkill(int Turn)
+        {
+
+        }
 
     }
 

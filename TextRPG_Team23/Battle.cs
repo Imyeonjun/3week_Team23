@@ -8,9 +8,9 @@ namespace TextRPG_Team23
 {
     class Battlecondition
     {
-        List<Monster> monsterBox;
-        BattleUi ui;
-        Battle battle;
+        public List<Monster> monsterBox { get; private set; }
+        public BattleUi ui { get; private set; }
+        public Battle battle { get; private set; }
 
         public void BattleConnect(List<Monster> monsterBox,BattleUi ui, Battle battle)
         {
