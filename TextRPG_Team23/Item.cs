@@ -58,12 +58,9 @@ namespace TextRPG_Team23
 
         public void Equip(Player player)
         {
-           if (player.Inventory.Slots[(int)SlotType] is Weapon oldWeapon)
-            {
-                player.Atk -= oldWeapon.Atk;
-            }
+           
             player.Inventory.Slots[(int)SlotType] = this;
-            player.Atk += Atk;
+            player.RecalculateStats();
             Console.WriteLine($"{Name}을 장착했습니다. (공격력 +{Atk})");
             
         }
@@ -89,12 +86,9 @@ namespace TextRPG_Team23
 
         public void Equip(Player player)
         {
-            if (player.Inventory.Slots[(int)SlotType] is Clothes oldClothes)
-            {
-                player.Def -= oldClothes.Def;
-            }
+
             player.Inventory.Slots[(int)SlotType] = this;
-            player.Def += Def;
+            player.RecalculateStats();
             Console.WriteLine($"{Name}을 장착했습니다. (방어력 +{Def})");
         }
 

@@ -135,14 +135,7 @@ namespace TextRPG_Team23
 
                     if (Slots[slotIndex] == selectedItem)
                     {
-                        if (selectedItem is Weapon w)
-                        {
-                            player.Atk -= w.Atk;
-                        }
-                        if (selectedItem is Clothes c)
-                        {
-                            player.Def -= c.Def;
-                        }
+                        
                         Slots[slotIndex] = null;
                         Console.WriteLine($"{((Item)selectedItem).Name}을(를) 해제했습니다.");
                     }
@@ -150,6 +143,7 @@ namespace TextRPG_Team23
                     {
                         selectedItem.Equip(player);
                     }
+                    player.RecalculateStats();
                 }
                 else
                 {
