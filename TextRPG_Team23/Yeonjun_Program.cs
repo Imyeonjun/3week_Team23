@@ -41,21 +41,17 @@ namespace TextRPG_Team23
 
             Battle battle = new Battle(condition);
 
-            condition.BattleConnect(_player, monsterBox, ui, battle);
-
-
             MonsterFactory factory = new MonsterFactory(monsterBox, condition);
 
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
-            
-
+            condition.BattleConnect(_player, monsterBox, ui, battle);
 
 
             _menu = new QuestMenu();
 
-            dungeon.WorkFactory();
-            dungeon.Start();
+            //dungeon.WorkFactory();
+            //dungeon.Start();
 
 
         }
@@ -94,8 +90,6 @@ namespace TextRPG_Team23
                 case 1:
                     Console.WriteLine("디버그 : 하급 던전 입장");
                     Console.ReadKey();
-                    
-
                     break;
                 case 2:
                     Console.WriteLine("디버그 : 중급 던전 입장");
