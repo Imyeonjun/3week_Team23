@@ -4,7 +4,7 @@ using System.Numerics;
 namespace TextRPG_Team23
 {
     public class Shop
-	{
+    {
         private Player player;
 
         public Shop(Player player)
@@ -42,7 +42,7 @@ namespace TextRPG_Team23
 
                 }
             }
-    }
+        }
         private void BuyItem()
         {
             while (true)
@@ -57,7 +57,7 @@ namespace TextRPG_Team23
 
                     if (alreadyOwned)
                     {
-                        Console.WriteLine($"{i + 1}. {item.Name} | {item.Description} | 구매완료");
+                        Console.WriteLine($"{i + 1}. {item.Name} | {item.Description} | 보유중");
                     }
                     else
                     {
@@ -89,7 +89,7 @@ namespace TextRPG_Team23
                         else if (player.Gold >= item.Price)
                         {
                             player.Gold -= item.Price;
-                            player.Inventory.AddItem(item);
+                            player.Inventory.AddItem(item.Clone());
                             Console.WriteLine($"{item.Name}을 구매했습니다!");
                         }
                         else
@@ -133,12 +133,47 @@ namespace TextRPG_Team23
                 Console.Write("판매할 아이템 번호를 입력하세요: ");
                 string input = Console.ReadLine();
 
-                if(int.TryParse(input, out int selected) && selected > 0 && selected <= items.Count)
+                if (int.TryParse(input, out int selected))
                 {
-                    
+                    if (selected == 0)
+                    {
+                        Console.WriteLine("상점 판매 메뉴를 종료합니다.");
+                        return;
+                    }
+                    else if (selected > 0 && selected <= items.Count)
+                    {
+                        // 유효한 번호 → 아이템 판매
+                        var stack = items[selected - 1];
+                        var item = stack.Item;
+                        if (player.Inventory.Slots.Contains(stack.Item))// 장비중인 아이템 이면
+                        {
+                            Console.WriteLine("장비중인 아이템 입니다. 판매할 수 없습니다.");
+                        }
+                        else
+                        {
+                            int sellPrice = (int)(item.Price * 0.85f);
+                            player.Gold += sellPrice;
+                            Console.WriteLine($"{item.Name}을 판매했습니다. (+{sellPrice}G)");
+                            stack.Decrease();
+                            if (stack.Quantity <= 0)
+                            {
+                                items.Remove(stack);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력해주세요.");
                 }
 
 
             }
         }
+    }
 }

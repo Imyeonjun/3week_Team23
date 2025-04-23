@@ -1,7 +1,11 @@
-﻿namespace TextRPG_Team23
+﻿using System.Numerics;
+using System;
+
+namespace TextRPG_Team23
 {
     internal class Program
     {
+<<<<<<< HEAD
         //게임 종료를 위한 변수
         static private bool isRunning = true;
         static Player player;
@@ -65,12 +69,65 @@
                 "\n5. 휴식 (여관)" +
                 "\n" +
                 "\n0. 게임 저장");
+=======
+        public static Random random = new Random();
+         
+
+        static void Main(string[] args)
+        {
+            Player player;
+            Intro intro = new Intro();
+            intro.CreateCharacter(out player);
+
+            GameManager gameManager = new GameManager(player);
+            gameManager.StartGame();
+>>>>>>> TestCombine
         }
 
-        static private void MenuSelect(string input)
+    }
+
+    public class GameManager
+    {
+        private bool isRunning = true;
+        private Player _player;
+        private QuestMenu _menu;
+        private Town town;
+
+        public GameManager(Player player)
         {
-            switch (input)
+            _player = player;
+            
+            town = new Town(this);
+
+            List<Monster> monsterBox = new List<Monster>();
+
+            Battlecondition condition = new Battlecondition();
+
+            BattleUi ui = new BattleUi(condition);
+
+            Battle battle = new Battle(condition);
+
+            MonsterFactory factory = new MonsterFactory(monsterBox, condition);
+
+            DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
+
+            condition.BattleConnect(_player, monsterBox, ui, battle);
+
+
+            _menu = new QuestMenu();
+
+            dungeon.WorkFactory();
+            dungeon.Start();
+
+
+        }
+
+        public void StartGame()
+        {
+
+            while (isRunning)
             {
+<<<<<<< HEAD
                 case "1": // 상태 보기
 
                     break;
@@ -117,13 +174,56 @@
                 default:
                     Console.WriteLine("\n잘못된 입력입니다.");
                     break;
+=======
+                town.MainMenu(_player);
+>>>>>>> TestCombine
             }
+        }
 
-            if (isRunning)
+        public void StopGame()
+        {
+            isRunning = false;
+        }
+    }
+
+    public class DungeonTest // 해당 클래스 or 메서드는 던전 관련 클래스로 이동 예정.
+    {
+
+        public string[] gateOptions = {
+                "하급 던전",
+                "중급 던전",
+                "상급 던전",
+            };
+
+        public void Gate()
+        {
+            Console.WriteLine("== 던전 선택 ==");
+            int selected = BranchManager.ReturnSelect(gateOptions, true, "돌아가기");
+
+            switch (selected)
             {
-                Console.WriteLine("\n아무 키나 눌러 진행");
-                Console.ReadKey();
-                ShowMainMenu();
+                case 1:
+                    Console.WriteLine("디버그 : 하급 던전 입장");
+                    Console.ReadKey();
+                    
+
+                    break;
+                case 2:
+                    Console.WriteLine("디버그 : 중급 던전 입장");
+                    Console.ReadKey();
+                    break;
+                case 3:
+                    Console.WriteLine("디버그 : 상급 던전 입장");
+                    Console.ReadKey();
+                    break;
+                case 0:
+                    Console.WriteLine("마을로 돌아갑니다.");
+                    Console.ReadKey();
+                    break;
+                case -1:
+                    Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                    Console.ReadKey();
+                    break;
             }
         }
     }
