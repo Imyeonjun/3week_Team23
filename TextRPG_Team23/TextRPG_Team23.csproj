@@ -7,10 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Battle_Results_Screen.cs" />
-    <Compile Remove="Dungeon.cs" />
-    <Compile Remove="MonsterFactory.cs" />
-  </ItemGroup>
-
 </Project>
