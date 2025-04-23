@@ -5,111 +5,205 @@ namespace TextRPG_Team23
 {
     internal class Program
     {
-        //게임 종료를 위한 변수
-        static private bool isRunning = true;
-
         static void Main(string[] args)
         {
-            CreateCharacter();
-            ShowMainMenu();
+            GameManager gameManager = new GameManager();
+            gameManager.StartGame();
+        }
+    }
 
-            //isRunning = false;가 되면 while 조건에 벗어나면서 프로그램 중단 = 게임 종료
-            while (isRunning == true)
-            {
-                Console.Write("메뉴 선택 > ");
-                string input = Console.ReadLine();
-                //MenuSelect(input);
-            }
+    /*public class Player //테스트용 더미 클래스
+    {
+        private string name;
+        private Job job;
 
+        public Player(string name, Job job)
+        {
+            this.name = name;
+            this.job = job;
+        }
+    }
+    public abstract class Job { }
+    public class Warrior : Job { }
+    public class Magician : Job { }*/ //여기까지 더미, 유기적으로 함수 처리할 것.
+
+    public class GameManager
+    {
+        private bool isRunning = true;
+        private Player player;
+
+        private Intro intro = new Intro();
+        private Town town;
+
+        public GameManager()
+        {
+            town = new Town(this);
         }
 
-        static private void ShowMainMenu()
+        public void StartGame()
         {
-            Console.Clear();
+            intro.CreateCharacter(out player);
+
+            while (isRunning)
+            {
+                town.MainMenu(player);
+            }
         }
 
-        /*static private void MenuSelect(string input)
+        public void StopGame()
         {
-            switch (input)
-            {
-                case "1": // 상태 보기
+            isRunning = false;
+        }
+    }
 
-                    break;
-                case "2": // 인벤토리
-
-                    break;
-                case "3": // 상점
-
-                    break;
-                case "4": // 던전
-
-                    break;
-                case "5": // 휴식 or 여관
-
-                    break;
-                case "0":
-                    Console.WriteLine
-                        ("== 저장 메뉴 ==" +
-                        "\n" +
-                        "\n1. 저장" +
-                        "\n2. 저장 후 종료" +
-                        "\n" +
-                        "\n0. 돌아가기");
-                    string saveInput = Console.ReadLine();
-
-                    switch (saveInput)
-                    {
-                        case "1":
-                            Console.WriteLine("게임을 저장합니다.");
-                            //게임 저장 호출
-                            ShowMainMenu();
-                            break;
-                        case "2":
-                            Console.WriteLine("게임을 저장합니다.");
-                            //게임 저장 호출
-                            isRunning = false;
-                            break;
-                        case "0":
-                            break;
-                    }
-                    break;
-
-                default:
-                    Console.WriteLine("\n잘못된 입력입니다.");
-                    break;
-            }
-
-            if (isRunning)
-            {
-                Console.WriteLine("\n아무 키나 눌러 진행");
-                Console.ReadKey();
-                ShowMainMenu();
-            }
-        }*/
-
+    public class Intro
+    {
         static Player player;
-        static void CreateCharacter()
+
+        private BranchManager selectJob = new BranchManager();
+
+        public string[] jobOptions = {
+                "전사",
+                "마법사"
+            };
+
+        public void CreateCharacter(out Player player)
         {
             Console.WriteLine("이름을 입력하세요.");
             string name = Console.ReadLine();
-            Console.WriteLine("직업을 선택하세요. (0: 전사, 1: 마법사)");
-            int jobChoice = int.Parse(Console.ReadLine());
-            Job job;
 
-            switch (jobChoice)
+            Job job = null;
+            bool selected = false;
+
+            while (!selected)
             {
-                case 0:
-                    job = new Warrior();
-                    break;
-                case 1:
-                    job = new Magician();
-                    break;
-                default:
-                    Console.WriteLine("잘못된 선택입니다. 기본 직업으로 전사를 선택합니다.");
-                    job = new Warrior();
-                    break;
+                Console.WriteLine("\n직업을 선택하세요.");
+                int result = selectJob.ReturnSelect(jobOptions, false, " ");
+
+
+                switch (result)
+                {
+                    case 1:
+                        job = new Warrior();
+                        selected = true;
+                        break;
+                    case 2:
+                        job = new Magician();
+                        selected = true;
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                }
             }
             player = new Player(name, job);
+        }
+    }
+
+    public class Town
+    {
+        // 인스턴스 생성
+        private BranchManager menu = new BranchManager();
+        private GameManager gameManager;
+
+        Dungeon gate = new Dungeon();
+
+        public Town(GameManager gm)
+        {
+            gameManager = gm;
+        }
+
+        // 선택지 종류
+        public string[] mainMenuOptions = {
+                "스테이터스 보기",
+                "인벤토리",
+                "상점",
+                "던전",
+                "여관"
+            };
+
+        public void MainMenu(Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("== 메인 메뉴 ==");
+            int selected = menu.ReturnSelect(mainMenuOptions, true, "게임 종료");
+
+            switch (selected)
+            {
+                case 1:
+                    Console.WriteLine("디버그 : 상태창 출력");
+                    Console.ReadKey();
+                    break;
+                case 2:
+                    Console.WriteLine("디버그 : 인벤토리 출력");
+                    Console.ReadKey();
+                    break;
+                case 3:
+                    Console.WriteLine("디버그 : 상점 출력");
+                    Console.ReadKey();
+                    break;
+                case 4:
+                    Console.WriteLine("디버그 : 던전 출력");
+                    Console.ReadKey();
+                    gate.Gate();
+                    break;
+                case 5:
+                    Console.WriteLine("디버그 : 여관 출력");
+                    Console.ReadKey();
+                    break;
+                case 0:
+                    Console.WriteLine("게임을 종료합니다.");
+                    Console.ReadKey();
+                    gameManager.StopGame();
+                    break;
+                case -1:
+                    Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
+
+    public class Dungeon
+    {
+        private BranchManager choice = new BranchManager();
+
+        public string[] gateOptions = {
+                "하급 던전",
+                "중급 던전",
+                "상급 던전",
+            };
+
+        public void Gate()
+        {
+            Console.WriteLine("== 던전 선택 ==");
+            int selected = choice.ReturnSelect(gateOptions, true, "돌아가기");
+
+            switch (selected)
+            {
+                case 1:
+                    Console.WriteLine("디버그 : 하급 던전 입장");
+                    Console.ReadKey();
+                    break;
+                case 2:
+                    Console.WriteLine("디버그 : 중급 던전 입장");
+                    Console.ReadKey();
+                    break;
+                case 3:
+                    Console.WriteLine("디버그 : 상급 던전 입장");
+                    Console.ReadKey();
+                    break;
+                case 0:
+                    Console.WriteLine("마을로 돌아갑니다.");
+                    Console.ReadKey();
+                    break;
+                case -1:
+                    Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                    Console.ReadKey();
+                    break;
+            }
         }
     }
 
