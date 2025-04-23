@@ -32,7 +32,7 @@ namespace TextRPG_Team23
         }
         public void WorkFactory()
         {
-            int spawnCount = Yeonjun_Program.random.Next(2, 5);
+            int spawnCount = Program.random.Next(2, 5);
             factory.MakeMonster(spawnCount);
         }
     }
