@@ -8,7 +8,7 @@ namespace TextRPG_Team23
 {
     interface Attack
     {
-        void Attack(int Atk);
+        void AttackPlayer();
     }
 
     interface TakeDamage
@@ -105,9 +105,9 @@ namespace TextRPG_Team23
             }
         }
 
-        public void Attack(int Atk)
+        public void AttackPlayer()
         {
-            
+            condition.Attack(Atk);
         }
 
         public void TakeDamage(int Damage)
@@ -149,9 +149,9 @@ namespace TextRPG_Team23
             //아군 전체 일시적보호막
         }
 
-        public void Attack(int Atk)
+        public void AttackPlayer()
         {
-
+            condition.Attack(Atk);
         }
 
         public void TakeDamage(int Damage)
@@ -182,9 +182,9 @@ namespace TextRPG_Team23
             //출혈,중독 
         }
 
-        public void Attack(int Atk)
+        public void AttackPlayer()
         {
-
+            condition.Attack(Atk);
         }
 
         public void TakeDamage(int Damage)
@@ -215,9 +215,9 @@ namespace TextRPG_Team23
             //은신 강력한 한방
         }
 
-        public void Attack(int Atk)
+        public void AttackPlayer()
         {
-
+            condition.Attack(Atk);
         }
 
         public void TakeDamage(int Damage)
@@ -248,9 +248,9 @@ namespace TextRPG_Team23
             //디버프 다중타격
         }
 
-        public void Attack(int Atk)
+        public void AttackPlayer()
         {
-
+            condition.Attack(Atk);
         }
 
         public void TakeDamage(int Damage)
@@ -281,9 +281,9 @@ namespace TextRPG_Team23
             //지속회복   
         }
 
-        public void Attack(int Atk)
+        public void AttackPlayer()
         {
-
+            condition.Attack(Atk);
         }
 
         public void TakeDamage(int Damage)

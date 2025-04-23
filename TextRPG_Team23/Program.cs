@@ -35,19 +35,29 @@ namespace TextRPG_Team23
 
             List<Monster> monsterBox = new List<Monster>();
 
-            BattleUi ui = new BattleUi();
-
-            Battle battle = new Battle();
-
             Battlecondition condition = new Battlecondition();
+
+            BattleUi ui = new BattleUi(condition);
+
+            Battle battle = new Battle(condition);
+
+            condition.BattleConnect(_player, monsterBox, ui, battle);
+
 
             MonsterFactory factory = new MonsterFactory(monsterBox, condition);
 
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
-            condition.BattleConnect(_player, monsterBox, ui, battle);
+            
+
+
 
             _menu = new QuestMenu();
+
+            dungeon.WorkFactory();
+            dungeon.Start();
+
+
         }
 
         public void StartGame()
@@ -67,6 +77,7 @@ namespace TextRPG_Team23
 
     public class DungeonTest // 해당 클래스 or 메서드는 던전 관련 클래스로 이동 예정.
     {
+
         public string[] gateOptions = {
                 "하급 던전",
                 "중급 던전",
@@ -83,6 +94,8 @@ namespace TextRPG_Team23
                 case 1:
                     Console.WriteLine("디버그 : 하급 던전 입장");
                     Console.ReadKey();
+                    
+
                     break;
                 case 2:
                     Console.WriteLine("디버그 : 중급 던전 입장");
