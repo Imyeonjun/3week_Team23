@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Team23_Dungeon
+namespace TextRPG_Team23
 {
-    class Monster
+    public class Monster
     {
         public static int NextCode;
         public int MobCode { get; set; } //고유번호

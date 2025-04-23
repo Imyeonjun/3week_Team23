@@ -95,7 +95,7 @@ namespace TextRPG_Team23
         {
             foreach (Monster mon in monBox)
             {
-                mon.MobInfo(false);
+                mon.MonsterInfo(false, mon.MobCode);
             }
             PrintStatusInDungeon();
             string input = Console.ReadLine();
@@ -106,7 +106,7 @@ namespace TextRPG_Team23
                     // 몬스터 목록 출력
                     foreach (Monster mon in monBox)
                     {
-                        mon.MobInfo(true);
+                        mon.MonsterInfo(true, mon.MobCode);
                     }
 
                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
@@ -126,7 +126,7 @@ namespace TextRPG_Team23
                     // 몬스터 목록 출력
                     foreach (Monster mon in monBox)
                     {
-                        mon.MobInfo(false);
+                        mon.MonsterInfo(false, mon.MobCode);
                     }
                     PrintSkillStatus();
                     Console.Write(">>> ");
@@ -136,7 +136,7 @@ namespace TextRPG_Team23
                     {
                         foreach (Monster mon in monBox)
                         {
-                            mon.MobInfo(true);
+                            mon.MonsterInfo(true, mon.MobCode);
                         }
                         if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                         {
