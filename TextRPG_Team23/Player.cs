@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Numerics;
+using System.Threading;
 
-namespace TextRPG_Team_private
+namespace TextRPG_Team23
 {
-    public class M_Player
+    public class Player
     {
         private int level;
+        private int exp;
         private string name;
         private float atkDmg;
         private int defence;
@@ -18,20 +20,22 @@ namespace TextRPG_Team_private
         private string jobName;
 
         public int Level { get => level; set => level = value; }
+        public int Exp { get => exp; set => exp = value; }
         public string Name { get => name; set => name = value; }
-        public float AtkDmg { get => atkDmg; set => atkDmg = value; }
-        public int Defence { get => defence; set => defence = value; }
+        public float Atk { get => atkDmg; set => atkDmg = value; }
+        public int Def { get => defence; set => defence = value; }
         public float TotalAtk { get; set; }
         public int TotalDef { get; set; }
         public int CurrentHp { get => currentHp; set => currentHp = value; }
         public int MaxHp { get => maxHp; set => maxHp = value; }
-        public int CurrentMP { get => currentMp; set => currentMp = value; }
+        public int CurrentMp { get => currentMp; set => currentMp = value; }
         public int MaxMp { get => maxMp; set => maxMp = value; }
         public int Gold { get => gld; set => gld = value; }
-        //public Inventory Inventory { get; set; } 인벤토리 구현되면 추가 예정
+        public Inventory Inventory { get; private set; }
+        public List<Quest>? Quests;
 
 
-        public M_Player(string name, Job job) // 인벤토리 구현되면 추가예정
+        public Player(string name, Job job) // 인벤토리 구현되면 추가예정
         {
             this.name = name;
             this.job = job;
@@ -41,24 +45,26 @@ namespace TextRPG_Team_private
             this.defence = job.BaseDefence;
 
             this.level = 1;
+            this.exp = 1;
             this.currentHp = maxHp;
             this.currentMp = maxMp;
             this.gld = 500;
 
-            //Inventory = inventory;
+            Inventory = new Inventory();
+
 
             RecalculateStats();
         }
 
         public void PrintStatus()
         {
-            Console.WriteLine("===== 캐릭터 상태 =====");
+            Console.WriteLine("\n===== 캐릭터 상태 =====");
             Console.WriteLine($"이름: {name}");
             Console.WriteLine($"직업: {jobName}");
             Console.WriteLine($"레벨: {level}");
             Console.WriteLine($"체력: {currentHp}");
-            //   Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()})");
-            //   Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})");
+            Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()})");
+            Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})");
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
 
@@ -66,7 +72,7 @@ namespace TextRPG_Team_private
 
         private void PrintStatusInDungeon()
         {
-            Console.WriteLine("[내정보]");
+            Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
             Console.WriteLine();
@@ -76,20 +82,20 @@ namespace TextRPG_Team_private
 
         }
 
-        public void PrintSkillStatus()
+        private void PrintSkillStatus()
         {
-            Console.WriteLine("[내정보]");
+            Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
             Console.WriteLine();
             job.PrintSkillInfo();
         }
 
-       /* public void PlayerDoing(List<GreenMonster> monBox)
+        public void PlayerDoing(List<Monster> monBox, Player player)
         {
-            foreach (GreenMonster mon in monBox)
+            foreach (Monster mon in monBox)
             {
-                mon.MobInfo(false);
+                mon.MonsterInfo(false, mon.MobCode);
             }
             PrintStatusInDungeon();
             string input = Console.ReadLine();
@@ -98,28 +104,29 @@ namespace TextRPG_Team_private
             {
                 case "1":
                     // 몬스터 목록 출력
-                    foreach (GreenMonster mon in monBox)
+                    foreach (Monster mon in monBox)
                     {
-                        mon.MobInfo(true);
+                        mon.MonsterInfo(true, mon.MobCode);
                     }
 
                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
                     if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
                     {
                         //공격 로직 작성
+                        job.Attack(monBox[targetIndex - 1], TotalAtk, player);
                     }
                     else
                     {
-                        PlayerDoing(monBox);
+                        PlayerDoing(monBox, player);
                         Console.WriteLine("잘못된 입력입니다.");
                     }
                     break;
 
                 case "2":
                     // 몬스터 목록 출력
-                    foreach (GreenMonster mon in monBox)
+                    foreach (Monster mon in monBox)
                     {
-                        mon.MobInfo(false);
+                        mon.MonsterInfo(false, mon.MobCode);
                     }
                     PrintSkillStatus();
                     Console.Write(">>> ");
@@ -127,90 +134,144 @@ namespace TextRPG_Team_private
 
                     if (skillInput == "1")
                     {
-                        foreach (GreenMonster mon in monBox)
+                        foreach (Monster mon in monBox)
                         {
-                            mon.MobInfo(true);
+                            mon.MonsterInfo(true, mon.MobCode);
                         }
                         if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                         {
                             //공격 로직 작성(단일딜)
-                            job.SkillA(monBox[tgIndex - 1]);
+                            job.SkillA(monBox[tgIndex - 1], TotalAtk, player);
                         }
                         else
                         {
-                            PlayerDoing(monBox);
+                            PlayerDoing(monBox, player);
                             Console.WriteLine("잘못된 입력입니다.");
                         }
                     }
                     else if (skillInput == "2")
                     {
                         // 공격 로직 작성 (광역딜)
-                        job.SkillB(monBox);
+                        job.SkillB(monBox, TotalAtk, player);
                     }
                     else
                     {
-                        PlayerDoing(monBox);
+                        PlayerDoing(monBox, player);
                         Console.WriteLine("잘못된 스킬 선택입니다.");
                     }
                     break;
 
                 default:
-                    PlayerDoing(monBox);
+                    PlayerDoing(monBox, player);
                     Console.WriteLine("잘못된 입력입니다.");
                     break;
             }
 
-        }*/ // 던전 행동 로직
+        } // 던전 행동 로직
 
-        /*public int ItemAttack()
+        public int ItemAttack()
         {
 
-            int bonus = 0;
-            foreach (var item in Inventory.GetAllItems())
+            int equipAtk = 0;
+            if (Inventory.Slots[(int)EquipSlot.Weapon] is Weapon weapon)
             {
-                if (item.IsEquipped)
-                    bonus += item.Attack;
+                equipAtk = weapon.Atk;
             }
-            return bonus;
+            return equipAtk;
         }
 
         public int ItemDefense()
         {
 
-            int bonus = 0;
-            foreach (var item in Inventory.GetAllItems())
+            int equipDef = 0;
+            if (Inventory.Slots[(int)EquipSlot.Clothes] is Clothes clothes)
             {
-                if (item.IsEquipped)
-                    bonus += item.Defense;
+                equipDef = clothes.Def;
             }
-            return bonus;
-
-        }*/ // 인벤토리 구현되면 추가 예정
+            return equipDef;
+        }
 
 
         public void RecalculateStats()
         {
-            //   TotalAtk = atkDmg + ItemAttack();
-            //   TotalDef = defence + ItemDefense();
+            TotalAtk = atkDmg + ItemAttack();
+            TotalDef = defence + ItemDefense();
         }
 
 
-        public void AddDungeonClear()
+        //public void AddDungeonClear()
+        //{
+
+        //    UpdateLevel();
+
+        //}
+
+        public void UpdateLevel()
         {
-
-            UpdateLevel();
-
-        }
-
-        void UpdateLevel()
-        {
-            Level++;
-            AtkDmg += 0.5f;
-            Defence += 1;
+            switch (Level)
+            {
+                case 1:
+                    if (exp >= 10)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                case 2:
+                    if (exp >= 35)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                case 3:
+                    if (exp >= 65)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                case 4:
+                    if (exp >= 100)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                default:
+                    break;
+            }
 
             RecalculateStats();
         }
-    }
+        public void AddQuest(Quest q)
+        {
+            // 이미 같은 제목의 퀘스트가 존재하는지 확인
+            foreach (Quest quest in Quests)
+            {
+                if (quest.Title == q.Title)
+                {
+                    Console.WriteLine($"이미 '{q.Title}' 퀘스트를 수락했습니다.");
+                    return;
+                }
+            }
+            q.IsActive = true;
+            Quests.Add(q);
+            Console.WriteLine($"'{q.Title}' 퀘스트를 수락했습니다!");
+        }
 
+        public void CheckAllQuests()
+        {
+            foreach (var quest in Quests)
+            {
+                quest.CheckCompletion(this);
+            }
+        }
+
+    }
 
 }
