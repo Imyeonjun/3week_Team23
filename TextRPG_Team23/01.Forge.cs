@@ -27,16 +27,16 @@ namespace TextRPG_Team23
     }
     internal class Forge : Inventory
     {
-        static void Main(string[] args)
+       /* static void Main(string[] args)
         {
             Console.CursorVisible = false;
 
             //Forge forge = new Forge();
             //forge.Selection();
 
-            Inn inn = new Inn();
-            inn.Selection();
-        }
+            //Inn inn = new Inn();
+            //inn.Selection();
+        }*/
         UpGrade upGrade = new UpGrade();
 
         Obj obj = new Obj(1, 1, "▶");

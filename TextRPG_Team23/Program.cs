@@ -24,6 +24,7 @@ namespace TextRPG_Team23
     {
         private bool isRunning = true;
         private Player _player;
+        private QuestMenu _menu;
         private Town town;
 
         public GameManager(Player player)
@@ -45,6 +46,8 @@ namespace TextRPG_Team23
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
             condition.BattleConnect(_player, monsterBox, ui, battle);
+
+            _menu = new QuestMenu();
         }
 
         public void StartGame()

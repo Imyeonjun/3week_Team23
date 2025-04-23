@@ -35,8 +35,9 @@ namespace TextRPG_Team23
             switch (selected)
             {
                 case 1:
-                    Console.WriteLine("디버그 : 상태창 출력");
-                    Console.ReadKey();
+                    //Console.WriteLine("디버그 : 상태창 출력");
+                    player.PrintStatus();
+                    Console.ReadLine();
                     break;
                 case 2:
                     player.Inventory.PrintInventory(player);
