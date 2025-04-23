@@ -1,52 +1,40 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Numerics;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-
-
-namespace TextRPG_Team23
+namespace TestDungeon
 {
-
     class DungeonMaganer
     {
-        public static Random random = new Random();
 
-        public static List<Monster> monsterBox = new List<Monster>();
+        Person p;
+        List<Monster> monsterBox;
+        BattleUi ui;
+        Battle battle;
+        Battlecondition condition;
+        MonsterFactory factory;
 
-        //MonsterFactory facktory = new MonsterFactory();
 
-        
-
-
-    }
-
-    class Battle
-    {
-        public void BattleStart()
+        public DungeonMaganer(Person p, List<Monster> monsterBox, BattleUi ui, Battle battle, Battlecondition condition, MonsterFactory factory)
         {
-            Console.Clear();
-            Console.Write("몬스터가 등장했다!\n\n" +
-              "전투를 시작하려면 아무키나 누르세요.\n" +
-              ">>>");
-
-            Console.ReadKey();
-            int spawnCount = DungeonMaganer.random.Next(2, 5);
+            this.p = p;
+            this.monsterBox = monsterBox;
+            this.ui = ui;
+            this.battle = battle;
+            this.condition = condition;
+            this.factory = factory;
         }
 
-
-        public void BattleAi()
+        public void Start()
         {
-
+            battle.EnterBattle();
         }
-
+        public void WorkFactory()
+        {
+            int spawnCount = Program.random.Next(2, 5);
+            factory.MakeMonster(spawnCount);
+        }
     }
-
-    
-
 }
-
