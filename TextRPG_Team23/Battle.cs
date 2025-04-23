@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestDungeon
+namespace TextRPG_Team23
 {
     class Battlecondition
     {
         List<Monster> monsterBox;
-        Person p;
         BattleUi ui;
         Battle battle;
 
-        public void BattleConnect(Person p,List<Monster> monsterBox,BattleUi ui, Battle battle)
+        public void BattleConnect(List<Monster> monsterBox,BattleUi ui, Battle battle)
         {
-            this.p = p;
+
             this.monsterBox = monsterBox;
             this.ui = ui;
             this.battle = battle;
@@ -29,7 +28,7 @@ namespace TestDungeon
     {
         private List<Monster> monsterBox;
         private BattleUi ui;
-        private Person p;
+
 
         int turnCount;
 
@@ -52,8 +51,8 @@ namespace TestDungeon
 
             Console.ReadKey();
 
-            while (monsterBox.Count > 0 && p.hp > 0)
-            {
+            //while (monsterBox.Count > 0 && p.hp > 0)
+/*            {
                 Console.Clear();
 
                 ui.PrintMonster(true);
@@ -63,7 +62,7 @@ namespace TestDungeon
 
                 //monsterBox.Clear();
                 //Console.WriteLine(string.Join(", ", monsterBox));
-            }
+            }*/
         }
 
         public void StartMonsterTurn()

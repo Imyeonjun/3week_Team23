@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestDungeon
+namespace TextRPG_Team23
 {
     class DungeonMaganer
     {
 
-        Person p;
         List<Monster> monsterBox;
         BattleUi ui;
         Battle battle;
@@ -17,9 +16,9 @@ namespace TestDungeon
         MonsterFactory factory;
 
 
-        public DungeonMaganer(Person p, List<Monster> monsterBox, BattleUi ui, Battle battle, Battlecondition condition, MonsterFactory factory)
+        public DungeonMaganer(List<Monster> monsterBox, BattleUi ui, Battle battle, Battlecondition condition, MonsterFactory factory)
         {
-            this.p = p;
+
             this.monsterBox = monsterBox;
             this.ui = ui;
             this.battle = battle;

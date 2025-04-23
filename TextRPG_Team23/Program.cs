@@ -5,11 +5,28 @@ namespace TextRPG_Team23
 {
     internal class Program
     {
+        public static Random random = new Random();
+
         static void Main(string[] args)
         {
+            List<Monster> monsterBox = new List<Monster>();
+
+            BattleUi ui = new BattleUi();
+
+            Battle battle = new Battle();
+
+            Battlecondition condition = new Battlecondition();
+
+            MonsterFactory factory = new MonsterFactory(monsterBox, condition);
+
+            DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
+
+            condition.BattleConnect(monsterBox, ui, battle);
+
             GameManager gameManager = new GameManager();
             gameManager.StartGame();
         }
+
     }
 
     /*public class Player //테스트용 더미 클래스
