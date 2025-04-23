@@ -7,6 +7,7 @@ namespace TextRPG_Team23
     public class Player
     {
         private int level;
+        private int exp;
         private string name;
         private float atkDmg;
         private int defence;
@@ -19,6 +20,7 @@ namespace TextRPG_Team23
         private string jobName;
 
         public int Level { get => level; set => level = value; }
+        public int Exp { get => exp; set => exp = value; }
         public string Name { get => name; set => name = value; }
         public float Atk { get => atkDmg; set => atkDmg = value; }
         public int Def { get => defence; set => defence = value; }
@@ -43,6 +45,7 @@ namespace TextRPG_Team23
             this.defence = job.BaseDefence;
 
             this.level = 1;
+            this.exp = 1;
             this.currentHp = maxHp;
             this.currentMp = maxMp;
             this.gld = 500;
@@ -186,7 +189,7 @@ namespace TextRPG_Team23
                 equipDef = clothes.Def;
             }
             return equipDef;
-        } 
+        }
 
 
         public void RecalculateStats()
@@ -203,14 +206,48 @@ namespace TextRPG_Team23
 
         //}
 
-        //void UpdateLevel()
-        //{
-        //    Level++;
-        //    AtkDmg += 0.5f;
-        //    Defence += 1;
+        public void UpdateLevel()
+        {
+            switch (Level)
+            {
+                case 1:
+                    if (exp >= 10)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                case 2:
+                    if (exp >= 35)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                case 3:
+                    if (exp >= 65)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                case 4:
+                    if (exp >= 100)
+                    {
+                        Level++;
+                        atkDmg += 0.5f;
+                        defence += 1;
+                    }
+                    break;
+                default:
+                    break;
+            }
 
-        //    RecalculateStats();
-        //}
+            RecalculateStats();
+        }
         public void AddQuest(Quest q)
         {
             // 이미 같은 제목의 퀘스트가 존재하는지 확인
