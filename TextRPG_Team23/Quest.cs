@@ -126,6 +126,10 @@ namespace TextRPG_Team23
                             Console.WriteLine("나가기 입력");
                             break;
                         case 1:
+                            if(selectedQuest.Title == "더욱 강해지기")
+                            {
+                                player.MonsterQuest = true;
+                            }
                             player.AddQuest(selectedQuest); // 이미 있는지 확인하는 검사가 포함된 AddQuest 사용
                             break;
                         default:

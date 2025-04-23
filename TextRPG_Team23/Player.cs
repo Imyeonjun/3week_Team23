@@ -33,6 +33,7 @@ namespace TextRPG_Team23
         public int MaxMp { get => maxMp; set => maxMp = value; }
         public int Gold { get => gld; set => gld = value; }
         public int KillMon { get => killingMonsterCnt; set => killingMonsterCnt = value; }
+        public bool MonsterQuest { get; set; }
         public Inventory Inventory { get; private set; }
         public List<Quest>? Quests = new List<Quest>();
 
@@ -200,7 +201,14 @@ namespace TextRPG_Team23
             TotalDef = defence + ItemDefense();
         }
 
+        public void PlayerTakeDamage(int dmg)
+        {
+            if(TotalDef > dmg)
+            {
 
+            }
+            CurrentHp = TotalDef - dmg;
+        }
         //public void AddDungeonClear()
         //{
 
@@ -338,6 +346,14 @@ namespace TextRPG_Team23
         public bool HasKillMonster()
         {
             return KillMon >= 5;
+        }
+
+        public void PlusKillMonsterCnt()
+        {
+            if(MonsterQuest)
+            {
+                KillMon++;
+            }
         }
     }
 
