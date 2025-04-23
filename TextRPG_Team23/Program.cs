@@ -12,21 +12,6 @@ namespace TextRPG_Team23
         }
     }
 
-    /*public class Player //테스트용 더미 클래스
-    {
-        private string name;
-        private Job job;
-
-        public Player(string name, Job job)
-        {
-            this.name = name;
-            this.job = job;
-        }
-    }
-    public abstract class Job { }
-    public class Warrior : Job { }
-    public class Magician : Job { }*/ //여기까지 더미, 유기적으로 함수 처리할 것.
-
     public class GameManager
     {
         private bool isRunning = true;
@@ -137,11 +122,11 @@ namespace TextRPG_Team23
                     Console.ReadKey();
                     break;
                 case 2:
-                    Console.WriteLine("디버그 : 인벤토리 출력");
+                    player.Inventory.PrintInventory(player);
                     Console.ReadKey();
                     break;
                 case 3:
-                    Console.WriteLine("디버그 : 상점 출력");
+                    new Shop(player).ShopPhase();
                     Console.ReadKey();
                     break;
                 case 4:
