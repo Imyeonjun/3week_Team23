@@ -25,8 +25,8 @@ namespace TextRPG_Team23
 
             for (int i = 0; i < mobCount; i++)
             {
-                int mobType = Program.random.Next(0, 6);
-                int level = Program.random.Next(1, 6);
+                int mobType = Yeonjun_Program.random.Next(0, 6);
+                int level = Yeonjun_Program.random.Next(1, 6);
                 switch (mobType)
                 {
                     case 0:
