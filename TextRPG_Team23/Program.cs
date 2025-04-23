@@ -9,7 +9,7 @@ namespace TextRPG_Team23
 
         static void Main(string[] args)
         {
-            List<Monster> monsterBox = new List<Monster>();
+            /*List<Monster> monsterBox = new List<Monster>();
 
             BattleUi ui = new BattleUi();
 
@@ -21,7 +21,7 @@ namespace TextRPG_Team23
 
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
-            condition.BattleConnect(monsterBox, ui, battle);
+            condition.BattleConnect(monsterBox, ui, battle);*/
 
             GameManager gameManager = new GameManager();
             gameManager.StartGame();
