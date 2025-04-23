@@ -18,7 +18,7 @@ namespace TextRPG_Team23
 
         public static List<Monster> monsterBox = new List<Monster>();
 
-        MonsterFactory facktory = new MonsterFactory();
+        //MonsterFactory facktory = new MonsterFactory();
 
         
 
