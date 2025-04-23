@@ -41,8 +41,8 @@ namespace TextRPG_Team23
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Console.ReadLine();
+                        //Console.Clear();
                         break;
                 }
             }
