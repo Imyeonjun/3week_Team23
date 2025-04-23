@@ -271,7 +271,7 @@ namespace TextRPG_Team23
                 quest.CheckCompletion(this);
             }
         }
-
+        //더미
     }
 
 }
