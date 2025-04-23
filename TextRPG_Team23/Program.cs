@@ -44,7 +44,7 @@ namespace TextRPG_Team23
 
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
-            condition.BattleConnect(monsterBox, ui, battle, _player);
+            condition.BattleConnect(_player, monsterBox, ui, battle);
         }
 
         public void StartGame()
