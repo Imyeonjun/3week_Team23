@@ -196,12 +196,12 @@ namespace TextRPG_Team23
 
     internal class Battle_Results_Screen
     {
-        static void Main(string[] args)
-        {
+        //static void Main(string[] args)
+        //{
            
               
             
-        }
+        //}
     }
 
     
