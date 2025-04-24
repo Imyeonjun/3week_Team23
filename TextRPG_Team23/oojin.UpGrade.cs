@@ -135,12 +135,8 @@ namespace TextRPG_Team23
                 else if (selectedItem.Upgrade == 9)
                 {
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
-                    var target = Items.FirstOrDefault(item => item.Item == selectedItem);
-                    if (target != null)
-                    {
-                        Items.Remove(target);
-                    }
-                }
+                    RemoveItem(selectedItem);
+                 }
                 else
                 {
                     Console.WriteLine("더 이상 강화할 수 없습니다.");
