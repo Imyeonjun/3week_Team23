@@ -16,6 +16,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("=== 상점 ===");
                 Console.WriteLine($"[보유 골드] {player.Gold}G\n");
                 Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
@@ -35,7 +36,10 @@ namespace TextRPG_Team23
                             break;
                         }
                     case "0":
-                        return;
+                        {
+                            Console.WriteLine("상점 메뉴를 닫습니다.");
+                            return;
+                        }
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         break;
@@ -47,6 +51,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine($"\n[보유 골드] {player.Gold} G\n");
                 Console.WriteLine("[아이템 구매 목록]");
                 for (int i = 0; i < ItemDB.Items.Count; i++)
@@ -57,7 +62,7 @@ namespace TextRPG_Team23
 
                     if (alreadyOwned)
                     {
-                        Console.WriteLine($"{i + 1}. {item.Name} | {item.Description} | 구매완료");
+                        Console.WriteLine($"{i + 1}. {item.Name} | {item.Description} | 보유중");
                     }
                     else
                     {
@@ -74,6 +79,7 @@ namespace TextRPG_Team23
                     if (selected == 0)
                     {
                         Console.WriteLine("상점 구매 메뉴를 종료합니다.");
+                        Console.ReadKey();
                         return;
                     }
 
@@ -85,26 +91,31 @@ namespace TextRPG_Team23
                         if (alreadyOwned)
                         {
                             Console.WriteLine($"이미 보유 중인 아이템입니다: {item.Name}");
+                            Console.ReadKey();
                         }
                         else if (player.Gold >= item.Price)
                         {
                             player.Gold -= item.Price;
-                            player.Inventory.AddItem(item);
+                            player.Inventory.AddItem(item.Clone());
                             Console.WriteLine($"{item.Name}을 구매했습니다!");
+                            Console.ReadKey();
                         }
                         else
                         {
                             Console.WriteLine("골드가 부족합니다.");
+                            Console.ReadKey();
                         }
                     }
                     else
                     {
                         Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
+                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.WriteLine("숫자를 입력해주세요.");
+                    Console.ReadKey();
                 }
             }
         }
@@ -113,10 +124,12 @@ namespace TextRPG_Team23
         {
             while (true)
             {
+                Console.Clear();
                 var items = player.Inventory.Items;
                 if (items.Count == 0)
                 {
                     Console.WriteLine("판매할 아이템이 없습니다.");
+                    Console.ReadKey();
                     return;
                 }
 
@@ -138,6 +151,7 @@ namespace TextRPG_Team23
                     if (selected == 0)
                     {
                         Console.WriteLine("상점 판매 메뉴를 종료합니다.");
+                        Console.ReadKey();
                         return;
                     }
                     else if (selected > 0 && selected <= items.Count)
@@ -148,6 +162,7 @@ namespace TextRPG_Team23
                         if (player.Inventory.Slots.Contains(stack.Item))// 장비중인 아이템 이면
                         {
                             Console.WriteLine("장비중인 아이템 입니다. 판매할 수 없습니다.");
+                            Console.ReadKey();
                         }
                         else
                         {
@@ -159,17 +174,20 @@ namespace TextRPG_Team23
                             {
                                 items.Remove(stack);
                             }
+                            Console.ReadKey();
 
                         }
                     }
                     else
                     {
                         Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
+                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.WriteLine("숫자를 입력해주세요.");
+                    Console.ReadKey();
                 }
 
 

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeProject
+
+namespace TextRPG_Team23
 {
     public struct Obj
     {
@@ -13,21 +14,30 @@ namespace TimeProject
         public string button;
         public Obj(int _x, int _y, string _button)
         {
-            this.x = _x;
-            this.y = _y;
-            this.button = _button;
+            x = _x;
+            y = _y;
+            button = _button;
         }
+        public void ObjPos(int _x, int _y, string image)
+        {
+            Console.SetCursorPosition(_x, _y);
+            Console.WriteLine(image);
+        }
+        
     }
-    internal class Forge
+    internal class Forge : Inventory
     {
-        static void Main(string[] args)
+       /* static void Main(string[] args)
         {
             Console.CursorVisible = false;
 
-            Forge forge = new Forge();
-            forge.Selection();
-        }
-        //UpGrade upGrade = new UpGrade();
+            //Forge forge = new Forge();
+            //forge.Selection();
+
+            //Inn inn = new Inn();
+            //inn.Selection();
+        }*/
+        UpGrade upGrade = new UpGrade();
 
         Obj obj = new Obj(1, 1, "▶");
         public void Selection()
@@ -60,7 +70,7 @@ namespace TimeProject
                         switch (obj.y)
                         {
                             case 1:
-                                //upGrade.ItemSelection();
+                                upGrade.ItemSelection();
                                 break;
                             case 2:
                                 break;
