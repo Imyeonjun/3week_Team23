@@ -11,7 +11,6 @@ namespace TextRPG_Team23
 
     internal class UpGrade : Inventory
     {
-        Item Item;
         private Dictionary<int, int> UpradeChance()
         {
             return new Dictionary<int, int>
@@ -32,7 +31,6 @@ namespace TextRPG_Team23
         private Item selectedItem;
         public void ItemSelection()
         {
-            //Inventory inventory = new Inventory();
             while (true)
             {
                 //Console.Clear();
