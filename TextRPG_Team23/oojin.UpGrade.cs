@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-
     internal class UpGrade : Inventory
     {
         private Dictionary<int, int> UpradeChance()
