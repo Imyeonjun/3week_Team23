@@ -11,7 +11,7 @@ namespace TextRPG_Team23
         public int Durability { get; protected set; } = -1;
         public int MaxDurability { get; protected set; } = -1;
 
-        public int Upgrade { get; protected set; } = 0;
+        public int Upgrade { get; set; } = 0;
 
         protected Item(int upgrade, string name, int price, string description, int durability = -1)//장비아이템 용 생성자
         {
