@@ -17,6 +17,7 @@ namespace TextRPG_Team23
             intro.CreateCharacter(out player);
 
             GameManager gameManager = new GameManager(player);
+            
             gameManager.StartGame();
 
             Inn inn = new Inn();
@@ -54,7 +55,8 @@ namespace TextRPG_Team23
             DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
 
             condition.BattleConnect(_player, monsterBox, ui, battle);
-
+            dungeon.WorkFactory();
+            dungeon.Start();
 
             Inn = new Inn();
             Forge = new Forge(player);
