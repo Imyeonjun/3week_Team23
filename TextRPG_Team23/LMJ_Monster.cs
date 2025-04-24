@@ -270,7 +270,7 @@ namespace TextRPG_Team23
                 }
                 else
                 {
-                    condition.Attack(realDamage);
+                    condition.Attack(realDamage);  
                     condition.ui.MonsterLog = $"{Name}의 비열한 공격";
                 }
             }

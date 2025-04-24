@@ -47,7 +47,8 @@ namespace TextRPG_Team23
 
             condition.BattleConnect(_player, monsterBox, ui, battle);
 
-
+            dungeon.WorkFactory();
+            dungeon.Start();
             _menu = new QuestMenu();
 
             //dungeon.WorkFactory();

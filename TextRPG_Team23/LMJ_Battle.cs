@@ -106,7 +106,7 @@ namespace TextRPG_Team23
                 
             }
 
-            turnCount += 1;
+            turnCount++;
         }
 
 
