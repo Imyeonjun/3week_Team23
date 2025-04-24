@@ -25,7 +25,8 @@ namespace TextRPG_Team23
                 "상점",
                 "던전",
                 "여관",
-                "대장간"
+                "대장간",
+                "신전"
             };
 
         public void MainMenu(Player player)
@@ -61,7 +62,10 @@ namespace TextRPG_Team23
                 case 6:
                     new Forge().Selection();
                     Console.ReadLine();
-                    
+                    break;
+                case 7:
+                    new Temple().Selection();
+                    Console.ReadLine();
                     break;
                 case 0:
                     Console.WriteLine("게임을 종료합니다.");

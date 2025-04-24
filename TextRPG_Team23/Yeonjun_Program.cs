@@ -33,6 +33,7 @@ namespace TextRPG_Team23
         private Town town;
         private Forge Forge;
         private Inn Inn;
+        private Temple Temple;
 
 
         public GameManager(Player player)
