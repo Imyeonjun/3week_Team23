@@ -85,14 +85,16 @@ namespace TextRPG_Team23
                     Console.WriteLine($"{prefix}{invItem}");
                 }
 
-                Console.WriteLine("\n1. 장착 관리\n0. 나가기");
+                Console.WriteLine("\n1. 장착 관리\n2. 아이템 사용\n0. 나가기");
                 string input = Console.ReadLine();
 
                 if (input == "1")
                     ManageEquipment(player, sortedItems);
+                else if (input == "2")
+                    UseItemPhase(player);
                 else if (input == "0")
                 {
-                    Console.WriteLine("인벤토리를 닫습니다."); 
+                    Console.WriteLine("인벤토리를 닫습니다.");
                     return;
                 }
                 else
@@ -195,8 +197,9 @@ namespace TextRPG_Team23
                 {
                     Items.Remove(selectedItem);
                     Console.WriteLine($"{selectedItem.Item.Name}을 모두 사용했습니다.");
-                    Console.ReadKey();
+                    
                 }
+                Console.ReadKey();
             }
             else if (selected != 0)
             {
@@ -223,5 +226,6 @@ namespace TextRPG_Team23
                 }
             }
         }
+       
     }
 }
