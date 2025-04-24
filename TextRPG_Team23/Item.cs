@@ -88,10 +88,9 @@ namespace TextRPG_Team23
 
         public override string ToString()
         {
-            string prefix = $"+{Upgrade}";
+            string upgradeText = Upgrade > 0 ? $"+{Upgrade} " : "";
             string durText = (Durability >= 0) ? $" | 내구도 {Durability}/{MaxDurability}" : "";
-            string brokenText = (IsBroken ? " [망가짐]" : "");
-            return $"{prefix}{Name}{brokenText} | 공격력 +{Atk} | {Description}{durText} | 상점가 {Price}G";
+            return $"{upgradeText}{Name} | 공격력 +{Atk} | {Description}{durText} | 상점가 {Price}G";
         }
         public override Item Clone()
         {
@@ -126,10 +125,9 @@ namespace TextRPG_Team23
 
         public override string ToString()
         {
-            string prefix = $"+{Upgrade}";
+            string upgradeText = Upgrade > 0 ? $"+{Upgrade} " : "";
             string durText = (Durability >= 0) ? $" | 내구도 {Durability}/{MaxDurability}" : "";
-            string brokenText = (IsBroken ? " [망가짐]" : "");
-            return $"{prefix}{Name}{brokenText} | 방어력 +{Def} | {Description}{durText} | 상점가 {Price}G";
+            return $"{upgradeText}{Name} | 방어력 +{Def} | {Description}{durText} | 상점가 {Price}G";
         }
         public override Item Clone()
         {
