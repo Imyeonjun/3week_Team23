@@ -63,6 +63,13 @@ public abstract class Job
         Console.Write(">> ");
     }
 
+    public void CheckKillQuest(int hp, Player player)
+    {
+        if(hp <= 0)
+        {
+            player.PlusKillMonsterCnt();
+        }
+    }
 }
 
 public class Warrior : Job
@@ -110,8 +117,12 @@ public class Warrior : Job
 
         int finalDamage = (int)finalAtkDmg;
         int originalHp = enemy.CurrentHp;
-        enemy.CurrentHp -= finalDamage;
-
+        //enemy.CurrentHp -= finalDamage;
+        if(enemy is TakeDamage a)
+        {
+            a.TakeDamage(finalDamage);
+        }
+        CheckKillQuest(enemy.CurrentHp, player);
         DisplayAttackResult(player, enemy, originalHp, finalDamage, isCritical, isMiss);
     }
 
@@ -132,8 +143,12 @@ public class Warrior : Job
 
         int finalDamage = (int)finalAtkDmg;
         int originalHp = enemy.CurrentHp;
-        enemy.CurrentHp -= finalDamage;
-        if (enemy.CurrentHp < 0) enemy.CurrentHp = 0;
+        //enemy.CurrentHp -= finalDamage;
+        if (enemy is TakeDamage a)
+        {
+            a.TakeDamage(finalDamage);
+        }
+        CheckKillQuest(enemy.CurrentHp, player);
 
         DisplayAttackResult(player, enemy, originalHp, finalDamage, "알파 스트라이크");
     }
@@ -180,8 +195,12 @@ public class Warrior : Job
 
             int finalDamage = (int)finalAtkDmg;
             int originalHp = enemy.CurrentHp;
-            enemy.CurrentHp -= finalDamage;
-            if (enemy.CurrentHp < 0) enemy.CurrentHp = 0;
+            //enemy.CurrentHp -= finalDamage;
+            if (enemy is TakeDamage a)
+            {
+                a.TakeDamage(finalDamage);
+            }
+            CheckKillQuest(enemy.CurrentHp, player);
 
             originalHps.Add(originalHp);
             damages.Add(finalDamage);
@@ -242,8 +261,12 @@ public class Magician : Job
 
         int finalDamage = (int)finalAtkDmg;
         int originalHp = enemy.CurrentHp;
-        enemy.CurrentHp -= finalDamage;
-
+        //enemy.CurrentHp -= finalDamage;
+        if (enemy is TakeDamage a)
+        {
+            a.TakeDamage(finalDamage);
+        }
+        CheckKillQuest(enemy.CurrentHp, player);
         DisplayAttackResult(player, enemy, originalHp, finalDamage, isCritical, isMiss);
     }
     public override void SkillA(Monster enemy, float atkDmg, Player player)
@@ -269,6 +292,7 @@ public class Magician : Job
             a.TakeDamage(finalDamage);
         }
         if (enemy.CurrentHp < 0) enemy.CurrentHp = 0;
+        CheckKillQuest(enemy.CurrentHp, player);
 
         DisplayAttackResult(player, enemy, originalHp, finalDamage, "알파 스트라이크");
     }
@@ -314,9 +338,12 @@ public class Magician : Job
 
             int finalDamage = (int)finalAtkDmg;
             int originalHp = enemy.CurrentHp;
-            enemy.CurrentHp -= finalDamage;
-            if (enemy.CurrentHp < 0) enemy.CurrentHp = 0;
-
+            //enemy.CurrentHp -= finalDamage;
+            if (enemy is TakeDamage a)
+            {
+                a.TakeDamage(finalDamage);
+            }
+            CheckKillQuest(enemy.CurrentHp, player);
             originalHps.Add(originalHp);
             damages.Add(finalDamage);
         }
