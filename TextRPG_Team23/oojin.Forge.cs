@@ -10,6 +10,7 @@ namespace TextRPG_Team23
     internal class Forge
     {
         UpGrade upGrade = new UpGrade();
+        Inventory inventory = new Inventory();
         public void Selection()
         {
             while (true)
@@ -27,6 +28,7 @@ namespace TextRPG_Team23
                     case 2:
                         break;
                     case 3:
+                        
                         break;
                 }
             }
