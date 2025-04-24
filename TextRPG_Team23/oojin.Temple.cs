@@ -14,22 +14,14 @@ namespace TextRPG_Team23
             Console.WriteLine("1. 헌금 2. 세레 3. 축복 4. 나가기");
 
             int.TryParse(Console.ReadLine(), out int input);// 헌금만 가능하며 돈이 싸이면 버프의 효과가 상승 세례(버프) 축복(상태이상해제)
-            if (input == 1)
+            if (input >= 1 || input <= 4)
             {
-                
-            }
-            else if (input == 2)
-            {
-
-            }
-            else if (input == 3)
-            {
-
-            }
-            else if (input == 4)
-            {
-                return;
-            }
+                switch(input)
+                {
+                    case 0:
+                        break;
+                }
+            }            
             else
             {
                 Console.WriteLine("잘못 입력하였습니다.");

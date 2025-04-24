@@ -9,7 +9,7 @@ namespace TextRPG_Team23
     public class Town
     {
         private GameManager gameManager;
-        private QuestMenu questMenu = new QuestMenu();
+       
 
         DungeonTest gate = new DungeonTest();
 
@@ -56,7 +56,7 @@ namespace TextRPG_Team23
                     gate.Gate();
                     break;
                 case 5:
-                    new Inn().Selection(player, questMenu);
+                    new Inn().Selection(player, );
                     Console.ReadLine();
                     break;
                 case 6:
