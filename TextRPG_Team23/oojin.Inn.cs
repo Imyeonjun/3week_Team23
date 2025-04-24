@@ -64,23 +64,7 @@ namespace TextRPG_Team23
             while (true)
             {
                 Console.Clear();
-
-                int.TryParse(Console.ReadLine(), out int input);
-                switch (input)
-                {
-                    case 1:
-                        questMenu.ShowAllQuests(player);
-                        return;
-                        break;
-                    case 2:
-                        //퀘스트 완룔
-                        break;
-                    case 3:
-                        return;
-                    default :
-                        Console.WriteLine("잘못 입력 했습니다.");
-                        break;
-                }
+                questMenu.ShowAllQuests(player);
             }
         }
     }

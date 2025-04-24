@@ -9,18 +9,6 @@ namespace TextRPG_Team23
 {
     internal class Forge
     {
-        static void Main(string[] args)
-        {
-            Console.CursorVisible = false;
-
-            Player player = new Player(); // 예시 체력값
-            QuestMenu questMenu = new QuestMenu();
-            //Forge forge = new Forge();
-            //forge.Selection();
-
-            Inn inn = new Inn();
-            inn.Selection(player, questMenu);
-        }
         UpGrade upGrade = new UpGrade();
         public void Selection()
         {
@@ -40,8 +28,6 @@ namespace TextRPG_Team23
                         break;
                     case 3:
                         break;
-
-
                 }
             }
         }

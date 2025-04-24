@@ -22,7 +22,7 @@ namespace TextRPG_Team23
             Durability = durability;
             MaxDurability = durability;
         }
-
+        
         protected Item(string name, int price, string description) //소모품 용
         {
             Name = name;
@@ -41,6 +41,12 @@ namespace TextRPG_Team23
         public virtual bool Use (Player player) => false;
 
         public abstract Item Clone();
+
+        public void UpUpgrade() => Upgrade++;
+        public void DonwUpgrade()
+        {
+            if (Upgrade > 0) Upgrade--;
+        }
     }
 
     public interface IEquipable

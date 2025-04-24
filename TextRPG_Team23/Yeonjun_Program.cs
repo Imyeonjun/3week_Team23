@@ -5,17 +5,22 @@ namespace TextRPG_Team23
 {
     internal class Program
     {
+
         public static Random random = new Random();
          
 
         static void Main(string[] args)
         {
+            QuestMenu questMenu = new QuestMenu();
             Player player;
             Intro intro = new Intro();
             intro.CreateCharacter(out player);
 
             GameManager gameManager = new GameManager(player);
             gameManager.StartGame();
+
+            Inn inn = new Inn();
+            inn.Selection(player, questMenu);
         }
 
     }

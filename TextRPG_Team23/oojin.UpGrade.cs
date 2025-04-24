@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace TextRPG_Team23
 {
 
-    internal class UpGrade
+    internal class UpGrade : Inventory
     {
-
+        Item Item;
         private Dictionary<int, int> UpradeChance()
         {
             return new Dictionary<int, int>
@@ -32,19 +32,19 @@ namespace TextRPG_Team23
         private Item selectedItem;
         public void ItemSelection()
         {
-            Inventory inventory = new Inventory();
+            //Inventory inventory = new Inventory();
             while (true)
             {
                 Console.Clear();
 
                 Console.WriteLine(" - 강화 할 장비를 (번호)선택하세요 - ");
                 
-                var equipmentItems = inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
+                var equipmentItems = Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
                 if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
                 {
                     foreach (var itemList in equipmentItems) 
                     {
-                        bool isEquipped = Array.Exists(inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
+                        bool isEquipped = Array.Exists(Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
 
                         Console.WriteLine($"{prefix}{itemList}");
@@ -58,14 +58,16 @@ namespace TextRPG_Team23
                 int.TryParse(Console.ReadLine(), out int input);
                 for (int i = 0; i < equipmentItems.Count; i++) 
                 {
+                    
                     if (input >= 1 && input <= equipmentItems.Count)
                     {
-                        if (input == i) // 입력한 숫자와 i값이 같다면
+                        if (input == i  + 1) // 입력한 숫자와 i값이 같다면
                         {
                             Console.WriteLine();
 
-                            //selectedItem = equipmentItems[i - 1]; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
-                            //ItemUpgrade(selectedItem);
+                            selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
+                            Console.Clear();
+                            ItemUpgrade();
                             return;
                         }
                     }
@@ -113,6 +115,7 @@ namespace TextRPG_Team23
 
             if (roll <= upGradeChance[selectedItem.Upgrade])
             {
+                selectedItem.UpUpgrade();
                 Console.WriteLine(" - Success - ");
                 Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 Console.WriteLine("Enter를 눌러서 계속...");
@@ -124,12 +127,21 @@ namespace TextRPG_Team23
                 Console.WriteLine(" 강화에 실패...\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
+                    selectedItem.DonwUpgrade();
                     Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
-                    // 파괴 로직
-                    Console.WriteLine("장비파괴");
+                    Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
+                    var target = Items.FirstOrDefault(item => item.Item == selectedItem);
+                    if (target != null)
+                    {
+                        Items.Remove(target);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("더 이상 강화할 수 없습니다.");
                 }
                 Console.WriteLine("Enter를 눌러서 계속...");
                 Console.ReadLine();
