@@ -9,9 +9,12 @@ namespace TextRPG_Team23
 {
     public class Forge
     {
-        UpGrade upGrade = new UpGrade();
+        public Player player;
+        public Forge(Player player) { this.player = player; }
+
         public void Selection()
         {
+            UpGrade upGrade = new UpGrade(player);
             while (true)
             {
                 //Console.Clear();
@@ -33,5 +36,4 @@ namespace TextRPG_Team23
             }
         }
     }
-    
 }

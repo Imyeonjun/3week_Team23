@@ -35,7 +35,6 @@ namespace TextRPG_Team23
         private Inn Inn;
         private Temple Temple;
 
-
         public GameManager(Player player)
         {
             _player = player;
@@ -58,7 +57,7 @@ namespace TextRPG_Team23
 
 
             Inn = new Inn();
-            Forge = new Forge();
+            Forge = new Forge(player);
             Temple = new Temple();
             _menu = new QuestMenu();
 
