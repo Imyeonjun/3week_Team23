@@ -62,12 +62,13 @@ namespace TextRPG_Team23
 
     public class Weapon : Item, IEquipable
     {
-        public int Atk { get; private set; }
+        public int BaseAtk { get; private set; }
+        public int Atk => BaseAtk + (Upgrade * 2); 
 
-        public Weapon(int upgrade, string name, int price, string description, int atk, int durability = -1)
+        public Weapon(int upgrade, string name, int price, string description, int baseAtk, int durability = -1)
             : base(upgrade, name, price, description, durability)
         {
-            Atk = atk + (upgrade * 2);
+            BaseAtk = baseAtk;
         }
 
         public EquipSlot SlotType => EquipSlot.Weapon;
@@ -100,12 +101,13 @@ namespace TextRPG_Team23
 
     public class Clothes : Item, IEquipable
     {
-        public int Def { get; private set; }
+        public int BaseDef { get; private set; }
+        public int Def => BaseDef + (Upgrade * 2);
 
-        public Clothes(int upgrade, string name, int price, string description, int def, int durability = -1)
+        public Clothes(int upgrade, string name, int price, string description, int baseDef, int durability = -1)
             : base(upgrade, name, price, description, durability)
         {
-            Def = def + (upgrade * 2);
+            BaseDef = baseDef;
         }
 
         public EquipSlot SlotType => EquipSlot.Clothes;
