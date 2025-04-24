@@ -29,7 +29,7 @@ namespace TextRPG_Team23
                 "신전"
             };
 
-        public void MainMenu(Player player)
+        public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple)
         {
             //Console.Clear();
             Console.WriteLine("== 메인 메뉴 ==");
@@ -56,15 +56,15 @@ namespace TextRPG_Team23
                     gate.Gate();
                     break;
                 case 5:
-                    new Inn().Selection(player, );
+                    inn.Selection(player, quest);
                     Console.ReadLine();
                     break;
                 case 6:
-                    new Forge().Selection();
+                    forge.Selection();
                     Console.ReadLine();
                     break;
                 case 7:
-                    new Temple().Selection();
+                    temple.Selection();
                     Console.ReadLine();
                     break;
                 case 0:

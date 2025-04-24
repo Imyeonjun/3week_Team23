@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    internal class Temple
+    public class Temple
     {
         public void Selection()
         {

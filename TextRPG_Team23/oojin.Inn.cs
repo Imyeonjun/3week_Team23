@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    internal class Inn
+    public class Inn
     {
         public void Selection(Player player, QuestMenu questMenu)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    internal class Forge
+    public class Forge
     {
         UpGrade upGrade = new UpGrade();
         Inventory inventory = new Inventory();

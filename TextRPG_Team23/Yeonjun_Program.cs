@@ -57,6 +57,9 @@ namespace TextRPG_Team23
             condition.BattleConnect(_player, monsterBox, ui, battle);
 
 
+            Inn = new Inn();
+            Forge = new Forge();
+            Temple = new Temple();
             _menu = new QuestMenu();
 
             //dungeon.WorkFactory();
@@ -68,7 +71,7 @@ namespace TextRPG_Team23
 
             while (isRunning)
             {
-                town.MainMenu(_player);
+                town.MainMenu(_player, _menu, Inn, Forge, Temple);
             }
         }
 
