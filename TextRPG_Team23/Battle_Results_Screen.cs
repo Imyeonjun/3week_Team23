@@ -16,7 +16,7 @@ namespace TextRPG_Team23
     {
 
 
-        public static void BattleResultUI(Player player, int dungeonMonsterCount, List<Monster> monsters)  
+        public static void BattleResultUI(Player player, List<Monster> monsters)  
         {
             // 적용 전 
             int oldLevel = player.Level;
@@ -51,7 +51,7 @@ namespace TextRPG_Team23
                 player.Exp = remainingExp;
 
 
-                Console.WriteLine($"던전에서 몬스터 {dungeonMonsterCount}마리를 잡았습니다.");
+                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
                 Console.WriteLine("");
 
                 Console.WriteLine("\n[캐릭터 정보]");
