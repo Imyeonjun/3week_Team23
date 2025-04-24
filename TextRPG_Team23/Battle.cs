@@ -29,6 +29,12 @@ namespace TextRPG_Team23
 
     }
 
+    class BattleEffect
+    {
+        //전투에 영향을 주는 객체를 만들어서 데미지나 버프 등 연산법칙을 만들어서
+        //그것을 전투에서 피해를 입히거나 버프를 줄 때 활용하는 것
+    }
+
 
     class Battle // 턴제루프만 맡는 녀석
     {
