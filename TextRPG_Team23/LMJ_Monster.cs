@@ -67,18 +67,19 @@ namespace TextRPG_Team23
 
     }
 
-    class Gravemoss : Monster, Attack, TakeDamage
+    class Gravemoss : Monster, TakeDamage
     {
         int Shield { get; set; }
 
         Battlecondition condition;
+
         public Gravemoss(Battlecondition condition, int code, int level)
         {
             this.condition = condition;
             MobCode = code;
             Level = level;
             Name = "모혈의 이끼거북";
-            Atk = 1;
+            Atk = 2;
             Def = 12;
             MaxHp = 34;
             CurrentHp = 34;
@@ -86,38 +87,47 @@ namespace TextRPG_Team23
 
         public override void UseSkill(int Turn)
         {
+            if (BuffDef > 0){BuffDef--;}
+
             if ((Turn % 2) == 0)
             {
                 Shield += 5;
-                BuffDef += (Shield / 5);
-
+                Hp += Shield;
                 Console.Write($"\n{Name}의 등껍질이 자라나기 시작한다.\n" +
-                              $"Def: +({BuffDef}) Shield: +({Shield})\n");
+                              $"Shield: +({Shield})\n");
+            }
+
+            if((Turn % 2) != 0)
+            {
+                condition.ui.MonsterLog = $"{Name}은 {condition.player.Name}을 등껍질로 후려친다!";
+                condition.Attack(Atk + (Shield / 2));
             }
 
             if ((Turn % 8 == 0))
             {
                 Shield = 0;
-                BuffDef = 0;
 
                 Console.Write($"\n너무 커져버린 등껍질이 바스라지고 말았다.\n" +
-                              $"<추가 방어력 제거 ({BuffDef}), 재생 보호막 파괴 ({Shield})>\n");
+                              $"<재생 보호막 파괴 ({Shield})>\n");
             }
         }
 
-        public void AttackPlayer()
-        {
-            condition.Attack(Atk);
-            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
-        }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - (Def / 3));
+            if (BuffDef <= 0)
+            {
+                Hp -= (Damage - (Def));
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                Hp -= (Damage - (Def * 2));
+            }
         }
     }
 
-    class Roothelm : Monster, Attack, TakeDamage
+    class Roothelm : Monster, TakeDamage
     {
         Battlecondition condition;
 
@@ -135,22 +145,37 @@ namespace TextRPG_Team23
 
         public override void UseSkill(int Turn)
         {
-            //아군 전체 일시적보호막
+            if (BuffDef > 0) {BuffDef--;}
+
+            if((Turn % 2) == 0)
+            {
+                BuffDef++;
+                condition.BuffDef(1);
+                condition.ui.MonsterLog = $"{Name}는 아군 전체를 축복합니다.";
+            }
+            if((Turn % 2) != 0)
+            {
+                condition.Attack(Atk + BuffDef);
+                condition.ui.MonsterLog = $"{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다.";
+            }
         }
 
-        public void AttackPlayer()
-        {
-            condition.Attack(Atk);
-            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
-        }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - (Def / 3));
+            if (BuffDef <= 0)
+            {
+                Hp -= (Damage - (Def));
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                Hp -= (Damage - (Def * 2));
+            }
         }
     }
 
-    class Blightmaw : Monster, Attack, TakeDamage
+    class Blightmaw : Monster, TakeDamage
     {
 
         Battlecondition condition;
@@ -169,25 +194,40 @@ namespace TextRPG_Team23
 
         public override void UseSkill(int Turn)
         {
-            //출혈,중독 
-        }
+            if (BuffDef > 0) {  BuffDef--; }
 
-        public void AttackPlayer()
-        {
-            condition.Attack(Atk);
-            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
+            if ((Turn % 2) == 0)
+            {
+
+            }
+            if ((Turn % 2) != 0)
+            {
+
+            }
         }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - (Def / 3));
+            if (BuffDef <= 0)
+            {
+                Hp -= (Damage - (Def));
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                Hp -= (Damage - (Def * 2));
+            }
         }
     }
 
-    class Duskrend : Monster, Attack, TakeDamage
+    class Duskrend : Monster, TakeDamage
     {
 
         Battlecondition condition;
+
+        int Luck;
+        bool hide;
+
         public Duskrend(Battlecondition condition, int code, int level)
         {
             this.condition = condition;
@@ -203,25 +243,63 @@ namespace TextRPG_Team23
 
         public override void UseSkill(int Turn)
         {
-            //은신 강력한 한방
+            if (BuffDef > 0) { BuffDef--; }
+
+            int realDamage = 15;
+
+            if ((Turn % 2) != 0)
+            {
+                Def = 50;
+                hide = true;
+                condition.ui.MonsterLog = $"{Name}은 그림자에 몸을 숨겼다.";
+            }
+            else if (hide)
+            {
+                Luck = Program.random.Next(1, 100);
+                Def = 0;
+                hide = false;
+                if (Luck > 70)
+                {
+                    condition.Attack(realDamage + Atk);
+                    condition.ui.MonsterLog = $"{Name}의 급소공략!";
+                }
+                else if (Luck < 40)
+                {
+                    condition.Attack(Atk - realDamage);
+                    condition.ui.MonsterLog = $"{Name}은 돌뿌리에 걸려 볼품없이 넘어져 {condition.player.Name}을 타격했다.";
+                }
+                else
+                {
+                    condition.Attack(realDamage);
+                    condition.ui.MonsterLog = $"{Name}의 비열한 공격";
+                }
+            }
+            
         }
 
-        public void AttackPlayer()
-        {
-            condition.Attack(Atk);
-            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
-        }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - (Def / 3));
+            if (BuffDef <= 0)
+            {
+                Hp -= (Damage - (Def));
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                Hp -= (Damage - (Def * 2));
+            }
         }
     }
 
-    class Gloomseer : Monster, Attack, TakeDamage
+    class Gloomseer : Monster,TakeDamage
     {
 
         Battlecondition condition;
+
+        int countProphecy;
+        bool doAttack = false;
+
         public Gloomseer(Battlecondition condition, int code, int level)
         {
             this.condition = condition;
@@ -232,30 +310,55 @@ namespace TextRPG_Team23
             Def = 2;
             MaxHp = 24;
             CurrentHp = 24;
-
+            countProphecy = 0;
         }
 
         public override void UseSkill(int Turn)
         {
-            //디버프 다중타격
+            if (BuffDef > 0) {BuffDef--;}
+
+            if (Turn % 2 != 0)
+            {
+                doAttack = true;
+                countProphecy = Program.random.Next(0,5);
+                condition.ui.MonsterLog = $"{Name}가 미래를 보기 시작합니다.\n" +
+                                          $"다음 턴에 {countProphecy}번의 공격이 적중합니다!";
+            }
+
+            if (Turn % 2 == 0 && doAttack == true)
+            {
+                doAttack = false;
+                for (int i = 0; i < countProphecy; i++)
+                {
+                    condition.Attack(Atk);
+                }
+                condition.ui.MonsterLog = $"{Name}는 신비한 힘으로 {condition.player.Name}의 정신을 공격합니다!\n" +
+                                          $"적중한 공격 횟수: {countProphecy} 피해량: {countProphecy * Atk}";
+            }
+
         }
 
-        public void AttackPlayer()
-        {
-            condition.Attack(Atk);
-            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
-        }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - (Def / 3));
+            if (BuffDef <= 0)
+            {
+                Hp -= (Damage - (Def));
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                Hp -= (Damage - (Def * 2));
+            }
         }
     }
 
-    class Rainwisp : Monster, Attack, TakeDamage
+    class Rainwisp : Monster, TakeDamage
     {
 
         Battlecondition condition;
+        int HealPoint;
+        bool isDanger;
         public Rainwisp(Battlecondition condition, int code, int level)
         {
             this.condition = condition;
@@ -263,26 +366,59 @@ namespace TextRPG_Team23
             Level = level;
             Name = "비안개 정령";
             Atk = 0;
-            Def = 9;
+            Def = 7;
             MaxHp = 26;
             CurrentHp = 26;
+            isDanger = false;
 
         }
 
         public override void UseSkill(int Turn)
         {
-            //지속회복   
+            if (BuffDef > 0) { BuffDef--; }
+
+            if (Turn % 2 != 0 && !isDanger)
+            {
+                int code = Program.random.Next(1, (condition.monsterBox.Count));
+                HealPoint = 12;
+                condition.HealMonster(HealPoint,code);
+
+                if (CurrentHp < 14)
+                {
+                    isDanger = true;
+                }
+                condition.ui.MonsterLog = $"{Name}의 안개가 아군을 감싸안습니다.";
+            }
+            else if (Turn % 2 != 0 && isDanger)
+            {
+                condition.ui.MonsterLog = $"{Name}이 안개를 준비하고 있습니다.";
+            }
+
+
+            if (Turn % 2 == 0 && !isDanger)
+            {
+                condition.ui.MonsterLog = $"{Name}이 안개를 준비하고 있습니다.";
+            }
+            else if (Turn % 2 == 0 && isDanger)
+            {
+                condition.HealAllMonster((HealPoint = Program.random.Next(5, 9)));
+                condition.ui.MonsterLog = $"자욱하게 퍼진 안개는 몬스터들을 회복시켰습니다.";
+            }
+
         }
 
-        public void AttackPlayer()
-        {
-            condition.Attack(Atk);
-            Console.WriteLine($"\n\n디버그: {Name}몬스터공격\n\n");
-        }
 
         public void TakeDamage(int Damage)
         {
-            Hp -= (Damage - (Def / 3));
+            if (BuffDef <= 0)
+            {
+                Hp -= (Damage - (Def));
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                Hp -= (Damage - (Def * 2));
+            }
         }
     }
 }

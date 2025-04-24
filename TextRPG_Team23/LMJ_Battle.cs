@@ -27,6 +27,37 @@ namespace TextRPG_Team23
             player.PlayerTakeDamage(damage);
         }
 
+        public void BuffDef(int BuffDef)
+        {
+            foreach (Monster m in monsterBox)
+            {
+                m.BuffDef = BuffDef;
+            }
+        }
+
+        public void BleedingAttack(int damage)
+        {
+            player.PlayerTakeDamage(damage);
+        }
+
+        public void HealAllMonster(int heal)
+        {
+            foreach(Monster m in monsterBox)
+            {
+                m.Hp += heal;
+            }
+        }
+        public void HealMonster(int heal,int code)
+        {
+            foreach(Monster m in monsterBox)
+            {
+                if(code == m.MobCode)
+                {
+                    m.Hp += heal;
+                }
+            }
+        }
+
     }
 
 
@@ -50,15 +81,15 @@ namespace TextRPG_Team23
               "전투를 시작하려면 아무키나 누르세요.\n" +
               ">>>");
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
             while (condition.monsterBox.Count > 0 &&  condition.player.CurrentHp> 0)
             {
 
                 condition.ui.PrintMonster(false);
-                Console.ReadKey();
+                //Console.ReadKey();
                 StartMonsterTurn();
-                Console.ReadKey();
+                //Console.ReadKey();
 
 
 
@@ -71,17 +102,9 @@ namespace TextRPG_Team23
             foreach (Monster m in condition.monsterBox)
             {
                 m.UseSkill(turnCount);
+                condition.ui.PrintMonsterLog();
                 
             }
-            foreach (Monster m in condition.monsterBox)
-            {
-                if (m is Attack a)
-                {
-                    a.AttackPlayer();
-                }
-            }
-
-
 
             turnCount += 1;
         }
@@ -92,6 +115,8 @@ namespace TextRPG_Team23
     class BattleUi
     {
         Battlecondition condition;
+
+        public string MonsterLog;
 
         public BattleUi(Battlecondition condition)
         {
@@ -109,13 +134,11 @@ namespace TextRPG_Team23
             }
             num = 1;
         }
+        public void PrintMonsterLog()
+        {
+            Console.WriteLine(MonsterLog);
+        }
 
-        //public void PrintMonsterAction()
-        //{
-        //    foreach (Monster m in monsterBox)
-        //    {
-        //        //monster.UseSkill
-        //    }
-        //}
+
     }
 }
