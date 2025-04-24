@@ -11,9 +11,9 @@ namespace TextRPG_Team23
         public int Durability { get; protected set; } = -1;
         public int MaxDurability { get; protected set; } = -1;
 
-        public int Upgrade { get; protected set; } = 0;
+        public int Upgrade { get; set; } = 0;
 
-        protected Item(int upgrade, string name, int price, string description, int durability = -1)//장비아이템 용
+        protected Item(int upgrade, string name, int price, string description, int durability = -1)//장비아이템 용 생성자
         {
             Upgrade = upgrade;
             Name = name;
@@ -22,8 +22,8 @@ namespace TextRPG_Team23
             Durability = durability;
             MaxDurability = durability;
         }
-        
-        protected Item(string name, int price, string description) //소모품 용
+
+        protected Item(string name, int price, string description) //소모품 용 생성자
         {
             Name = name;
             Price = price;
@@ -35,18 +35,17 @@ namespace TextRPG_Team23
             if (Durability > 0)
                 Durability--;
         }
+        public void RepairMax() // 내구도 전체수리 로직 외부에서 불러다쓰기
+        {
+            Durability = MaxDurability;
+            Console.WriteLine($"{Name}의 내구도가 {Durability}/{MaxDurability}로 복구되었습니다.");
+        }
 
         public bool IsBroken => Durability == 0;
 
         public virtual bool Use (Player player) => false;
 
         public abstract Item Clone();
-
-        public void UpUpgrade() => Upgrade++;
-        public void DonwUpgrade()
-        {
-            if (Upgrade > 0) Upgrade--;
-        }
     }
 
     public interface IEquipable
@@ -172,7 +171,8 @@ namespace TextRPG_Team23
             new Clothes(0, "낡은 옷", 50, "낡은 방어구입니다.", 5, 8),
             new Clothes(0, "가죽 갑옷", 150, "튼튼한 가죽 방어구입니다.", 10, 12),
             new Consumable("체력 포션", 50, "체력을 30 회복합니다.", p => p.CurrentHp = Math.Min(p.MaxHp, p.CurrentHp + 30)),
-            new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 30))
+            new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 30)),
+            new Consumable("전체 수리 도구", 80, "보유중인 모든 아이템을 수리합니다.", RepairItem.RepairAll)
         };
     }
 }

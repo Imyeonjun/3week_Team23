@@ -115,6 +115,10 @@ public class Warrior : Job
             Console.WriteLine("공격이 빗나갔다!");
         }
 
+        if(!isMiss)
+        {
+            player.Inventory.CheckWeaponDurability(player);
+        }
         int finalDamage = (int)finalAtkDmg;
         int originalHp = enemy.CurrentHp;
         //enemy.CurrentHp -= finalDamage;
@@ -258,7 +262,10 @@ public class Magician : Job
             isMiss = true;
             Console.WriteLine("공격이 빗나갔다!");
         }
-
+        if (!isMiss)
+        {
+            player.Inventory.CheckWeaponDurability(player);
+        }
         int finalDamage = (int)finalAtkDmg;
         int originalHp = enemy.CurrentHp;
         //enemy.CurrentHp -= finalDamage;

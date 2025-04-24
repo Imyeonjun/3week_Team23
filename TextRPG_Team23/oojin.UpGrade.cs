@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    internal class UpGrade : Inventory
+    internal class UpGrade
     {
+        private Player player;
         private Dictionary<int, int> UpradeChance()
         {
             return new Dictionary<int, int>
@@ -26,7 +27,11 @@ namespace TextRPG_Team23
                 { 9, 10 },
             };
         }
-        
+        public UpGrade(Player player)
+        {
+            this.player = player;
+        }
+
         private Item selectedItem;
         public void ItemSelection()
         {
@@ -35,13 +40,13 @@ namespace TextRPG_Team23
                 //Console.Clear();
 
                 Console.WriteLine(" - 강화 할 장비를 (번호)선택하세요 - ");
-                
-                var equipmentItems = Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
+
+                var equipmentItems = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
                 if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
                 {
                     foreach (var itemList in equipmentItems) 
                     {
-                        bool isEquipped = Array.Exists(Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
+                        bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
 
                         Console.WriteLine($"{prefix}{itemList}");
@@ -65,7 +70,7 @@ namespace TextRPG_Team23
                             Console.WriteLine();
 
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
-                            Console.Clear();
+                            //Console.Clear();
                             ItemUpgrade();
                             return;
                         }
@@ -82,7 +87,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                Console.Clear();
+                //Console.Clear();
 
                 Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
 
@@ -114,7 +119,7 @@ namespace TextRPG_Team23
 
             if (roll <= upGradeChance[selectedItem.Upgrade])
             {
-                selectedItem.UpUpgrade();
+                
                 Console.WriteLine(" - Success - ");
                 Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 Console.WriteLine("Enter를 눌러서 계속...");
@@ -126,14 +131,15 @@ namespace TextRPG_Team23
                 Console.WriteLine(" 강화에 실패...\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
-                    selectedItem.DonwUpgrade();
+                    selectedItem.Upgrade++;
                     Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
+                    selectedItem.Upgrade--;
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
-                    RemoveItem(selectedItem);
-                 }
+                    player.Inventory.RemoveItem(selectedItem);
+                }
                 else
                 {
                     Console.WriteLine("더 이상 강화할 수 없습니다.");
