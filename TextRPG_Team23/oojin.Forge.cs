@@ -14,13 +14,13 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine("- Welcome - \n   1. 강화 \n   2. 제작 \n   3. 수리");
                 int.TryParse(Console.ReadLine(), out int input);
                 switch (input)
                 {
                     case 1:
-                        Console.Clear();
+                        //Console.Clear();
                         upGrade.ItemSelection();
                         return;
                         break;

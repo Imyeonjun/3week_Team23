@@ -9,6 +9,7 @@ namespace TextRPG_Team23
     public class Town
     {
         private GameManager gameManager;
+        private QuestMenu questMenu = new QuestMenu();
 
         DungeonTest gate = new DungeonTest();
 
@@ -23,7 +24,8 @@ namespace TextRPG_Team23
                 "인벤토리",
                 "상점",
                 "던전",
-                "여관"
+                "여관",
+                "대장간"
             };
 
         public void MainMenu(Player player)
@@ -53,8 +55,13 @@ namespace TextRPG_Team23
                     gate.Gate();
                     break;
                 case 5:
-                    Console.WriteLine("디버그 : 여관 출력");
+                    new Inn().Selection(player, questMenu);
                     Console.ReadLine();
+                    break;
+                case 6:
+                    new Forge().Selection();
+                    Console.ReadLine();
+                    
                     break;
                 case 0:
                     Console.WriteLine("게임을 종료합니다.");

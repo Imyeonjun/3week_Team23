@@ -35,7 +35,7 @@ namespace TextRPG_Team23
             //Inventory inventory = new Inventory();
             while (true)
             {
-                Console.Clear();
+                //Console.Clear();
 
                 Console.WriteLine(" - 강화 할 장비를 (번호)선택하세요 - ");
                 
@@ -53,6 +53,8 @@ namespace TextRPG_Team23
                 else
                 {
                     Console.WriteLine("강화할 장비 아이템이 없습니다.");
+                    Console.WriteLine("아무키를 누르고 Enter로 나가기");
+                    return;
                 }
                 
                 int.TryParse(Console.ReadLine(), out int input);

@@ -31,6 +31,9 @@ namespace TextRPG_Team23
         private Player _player;
         private QuestMenu _menu;
         private Town town;
+        private Forge Forge;
+        private Inn Inn;
+
 
         public GameManager(Player player)
         {
@@ -57,8 +60,6 @@ namespace TextRPG_Team23
 
             //dungeon.WorkFactory();
             //dungeon.Start();
-
-
         }
 
         public void StartGame()
