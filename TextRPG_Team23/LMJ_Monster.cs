@@ -31,6 +31,8 @@ namespace TextRPG_Team23
         public int MaxHp { get; set; }
         public int CurrentHp { get; set; }
 
+        public bool IsDead { get; set; }
+
         public int Hp
         {
             get { return CurrentHp; }
@@ -83,11 +85,13 @@ namespace TextRPG_Team23
             Def = 12;
             MaxHp = 34;
             CurrentHp = 34;
+            IsDead = false;
         }
 
         public override void UseSkill(int Turn)
         {
-            if (BuffDef > 0){BuffDef--;}
+
+            if (BuffDef > 0) { BuffDef--; }
 
             if ((Turn % 2) == 0)
             {
@@ -97,7 +101,7 @@ namespace TextRPG_Team23
                               $"Shield: +({Shield})\n");
             }
 
-            if((Turn % 2) != 0)
+            if ((Turn % 2) != 0)
             {
                 condition.ui.MonsterLog = $"{Name}은 {condition.player.Name}을 등껍질로 후려친다!";
                 condition.Attack(Atk + (Shield / 2));
@@ -141,19 +145,20 @@ namespace TextRPG_Team23
             Def = 10;
             MaxHp = 40;
             CurrentHp = 40;
+            IsDead = false;
         }
 
         public override void UseSkill(int Turn)
         {
-            if (BuffDef > 0) {BuffDef--;}
+            if (BuffDef > 0) { BuffDef--; }
 
-            if((Turn % 2) == 0)
+            if ((Turn % 2) == 0)
             {
                 BuffDef++;
                 condition.BuffDef(1);
                 condition.ui.MonsterLog = $"{Name}는 아군 전체를 축복합니다.";
             }
-            if((Turn % 2) != 0)
+            if ((Turn % 2) != 0)
             {
                 condition.Attack(Atk + BuffDef);
                 condition.ui.MonsterLog = $"{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다.";
@@ -189,12 +194,22 @@ namespace TextRPG_Team23
             Def = 3;
             MaxHp = 27;
             CurrentHp = 27;
+            IsDead = false;
 
         }
 
         public override void UseSkill(int Turn)
         {
+            if (BuffDef > 0) { BuffDef--; }
 
+            if ((Turn % 2) == 0)
+            {
+
+            }
+            if ((Turn % 2) != 0)
+            {
+
+            }
         }
 
         public void TakeDamage(int Damage)
@@ -229,7 +244,7 @@ namespace TextRPG_Team23
             Def = 0;
             MaxHp = 19;
             CurrentHp = 19;
-
+            IsDead = false;
         }
 
         public override void UseSkill(int Turn)
@@ -265,7 +280,7 @@ namespace TextRPG_Team23
                     condition.ui.MonsterLog = $"{Name}의 비열한 공격";
                 }
             }
-            
+
         }
 
 
@@ -283,7 +298,7 @@ namespace TextRPG_Team23
         }
     }
 
-    class Gloomseer : Monster,TakeDamage
+    class Gloomseer : Monster, TakeDamage
     {
 
         Battlecondition condition;
@@ -302,16 +317,17 @@ namespace TextRPG_Team23
             MaxHp = 24;
             CurrentHp = 24;
             countProphecy = 0;
+            IsDead = false;
         }
 
         public override void UseSkill(int Turn)
         {
-            if (BuffDef > 0) {BuffDef--;}
+            if (BuffDef > 0) { BuffDef--; }
 
             if (Turn % 2 != 0)
             {
                 doAttack = true;
-                countProphecy = Program.random.Next(0,5);
+                countProphecy = Program.random.Next(0, 5);
                 condition.ui.MonsterLog = $"{Name}가 미래를 보기 시작합니다.\n" +
                                           $"다음 턴에 {countProphecy}번의 공격이 적중합니다!";
             }
@@ -361,6 +377,7 @@ namespace TextRPG_Team23
             MaxHp = 26;
             CurrentHp = 26;
             isDanger = false;
+            IsDead = false;
 
         }
 
@@ -372,7 +389,7 @@ namespace TextRPG_Team23
             {
                 int code = Program.random.Next(1, (condition.monsterBox.Count));
                 HealPoint = 12;
-                condition.HealMonster(HealPoint,code);
+                condition.HealMonster(HealPoint, code);
 
                 if (CurrentHp < 14)
                 {
