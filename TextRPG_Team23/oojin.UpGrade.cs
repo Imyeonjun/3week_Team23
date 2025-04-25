@@ -49,8 +49,11 @@ namespace TextRPG_Team23
                     {
                         bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
-
-                        Console.WriteLine($"{prefix}{itemList}");
+                        for (int i = 0; i < equipmentItems.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {prefix}{itemList}");
+                        }
+                       
                     }
                 }
                 else
@@ -143,6 +146,7 @@ namespace TextRPG_Team23
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
                     player.Inventory.RemoveItem(selectedItem);
                     isFail = true;
+                    return;
                 }
                 else if (selectedItem.Upgrade == 10)
                 {
