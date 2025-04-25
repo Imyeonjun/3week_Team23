@@ -16,12 +16,12 @@ namespace TextRPG_Team23
     {
 
 
-        public static void BattleResultUI(Player player, List<Monster> monsters, int hp)  
+        public static void BattleResultUI(Player player, List<Monster> monsters, int hp)
         {
             // 적용 전 
             int oldLevel = player.Level;
             int oldExp = player.Exp;
-            
+
             int monsterLevelSum = 0;
 
             for (int i = 0; i < monsters.Count; i++)
@@ -50,7 +50,7 @@ namespace TextRPG_Team23
 
                 //플레이어 정보 업데이트
                 player.Level = newLevel;
-               
+
 
 
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
@@ -83,7 +83,7 @@ namespace TextRPG_Team23
                         foreach (string n in itemNames)
                         {
                             if (n == name)
-                                
+
                                 count++;
                         }
 
@@ -96,7 +96,7 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine("");
 
-                               
+
                 Console.WriteLine("\n 아무 키나 누르세요");
                 Console.ReadLine();
                 return;
@@ -123,10 +123,10 @@ namespace TextRPG_Team23
             }
 
 
-            
+
         }
 
-       
+
     }
 
     public static class LevelUp
@@ -172,7 +172,7 @@ namespace TextRPG_Team23
                 player.LevelUp();
             }
 
-            
+
             return level;
         }
     }
@@ -233,48 +233,86 @@ namespace TextRPG_Team23
                 switch (monsternam.Name)
                 {
                     case "모혈의 이끼거북":
-                        drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[2]);
                         break;
                     case "부패의 턱":
-                        drops.Add(ItemDB.Items[5]);
+                        drops.Add(ItemDB.Items[3]);
                         drops.Add(ItemDB.Items[4]);
                         break;
                     case "뿌리투구 수호자":
                         drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[6]);
                         break;
                     case "일몰 좀도둑":
-                        drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[2]);
                         break;
                     case "어스름 예언자":
-                        drops.Add(ItemDB.Items[5]);
+                        drops.Add(ItemDB.Items[3]);
                         drops.Add(ItemDB.Items[4]);
                         break;
                     case "비안개 정령":
                         drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[6]);
                         break;
 
                 }
             }
 
+          
+            List<Weapon> weapons = drops.OfType<Weapon>().ToList();
+            List<Clothes> armors = drops.OfType<Clothes>().ToList();
+            List<Consumable> consumable = drops.OfType<Consumable>().ToList();
 
-            foreach (Item item in drops)
+            
+            var uniqueWeapons = new HashSet<Weapon>(weapons);
+            var uniqueArmors = new HashSet<Clothes>(armors);
+
+
+            
+            var existingNames = new HashSet<string>(
+                player.Inventory.Items.Select(stack => stack.Item.Name)
+            );
+
+            
+            var rewardNames = new List<string>();
+
+           
+            foreach (var armor in uniqueArmors)
             {
-                player.Inventory.AddItem(item);
+                if (!existingNames.Contains(armor.Name))
+                {
+                    player.Inventory.AddItem(armor.Clone());
+                    rewardNames.Add(armor.Name);
+                    existingNames.Add(armor.Name);
+                }
+            }
+
+            
+            foreach (var weapon in uniqueWeapons)
+            {
+                if (!existingNames.Contains(weapon.Name))
+                {
+                    player.Inventory.AddItem(weapon.Clone());
+                    rewardNames.Add(weapon.Name);
+                    existingNames.Add(weapon.Name);
+                }
+            }
+
+            
+            foreach (var con in consumable)
+            {
+
+
+                player.Inventory.AddItem(con.Clone());
+                rewardNames.Add(con.Name);
+                existingNames.Add(con.Name);
 
             }
 
-
-            var itemName = new string[drops.Count];
-
-            for (int i = 0; i < drops.Count; i++)
-            {
-                itemName[i] = drops[i].Name;
-            }
-            return itemName;
+            
+            return rewardNames.ToArray();
 
 
         }
@@ -290,10 +328,10 @@ namespace TextRPG_Team23
 
     internal class Battle_Results_Screen
     {
-      
+
     }
 
-    
+
 
 
 
