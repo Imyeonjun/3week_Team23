@@ -54,11 +54,11 @@ namespace TextRPG_Team23
         {
             if (!isAction) //플레이어가 타겟으로 지정하지 않을 때 / 번호출력x
             {
-                Console.WriteLine($"Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}] {(IsDead ? "Dead" : "Alive")}");
+                Console.WriteLine($"Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {MaxHp}/{CurrentHp}] {(IsDead ? "Dead" : "Alive")}");
             }
             else /*if (!IsDead)*///플레이어가 타겟으로 지정할 때 / 번호출력o
             {
-                Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}]  {(IsDead ? "Dead" : "Alive" )}");
+                Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {MaxHp}/{CurrentHp}]  {(IsDead ? "Dead" : "Alive" )}");
             }
         }
 
@@ -95,7 +95,7 @@ namespace TextRPG_Team23
 
             if ((Turn % 2) == 0)
             {
-                Shield += 5;
+                Shield += 3;
                 Hp += Shield;
                 condition.ui.MonsterLog = $"\n{Name}의 등껍질이 자라나기 시작한다. | Shield: +({Shield})";
             }
@@ -119,12 +119,16 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
-                Hp -= (Damage - (Def));
+                int realDamage;
+                realDamage = Damage - Def;
+                Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                Hp -= (Damage - (Def * 2));
+                int realDamage;
+                realDamage = Damage - (Def * 2);
+                Hp -= realDamage;
             }
         }
     }
@@ -168,12 +172,16 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
-                Hp -= (Damage - (Def));
+                int realDamage;
+                realDamage = Damage - Def;
+                Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                Hp -= (Damage - (Def * 2));
+                int realDamage;
+                realDamage = Damage - (Def * 2);
+                Hp -= realDamage;
             }
         }
     }
@@ -263,14 +271,16 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
-                Hp -= (Damage - (Def));
-                poisonPower++;
+                int realDamage;
+                realDamage = Damage - Def;
+                Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                Hp -= (Damage - (Def * 2));
-                poisonPower++;
+                int realDamage;
+                realDamage = Damage - (Def * 2);
+                Hp -= realDamage;
             }
         }
     }
@@ -337,12 +347,16 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
-                Hp -= (Damage - (Def));
+                int realDamage;
+                realDamage = Damage - Def;
+                Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                Hp -= (Damage - (Def * 2));
+                int realDamage;
+                realDamage = Damage - (Def * 2);
+                Hp -= realDamage;
             }
         }
     }
@@ -398,12 +412,16 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
-                Hp -= (Damage - (Def));
+                int realDamage;
+                realDamage = Damage - Def;
+                Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                Hp -= (Damage - (Def * 2));
+                int realDamage;
+                realDamage = Damage - (Def * 2);
+                Hp -= realDamage;
             }
         }
     }
@@ -469,12 +487,16 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
-                Hp -= (Damage - (Def));
+                int realDamage;
+                realDamage = Damage - Def;
+                Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                Hp -= (Damage - (Def * 2));
+                int realDamage;
+                realDamage = Damage - (Def * 2);
+                Hp -= realDamage;
             }
         }
 
