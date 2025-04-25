@@ -25,6 +25,12 @@ namespace TextRPG_Team23
                         case 1:
                             Offering(player);
                             break;
+                        case 2:
+                            Buff(player);
+                            break;
+                        case 3:
+                            Console.WriteLine("미구현");
+                            break;
                     }
                 }
                 else if (input == 0)
@@ -72,6 +78,10 @@ namespace TextRPG_Team23
                 BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
                 //Console.WriteLine("잘못 입력했습니다.");
             }
+        }
+        private void Buff(Player player)
+        {
+
         }
     }
 }
