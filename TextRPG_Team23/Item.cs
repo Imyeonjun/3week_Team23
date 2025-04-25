@@ -94,7 +94,7 @@ namespace TextRPG_Team23
         }
         public override Item Clone()
         {
-            return new Weapon(Upgrade, Name, Price, Description, Atk, Durability);
+            return new Weapon(Upgrade, Name, Price, Description, BaseAtk, Durability);
         }
     }
 
@@ -131,7 +131,7 @@ namespace TextRPG_Team23
         }
         public override Item Clone()
         {
-            return new Clothes(Upgrade, Name, Price, Description, Def, Durability );
+            return new Weapon(Upgrade, Name, Price, Description, BaseDef, Durability);
         }
     }
 
