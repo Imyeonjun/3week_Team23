@@ -20,7 +20,7 @@ namespace TextRPG_Team23
             {
                 //Console.Clear();
                
-                Console.WriteLine("1. 강화   2. 제작   3. 수리  0. 나가기");
+                Console.Write("1. 강화  2. 제작  3. 수리 0. 나가기 \n>>> ");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 if (input > 0 && input <= 3)

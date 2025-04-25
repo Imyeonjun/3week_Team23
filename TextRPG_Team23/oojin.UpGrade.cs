@@ -44,14 +44,20 @@ namespace TextRPG_Team23
                 if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
                 {
 
-                    Console.WriteLine("\n == 강화 할 장비를 (번호)선택하세요 == ");
+                    Console.WriteLine("\n == 강화 할 장비를 (번호)선택하세요 == 0. 나가기");
+                    int.TryParse(Console.ReadLine(), out int num);
+                    if (num == 0)
+                    {
+                        return;
+                    }
+
                     int i = 0;
                     foreach (var itemList in equipmentItems)
                     {
                         bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
 
-                        Console.WriteLine($"{i + 1}. {prefix}{itemList} \n>>> ");
+                        Console.Write($"{i + 1}. {prefix}{itemList} \n>>> ");
                         i++;
                     }
                 }
