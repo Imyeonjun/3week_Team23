@@ -36,6 +36,7 @@ namespace TextRPG_Team23
         private Forge Forge;
         private Inn Inn;
         private Temple Temple;
+        public DungeonMaganer dungeon;
 
         public GameManager(Player player)
         {
@@ -57,14 +58,14 @@ namespace TextRPG_Team23
 
             condition.BattleConnect(_player, monsterBox, ui, battle);
             
-
+            this.dungeon = dungeon;
             Inn = new Inn();
             Forge = new Forge(player);
             Temple = new Temple();
             _menu = new QuestMenu();
 
             //dungeon.WorkFactory();
-            //dungeon.Start();
+            //dungeon.Start();    
         }
 
         public void StartGame()
@@ -72,7 +73,7 @@ namespace TextRPG_Team23
 
             while (isRunning)
             {
-                town.MainMenu(_player, _menu, Inn, Forge, Temple);
+                town.MainMenu(_player, _menu, Inn, Forge, Temple, dungeon);
             }
         }
 
@@ -91,7 +92,7 @@ namespace TextRPG_Team23
                 "상급 던전",
             };
 
-        public void Gate()
+        public void Gate(DungeonMaganer dungeon)
         {
             Console.WriteLine("== 던전 선택 ==");
             int selected = BranchManager.ReturnSelect(gateOptions, true, "돌아가기");
@@ -101,6 +102,8 @@ namespace TextRPG_Team23
                 case 1:
                     Console.WriteLine("디버그 : 하급 던전 입장");
                     Console.ReadKey();
+                    dungeon.WorkFactory();
+                    dungeon.Start();    
                     break;
                 case 2:
                     Console.WriteLine("디버그 : 중급 던전 입장");

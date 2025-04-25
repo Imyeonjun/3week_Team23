@@ -29,7 +29,7 @@ namespace TextRPG_Team23
                 "신전"
             };
 
-        public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple)
+        public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple, DungeonMaganer dungeon)
         {
             //Console.Clear();
             Console.WriteLine("== 메인 메뉴 ==");
@@ -54,7 +54,7 @@ namespace TextRPG_Team23
                     // 던전 입장 코드 수정
                     Console.WriteLine("디버그 : 던전 출력");
                     Console.ReadLine();
-                    gate.Gate();
+                    gate.Gate(dungeon);
                     break;
                 case 5:
                     inn.Selection(player, quest);

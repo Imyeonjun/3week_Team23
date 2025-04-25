@@ -75,7 +75,7 @@ public abstract class Job
 public class Warrior : Job
 {
     public override string JobName => "전사";
-    public override float BaseAtkDmg => 1.0f;
+    public override float BaseAtkDmg => 100.0f;
     public override int BaseDefence => 1;
 
     public override void PrintSkillInfo()
