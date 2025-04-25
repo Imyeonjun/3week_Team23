@@ -14,12 +14,15 @@ namespace TextRPG_Team23
         public BattleUi ui { get; private set; }
         public Battle battle { get; private set; }
 
+        public List<Monster> deadMonsterBox { get; set; }
+
         public void BattleConnect(Player player, List<Monster> monsterBox, BattleUi ui, Battle battle)
         {
             this.player = player;
             this.monsterBox = monsterBox;
             this.ui = ui;
             this.battle = battle;
+            deadMonsterBox = new List<Monster>();
         }
 
         public void Attack(int damage)
@@ -95,6 +98,7 @@ namespace TextRPG_Team23
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBattle = false;
+                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox);
                     continue;
                 }
 
