@@ -15,7 +15,7 @@ namespace TextRPG_Team23
             Console.WriteLine(" - @@ 신전에 어서오세요 - \n");
             while (true)
             {
-                Console.WriteLine("1. 헌금 2. 세레 3. 축복 0. 나가기 \n");
+                Console.WriteLine("1. 헌금 2. 버프 3. 축복 0. 나가기 \n");
 
                 int.TryParse(Console.ReadLine(), out int input);// 헌금만 해서 돈이 싸이면 버프의 효과가 상승 세례(버프) 축복(상태이상해제)
                 if (input > 0 && input <= 3)

@@ -16,7 +16,7 @@ namespace TextRPG_Team23
         {
             return new Dictionary<int, int>
             {
-                { 0, 100 },
+                { 0, 100 }, 
                 { 1, 90 },
                 { 2, 80 },
                 { 3, 70 },
@@ -25,9 +25,23 @@ namespace TextRPG_Team23
                 { 6, 40 },
                 { 7, 30 },
                 { 8, 20 },
-                { 9, 100 },
+                { 9, 10 },
             };
+           
         }
+        Dictionary<int, int> upgradeGold = new Dictionary<int, int>()
+            {
+                { 0, 100 },
+                { 1, 200 },
+                { 2, 200 },
+                { 3, 400 },
+                { 4, 400 },
+                { 5, 400 },
+                { 6, 700 },
+                { 7, 700 },
+                { 8, 700 },
+                { 9, 1100 },
+            };
         public UpGrade(Player player)
         {
             this.player = player;
@@ -110,8 +124,12 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
-                Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
-                Console.Write(" 1. [YES] 2. [NO] \n>>> ");
+                if(player.Gold > 0)
+                {
+                    Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
+                    Console.Write(" 1. [YES] 2. [NO] \n>>> ");
+                }
+
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)
@@ -145,7 +163,7 @@ namespace TextRPG_Team23
             {
                 selectedItem.Upgrade++;
                 Console.WriteLine(" == Success == ");
-                Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) {selectedItem.Upgrade} + {selectedItem.Name} 되었습니다.\n");
+                Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) \"{selectedItem.Upgrade} + {selectedItem.Name}\" 되었습니다.\n");
             }
             else // 강화에 실패
             {
@@ -153,8 +171,8 @@ namespace TextRPG_Team23
                 Console.WriteLine($"강화에 실패 했습니다.\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
-                    //selectedItem.Upgrade--;
-                    Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) \"+ {selectedItem.Upgrade}\" 되었습니다.\n");
+                    selectedItem.Upgrade--;
+                    Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) \"{selectedItem.Upgrade} + {selectedItem.Name}\" 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
