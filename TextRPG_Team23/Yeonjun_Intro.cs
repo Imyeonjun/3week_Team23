@@ -18,8 +18,13 @@ namespace TextRPG_Team23
         public void CreateCharacter(out Player player)
         {
             // 이름이 공백도 가능 안되게 수정
-            Console.WriteLine("이름을 입력하세요.");
-            string name = Console.ReadLine();
+            string name = "";
+
+            while (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("이름을 입력하세요.");
+                name = Console.ReadLine();
+            }
 
             Job job = null;
             bool selected = false;

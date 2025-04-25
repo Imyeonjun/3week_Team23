@@ -96,7 +96,8 @@ namespace TextRPG_Team23
                 Console.WriteLine($"[{i + 1}] {allQuests[i].Title}");
             }
 
-            Console.Write("\n자세히 볼 퀘스트 번호를 입력하세요 (0: 취소): ");
+            Console.Write("\n자세히 볼 퀘스트 번호를 입력하세요: ");
+            Console.WriteLine("0. 나가기");
             if (int.TryParse(Console.ReadLine(), out int input))
             {
                 if (input == 0)

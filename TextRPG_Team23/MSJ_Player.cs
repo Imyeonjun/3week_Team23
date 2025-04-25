@@ -123,8 +123,8 @@ namespace TextRPG_Team23
                     }
                     else
                     {
+                        BranchManager.ErrorMessage("잘못된 입력입니다.");
                         PlayerDoing(monBox, player);
-                        Console.WriteLine("잘못된 입력입니다.");
                     }
                     break;
 
@@ -151,8 +151,8 @@ namespace TextRPG_Team23
                         }
                         else
                         {
+                            BranchManager.ErrorMessage("잘못된 입력입니다.");
                             PlayerDoing(monBox, player);
-                            Console.WriteLine("잘못된 입력입니다.");
                         }
                     }
                     else if (skillInput == "2")
@@ -162,14 +162,14 @@ namespace TextRPG_Team23
                     }
                     else
                     {
+                        BranchManager.ErrorMessage("잘못된 스킬 선택입니다.");
                         PlayerDoing(monBox, player);
-                        Console.WriteLine("잘못된 스킬 선택입니다.");
                     }
                     break;
 
                 default:
+                    BranchManager.ErrorMessage("잘못된 입력입니다.");
                     PlayerDoing(monBox, player);
-                    Console.WriteLine("잘못된 입력입니다.");
                     break;
             }
 
