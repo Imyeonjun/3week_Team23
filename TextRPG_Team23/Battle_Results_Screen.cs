@@ -44,7 +44,7 @@ namespace TextRPG_Team23
 
 
                 // 레벨, 경험치 
-                int newLevel = LevelUp.NewLevel(oldLevel, totalExp, out int remainingExp);
+                int newLevel = LevelUp.NewLevel(oldLevel, totalExp, out int remainingExp, player);
 
                 //플레이어 정보 업데이트
                 player.Level = newLevel;
@@ -186,7 +186,7 @@ namespace TextRPG_Team23
         }
 
 
-        public static int NewLevel(int currentLevel, int totalExp, out int remainingExp)
+        public static int NewLevel(int currentLevel, int totalExp, out int remainingExp, Player player)
         {
             int exp = totalExp;
             int level = currentLevel;
@@ -195,6 +195,10 @@ namespace TextRPG_Team23
             {
                 exp -= MaxExp(level);
                 level++;
+            }
+            if (level != currentLevel)
+            {
+                player.RecalculateStats();
             }
 
             remainingExp = exp;
