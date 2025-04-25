@@ -45,12 +45,14 @@ namespace TextRPG_Team23
                 var equipmentItems = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
                 if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
                 {
+                    int i = 0;
                     foreach (var itemList in equipmentItems) 
                     {
                         bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
 
-                        Console.WriteLine($"{prefix}{itemList}");
+                        Console.WriteLine($"{i + 1}. {prefix}{itemList}");
+                        i++;
                     }
                 }
                 else
@@ -71,6 +73,7 @@ namespace TextRPG_Team23
                             Console.WriteLine();
 
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
+                            Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
                             //Console.Clear();
                             ItemUpgrade();
                             return;
@@ -78,7 +81,8 @@ namespace TextRPG_Team23
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 번호입니다");
+                        BranchManager.ErrorMessage("잘못된 번호입니다,  Enter를 누른 후 다시 입력해주세요.");
+                        //Console.WriteLine("잘못된 번호입니다");
                         break;
                     }
                 }
@@ -86,26 +90,32 @@ namespace TextRPG_Team23
         }
         private void ItemUpgrade()
         {
+            
             while (true)
             {
                 //Console.Clear();
-
-                Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
 
                 Console.WriteLine(" - 아이템을 강화하시겠습니까? - ");
                 Console.WriteLine(" 1. [YES] 2. [NO]");
 
                 int.TryParse(Console.ReadLine(), out int input);
-                switch (input)
+                if (input > 0 && input <= 2)
                 {
-                    case 1:
-                        ItemGamblig();
-                        break;
-                    case 2:
-                        return;
-                    default:
-                        Console.WriteLine("잘못 입력 했습니다.");
-                        break;
+                    switch (input)
+                    {
+                        case 1:
+                            ItemGamblig();
+                            break;
+                        case 2:
+                            // forge 로 돌아가기
+                            break;
+                    }
+                }
+                else
+                {
+                    BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
+                    //Console.WriteLine("잘못 입력했습니다.");
+                    ItemUpgrade();
                 }
             }
         }
@@ -134,7 +144,7 @@ namespace TextRPG_Team23
                 Console.WriteLine(" 강화에 실패...\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8 && !isFail)
                 {
-                    selectedItem.Upgrade--;
+                    //selectedItem.Upgrade--;
                     Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
@@ -142,7 +152,9 @@ namespace TextRPG_Team23
                     
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
                     player.Inventory.RemoveItem(selectedItem);
+                    
                     isFail = true;
+                    return;
                 }
                 else if (selectedItem.Upgrade == 10)
                 {
@@ -152,7 +164,6 @@ namespace TextRPG_Team23
                 }
                 else
                 {
-                    Console.WriteLine("더 이상 강화할 수 없습니다.");
                     return;
                 }
                 Console.WriteLine("Enter를 눌러서 계속...");
