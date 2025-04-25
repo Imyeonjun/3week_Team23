@@ -194,16 +194,7 @@ namespace TextRPG_Team23
 
         public override void UseSkill(int Turn)
         {
-            if (BuffDef > 0) {  BuffDef--; }
 
-            if ((Turn % 2) == 0)
-            {
-
-            }
-            if ((Turn % 2) != 0)
-            {
-
-            }
         }
 
         public void TakeDamage(int Damage)
