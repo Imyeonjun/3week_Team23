@@ -37,8 +37,9 @@ namespace TextRPG_Team23
         }
         private void Repair()
         {
+            bool re = false;
             //Console.Clear();
-            Console.WriteLine(" == 수리할 아이템 선택 == ");
+            Console.WriteLine(" == 수리할 아이템 선택 == \n");
 
             var items = player.Inventory.Items;
 
@@ -47,17 +48,22 @@ namespace TextRPG_Team23
                 Console.WriteLine($"{i + 1}. {items[i].Item.Name} (내구도: {items[i].Item.Durability}/{items[i].Item.MaxDurability})");
             }
 
-            Console.WriteLine(" == 수리할 아이템 번호를 입력하세요 == ");
-            int.TryParse(Console.ReadLine(), out int index);
-            if (index > 0 && index <= items.Count)
+            do
             {
-                items[index - 1].Item.RepairMax();  // 여기서 호출!
+                Console.WriteLine(" == 수리할 아이템 번호를 입력하세요 == ");
+                int.TryParse(Console.ReadLine(), out int index);
+                if (index > 0 && index <= items.Count)
+                {
+                    items[index - 1].Item.RepairMax();  // 여기서 호출!
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                }
             }
-            else
-            {
-                Console.WriteLine("잘못된 입력입니다.");
-                return;
-            }
+            while (!re);
+           
         }
     }
 }
