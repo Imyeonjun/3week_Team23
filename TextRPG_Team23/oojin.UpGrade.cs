@@ -53,9 +53,9 @@ namespace TextRPG_Team23
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
 
                         Console.WriteLine($"{i + 1}. {prefix}{itemList}");
-                        Console.Write("0. 나가기\n>>> ");
                         i++;
                     }
+                    Console.Write("0. 나가기\n>>> ");
                 }
                 else
                 {

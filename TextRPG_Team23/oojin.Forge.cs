@@ -15,12 +15,12 @@ namespace TextRPG_Team23
         public void Selection(Forge forge)
         {
             UpGrade upGrade = new UpGrade(player);
-            Console.WriteLine(" == @@ 대장간에 어서오세요 == \n");
+            Console.WriteLine(" == @@ 대장간에 어서오세요 ==");
             while (true)
             {
                 //Console.Clear();
                
-                Console.Write("1. 강화  2. 제작  3. 수리 0. 나가기 \n>>> ");
+                Console.Write("\n1. 강화  2. 제작  3. 수리 0. 나가기 \n>>> ");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 if (input > 0 && input <= 3)
@@ -65,12 +65,17 @@ namespace TextRPG_Team23
                 bool isItme = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item);
                 string Mounting = isItme ? "[E] " : "";
 
-                Console.Write($"{i + 1}. {Mounting}{itemList}\n>>> ");
+                Console.WriteLine($"{i + 1}. {Mounting}{itemList}");
                 i++;
             }
+            Console.Write("0. 나가기 \n>>> ");
             int.TryParse(Console.ReadLine(), out int index);
-            if (index > 0 && index <= items.Count)
+            if (index >= 0 && index <= items.Count)
             {
+                if (index == 0)
+                {
+                    return;
+                }
                 items[index - 1].Item.RepairMax();  // 여기서 호출!
                 return;
             }
