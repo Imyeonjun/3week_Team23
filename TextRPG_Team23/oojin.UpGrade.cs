@@ -45,15 +45,14 @@ namespace TextRPG_Team23
                 var equipmentItems = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
                 if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
                 {
+                    int i = 0;
                     foreach (var itemList in equipmentItems) 
                     {
                         bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
                         string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
-                        for (int i = 0; i < equipmentItems.Count; i++)
-                        {
-                            Console.WriteLine($"{i + 1}. {prefix}{itemList}");
-                        }
-                       
+
+                        Console.WriteLine($"{i + 1}. {prefix}{itemList}");
+                        i++;
                     }
                 }
                 else
@@ -82,7 +81,7 @@ namespace TextRPG_Team23
                     }
                     else
                     {
-                        BranchManager.ErrorMessage("잘못된 번호입니다, 다시 입력해주세요.");
+                        BranchManager.ErrorMessage("잘못된 번호입니다,  Enter를 누른 후 다시 입력해주세요.");
                         //Console.WriteLine("잘못된 번호입니다");
                         break;
                     }
