@@ -93,23 +93,26 @@ namespace TextRPG_Team23
 
             if (BuffDef > 0) { BuffDef--; }
 
-            if ((Turn % 2) == 0)
+            if (Turn % 2 != 0)
+            {
+                condition.Attack(Atk + (Shield / 2));
+                condition.ui.MonsterLog = $"\n▶{Name}은 {condition.player.Name}을 등껍질로 후려친다!\n" +
+                                          $"< 받은 데미지: ({Atk + (Shield / 2)}) >";
+            }
+
+            if (Turn % 2 == 0)
             {
                 Shield += 3;
                 Hp += Shield;
-                condition.ui.MonsterLog = $"\n{Name}의 등껍질이 자라나기 시작한다. | Shield: +({Shield})";
+                condition.ui.MonsterLog = $"\n▷{Name}의 등껍질이 자라나기 시작한다.\n" + 
+                                          $"< 누적된 재생등껍질: ({Shield}) >";
             }
 
-            if ((Turn % 2) != 0)
-            {
-                condition.ui.MonsterLog = $"\n{Name}은 {condition.player.Name}을 등껍질로 후려친다!";
-                condition.Attack(Atk + (Shield / 2));
-            }
-
-            if ((Turn % 8 == 0))
+            if (Turn % 8 == 0)
             {
                 Shield = 0;
-                condition.ui.MonsterLog = $"\n{Name}의 덩껍질이 바스라졌다 | <재생 보호막 파괴 ({Shield})>";
+                condition.ui.MonsterLog = $"\n▷{Name}의 덩껍질이 바스라졌다 \n"+
+                                          $"< 재생 보호막 파괴 ({Shield}) >";
 
             }
         }
@@ -154,16 +157,18 @@ namespace TextRPG_Team23
         {
             if (BuffDef > 0) { BuffDef--; }
 
+            if ((Turn % 2) != 0)
+            {
+                condition.Attack(Atk + BuffDef);
+                condition.ui.MonsterLog = $"\n▶{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다." +
+                                          $"< 받은 데미지: ({Atk + BuffDef}) >";
+            }
+
             if ((Turn % 2) == 0)
             {
                 BuffDef++;
                 condition.BuffDef(1);
-                condition.ui.MonsterLog = $"\n{Name}는 아군 전체를 축복합니다.";
-            }
-            if ((Turn % 2) != 0)
-            {
-                condition.Attack(Atk + BuffDef);
-                condition.ui.MonsterLog = $"\n{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다.";
+                condition.ui.MonsterLog = $"\n▷{Name}는 아군 전체를 축복합니다.";
             }
         }
 
@@ -227,19 +232,19 @@ namespace TextRPG_Team23
 
             if ((Turn % 2) != 0)
             {
-                if (poisonCount >= 0 && poisonCount < 6)
-                {
-                    poisonCount++;
-                }
 
                 if (isPowerUp)
                 {
-                    condition.ui.MonsterLog = $"\n당신의 공격에 화가 난 {Name}은 아주 치명적인 맹독을 내뿜었다!\n" +
-                                              $"받게 될 데미지{poisonDamage}";
+                    condition.ui.MonsterLog = $"\n▷{Name}은 아주 치명적인 맹독을 입에서 뚝 뚝 흘린다.\n" +
+                                              $"다음 턴에 받게 될 데미지: {poisonDamage}";
                 }
                 else
                 {
-                    condition.ui.MonsterLog = $"\n{Name}은 {condition.player.Name}에게 독가스를 분사했다\n" +
+                    if (poisonCount >= 0 && poisonCount < 6)
+                    {
+                        poisonCount++;
+                    }
+                    condition.ui.MonsterLog = $"\n▷{Name}은 독을 내뿜을 준비를 한다.\n" +
                                               $"누적된 독수치: {poisonCount}  수치마다 받게 될 데미지{poisonDamage}";
                 }
 
@@ -249,8 +254,9 @@ namespace TextRPG_Team23
             {
                 if (isPowerUp)
                 {
+                    poisonCount = 1;
                     condition.Attack(poisonCount * poisonDamage);
-                    condition.ui.MonsterLog = $"\n당신의 공격에 화가 난 {Name}은 치명적인 맹독을 분사했다!\n" +
+                    condition.ui.MonsterLog = $"\n▶당신의 공격에 화가 난 {Name}은 치명적인 맹독을 분사했다!!!\n" +
                                               $"치명적인독 피해: {poisonCount * poisonDamage}";
                     isPowerUp = false;
                     poisonDamage = 3;
@@ -259,11 +265,10 @@ namespace TextRPG_Team23
                 else
                 {
                     condition.Attack(poisonCount * poisonDamage);
-                    condition.ui.MonsterLog = $"\n{Name}의 독이 {condition.player.Name}을 위협한다!\n" +
+                    condition.ui.MonsterLog = $"\n▶{Name}의 독이 {condition.player.Name}에게 분사된다!\n" +
                                               $"독 피해: {poisonCount * poisonDamage}";
                 }
             }
-
 
         }
 
@@ -271,12 +276,14 @@ namespace TextRPG_Team23
         {
             if (BuffDef <= 0)
             {
+                poisonPower += 1;
                 int realDamage;
                 realDamage = Damage - Def;
                 Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
+                poisonPower += 1;
                 BuffDef--;
                 int realDamage;
                 realDamage = Damage - (Def * 2);
@@ -316,7 +323,7 @@ namespace TextRPG_Team23
             {
                 Def = 50;
                 hide = true;
-                condition.ui.MonsterLog = $"\n{Name}은 그림자에 몸을 숨겼다.";
+                condition.ui.MonsterLog = $"\n▷{Name}은 그림자에 몸을 숨겼다.";
             }
             else if (hide)
             {
@@ -326,17 +333,20 @@ namespace TextRPG_Team23
                 if (Luck > 70)
                 {
                     condition.Attack(realDamage + Atk);
-                    condition.ui.MonsterLog = $"\n{Name}의 급소공략!";
+                    condition.ui.MonsterLog = $"\n▶{Name}의 급소공략!\n" +
+                                              $"받은 데미지: ({realDamage + Atk})";
                 }
                 else if (Luck < 40)
                 {
                     condition.Attack(Atk - realDamage);
-                    condition.ui.MonsterLog = $"\n{Name}은 돌뿌리에 걸려 볼품없이 넘어져 {condition.player.Name}을 타격했다.";
+                    condition.ui.MonsterLog = $"\n▶{Name}은 돌뿌리에 걸려 볼품없이 넘어져 {condition.player.Name}을 타격했다.\n" +
+                                              $"받은 데미지: ({Atk - realDamage})";
                 }
                 else
                 {
                     condition.Attack(realDamage);
-                    condition.ui.MonsterLog = $"\n{Name}의 비열한 공격";
+                    condition.ui.MonsterLog = $"\n▶{Name}의 비열한 공격\n" +
+                                              $"받은 데미지: ({realDamage})"; ;
                 }
             }
 
@@ -391,7 +401,7 @@ namespace TextRPG_Team23
             {
                 doAttack = true;
                 countProphecy = Program.random.Next(0, 5);
-                condition.ui.MonsterLog = $"\n{Name}가 미래를 보기 시작합니다.\n" +
+                condition.ui.MonsterLog = $"\n▷{Name}가 미래를 보기 시작합니다.\n" +
                                           $"다음 턴에 {countProphecy}번의 공격이 적중합니다!";
             }
 
@@ -402,8 +412,8 @@ namespace TextRPG_Team23
                 {
                     condition.Attack(Atk);
                 }
-                condition.ui.MonsterLog = $"\n{Name}는 신비한 힘으로 {condition.player.Name}의 정신을 공격합니다!\n" +
-                                          $"적중한 공격 횟수: {countProphecy} 피해량: {countProphecy * Atk}";
+                condition.ui.MonsterLog = $"\n▶{Name}는 신비한 힘으로 {condition.player.Name}의 정신을 공격합니다!\n" +
+                                          $"적중한 공격 횟수: {countProphecy} 받은 피해량: {countProphecy * Atk}";
             }
         }
 
@@ -452,33 +462,29 @@ namespace TextRPG_Team23
 
             if (Turn % 2 != 0 && !isDanger)
             {
-                int myCode = MobCode;
-                int target = FindFriendly();
-
-                HealPoint = 12;
-                condition.HealMonster(HealPoint, target);
-
-                if (CurrentHp < 14)
-                {
-                    isDanger = true;
-                }
-
-                condition.ui.MonsterLog = $"\n{Name}의 안개가 아군을 감싸안습니다.";
+                condition.ui.MonsterLog = $"\n▷{Name}이 안개를 준비하고 있습니다.";
             }
             else if (Turn % 2 != 0 && isDanger)
             {
-                condition.ui.MonsterLog = $"\n{Name}이 안개를 준비하고 있습니다.";
+                condition.ui.MonsterLog = $"\n▷{Name}이 안개를 준비하고 있습니다.";
             }
 
 
             if (Turn % 2 == 0 && !isDanger)
             {
-                condition.ui.MonsterLog = $"\n{Name}이 안개를 준비하고 있습니다.";
+                int myCode = MobCode;
+                int target = FindFriendly();
+                HealPoint = 12;
+                condition.HealMonster(HealPoint, target);
+                
+                condition.ui.MonsterLog = $"\n▶{Name}의 안개가 아군을 회복시킵니다.\n" +
+                                          $"< 회복시킨 아군: ({condition.healTarget}) | 회복량: ({HealPoint}) >";
             }
             else if (Turn % 2 == 0 && isDanger)
             {
                 condition.HealAllMonster((HealPoint = Program.random.Next(5, 9)));
-                condition.ui.MonsterLog = $"\n자욱하게 퍼진 안개는 몬스터들을 회복시켰습니다.";
+                condition.ui.MonsterLog = $"\n▶자욱하게 퍼진 안개는 몬스터들을 회복시켰습니다.\n" +
+                                          $"< 회복량: ({HealPoint}) >";
             }
         }
 
@@ -490,6 +496,10 @@ namespace TextRPG_Team23
                 int realDamage;
                 realDamage = Damage - Def;
                 Hp -= realDamage;
+                if (CurrentHp < 14)
+                {
+                    isDanger = true;
+                }
             }
             else if (BuffDef > 0)
             {
@@ -497,6 +507,10 @@ namespace TextRPG_Team23
                 int realDamage;
                 realDamage = Damage - (Def * 2);
                 Hp -= realDamage;
+                if (CurrentHp < 14)
+                {
+                    isDanger = true;
+                }
             }
         }
 
