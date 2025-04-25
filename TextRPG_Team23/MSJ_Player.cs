@@ -122,6 +122,11 @@ namespace TextRPG_Team23
                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
                     if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
                     {
+                        if(monBox[targetIndex - 1].IsDead)
+                        {
+                            Console.WriteLine("이미 죽은 몬스터 입니다.");
+                            PlayerDoing(monBox, player, ui);
+                        }
                         //공격 로직 작성
                         job.Attack(monBox[targetIndex - 1], TotalAtk, player);
                     }
@@ -155,6 +160,11 @@ namespace TextRPG_Team23
 
                         if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                         {
+                            if (monBox[tgIndex - 1].IsDead)
+                            {
+                                Console.WriteLine("이미 죽은 몬스터 입니다.");
+                                PlayerDoing(monBox, player, ui);
+                            }
                             //공격 로직 작성(단일딜)
                             job.SkillA(monBox[tgIndex - 1], TotalAtk, player);
                         }
@@ -166,8 +176,11 @@ namespace TextRPG_Team23
                     }
                     else if (skillInput == "2")
                     {
-                        // 공격 로직 작성 (광역딜)
-                        job.SkillB(monBox, TotalAtk, player);
+                        //살아있는 몬스터만 필터링
+                        List<Monster> aliveMonsters = monBox.FindAll(mon => mon.IsDead == false);
+
+                        //광역 공격
+                        job.SkillB(aliveMonsters, TotalAtk, player);
                     }
                     else
                     {
