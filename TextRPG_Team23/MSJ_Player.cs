@@ -134,21 +134,25 @@ namespace TextRPG_Team23
 
                 case "2":
                     // 몬스터 목록 출력
-                    foreach (Monster mon in monBox)
+                    /*foreach (Monster mon in monBox)
                     {
                         mon.MonsterInfo(false, mon.MobCode);
 
-                    }
+                    }*/
+                    ui.PrintMonster(false);
+
                     PrintSkillStatus();
                     Console.Write(">>> ");
                     string skillInput = Console.ReadLine();
 
                     if (skillInput == "1")
                     {
-                        foreach (Monster mon in monBox)
+                        /*foreach (Monster mon in monBox)
                         {
                             mon.MonsterInfo(true, mon.MobCode);
-                        }
+                        }*/
+                        ui.PrintMonster(true);
+
                         if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                         {
                             //공격 로직 작성(단일딜)
