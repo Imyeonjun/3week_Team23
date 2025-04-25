@@ -165,12 +165,14 @@ namespace TextRPG_Team23
             foreach (Monster m in condition.monsterBox)
             {
                 m.MonsterInfo(playerTurn, num);
-                if (!m.IsDead)
+                /*if (!m.IsDead)
                 {
                     num++;
-                }
+                }*/
+                num++;
             }
         }
+
         public void PrintMonsterLog()
         {
             Console.WriteLine(MonsterLog);
