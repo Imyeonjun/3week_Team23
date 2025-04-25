@@ -8,6 +8,7 @@ namespace TextRPG_Team23
 {
     public class Temple
     {
+        private int gold;
         public void Selection(Player player)
         {
             // 기능 추가 수정
@@ -41,8 +42,7 @@ namespace TextRPG_Team23
         }
         private void Offering(Player player)
         {
-            int gold = 0;
-            Console.Write("현재 남아있는 돈 : ");
+            Console.Write("현재 가지고 있는 금액 : ");
 
             Console.WriteLine($"{player.Gold}G");
 
@@ -54,11 +54,17 @@ namespace TextRPG_Team23
             {
                 if (input == 1)
                 {
-                    //Console.WriteLine(" == 헌금 할 금액을 입력해주세요 ==\n");
-                    //Console.WriteLine($"{currentGold}G");
-                    //int.TryParse(Console.ReadLine(), out int goldInput);
-                    //currentGold -= goldInput;
-                    //Console.WriteLine($"{currentGold}G");
+                    Console.WriteLine(" == 헌금 할 금액을 입력해주세요 ==\n");
+                    int.TryParse(Console.ReadLine(), out int goldInput);
+
+                    player.Gold -= goldInput;
+
+                    gold += goldInput;
+                    Console.WriteLine($"기부된 현재 금액 : {gold}");
+                }
+                else
+                {
+                    return;
                 }
             }
             else
