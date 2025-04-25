@@ -18,7 +18,7 @@ namespace TextRPG_Team23
             while (true)
             {
                 //Console.Clear();
-                Console.WriteLine("- @@대장간에 어서오세요 - \n   1. 강화 \n   2. 제작 \n   3. 수리 0. 나가기");
+                Console.WriteLine("- @@대장간에 어서오세요 - \n   1. 강화 \n   2. 제작 \n   3. 수리  \n 0. 나가기");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 if (input > 0 && input <= 2)
