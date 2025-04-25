@@ -191,7 +191,7 @@ namespace TextRPG_Team23
             Console.WriteLine("");
             Console.WriteLine("                       제작 ");
             Console.WriteLine("");
-            Console.WriteLine("메인 메뉴                             : 임연준 (팀장)");
+            Console.WriteLine("메인 메뉴, 세이브 로드                : 임연준 (팀장)");
             Console.WriteLine("던전, 몬스터, 전투시스템              : 이명준");
             Console.WriteLine("Player 클래스, 상태보기, Quest 클래스 : 문승준");
             Console.WriteLine("아이템, 인벤토리, 상점                : 박지환");
