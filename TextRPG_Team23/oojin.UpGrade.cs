@@ -32,17 +32,16 @@ namespace TextRPG_Team23
         {
             this.player = player;
         }
-        bool a = true;
+
         private Item selectedItem;
         public void ItemSelection(Forge forge)
         {
-            bool a = true;
-            while (a)
+            while (true)
             {
                 //Console.Clear();
 
-                Console.WriteLine(" == 계속 하시겠습니까? == ");
-                Console.WriteLine(" 1. [YES] 2. [NO]");
+                //Console.WriteLine(" == 계속 하시겠습니까? == ");
+                //Console.Write(" 1. [YES] 2. [NO] \n >>>");
 
                 int.TryParse(Console.ReadLine(), out int num);
                 if (num > 0 && num <= 2)
@@ -53,7 +52,7 @@ namespace TextRPG_Team23
                         if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
                         {
 
-                            Console.WriteLine(" - 강화 할 장비를 (번호)선택하세요 - ");
+                            Console.WriteLine(" == 강화 할 장비를 (번호)선택하세요 == ");
                             int i = 0;
                             foreach (var itemList in equipmentItems)
                             {
@@ -74,7 +73,6 @@ namespace TextRPG_Team23
                         int.TryParse(Console.ReadLine(), out int input);
                         for (int i = 0; i < equipmentItems.Count; i++)
                         {
-
                             if (input >= 1 && input <= equipmentItems.Count)
                             {
                                 if (input == i + 1) // 입력한 숫자와 i값이 같다면
@@ -82,7 +80,7 @@ namespace TextRPG_Team23
                                     Console.WriteLine();
 
                                     selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
-                                    Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
+                                    Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) 선택되었습니다.\n");
                                     //Console.Clear();
                                     ItemUpgrade(forge);
                                     break;
@@ -98,7 +96,6 @@ namespace TextRPG_Team23
                     }
                     else if(num == 2)
                     {
-                        a = false;
                         forge.Selection(forge);
 
                         return;
@@ -121,12 +118,11 @@ namespace TextRPG_Team23
         }
         private void ItemUpgrade(Forge forge)
         {
-            a = true;
-            do
+            while (true)
             {
                 //Console.Clear();
 
-                Console.WriteLine(" - 아이템을 강화하시겠습니까? - ");
+                Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
                 Console.WriteLine(" 1. [YES] 2. [NO]");
 
                 int.TryParse(Console.ReadLine(), out int input);
@@ -145,10 +141,9 @@ namespace TextRPG_Team23
                 {
                     BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
                     //Console.WriteLine("잘못 입력했습니다.");
-                    ItemUpgrade(forge);
+                    //ItemUpgrade(forge);
                 }
             }
-            while (a);
         }
         private void ItemGamblig(Forge forge)
         {
@@ -159,46 +154,38 @@ namespace TextRPG_Team23
 
             int roll = rand.Next(1, 101);
 
-            bool isFail = false;
-
-            if (roll <= upGradeChance[selectedItem.Upgrade] && !isFail)
+            if (roll <= upGradeChance[selectedItem.Upgrade]) // 강화에 성공
             {
                 selectedItem.Upgrade++;
-                Console.WriteLine(" - Success - ");
-                Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
-                Console.WriteLine("Enter를 눌러서 계속...");
-                Console.ReadLine();
+                Console.WriteLine(" == Success == ");
+                Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
             }
-            else
+            else // 강화에 실패
             {
-                Console.WriteLine(" - failure - ");
-                Console.WriteLine(" 강화에 실패...\n");
-                if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8 && !isFail)
+                Console.WriteLine(" == failure == ");
+                Console.WriteLine($"강화에 실패 했습니다.\n");
+                if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
                     //selectedItem.Upgrade--;
-                    Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
+                    Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
                     
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
                     player.Inventory.RemoveItem(selectedItem);
-                    a = false;
                     forge.Selection(forge);
 
-                   
-                    isFail = true;
                     return;
                 }
-                else if (selectedItem.Upgrade == 10)
-                {
-                    Console.WriteLine("더 이상 강화할 수 없습니다.");
-                    a = false;
-                    forge.Selection(forge);
+                //else if (selectedItem.Upgrade == 10)
+                //{
+                //    Console.WriteLine("더 이상 강화할 수 없습니다.");
+                //    a = false;
+                //    forge.Selection(forge);
                     
-                    isFail = true;
-                    return;
-                }
+                //    return;
+                //}
                 else
                 {
                     return;
