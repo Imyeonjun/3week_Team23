@@ -96,23 +96,10 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine("");
 
-
-
-
-
-
-                Console.WriteLine("0. 다음");
-                Console.Write("\n선택 >>");
-
-                int choiceNumber = CheckInput(0, 0);
-                switch (choiceNumber)
-                {
-                    case 0:
-                        return;
-                        
-
-
-                }
+                               
+                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.ReadLine();
+                return;
             }
             else
             {
@@ -126,21 +113,17 @@ namespace TextRPG_Team23
                 Console.WriteLine($"HP {player.MaxHp} → 0");
                 Console.WriteLine("");
 
-                Console.WriteLine("0. 다음");                       
-                Console.Write("\n선택 >>");
 
-                int choiceNumber = CheckInput(0, 0);
-                switch (choiceNumber)
-                {
-                    case 0:
-                        End.Eending();
-                        break;
-
-
-                }
+                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.ReadLine();
+                End.Eending();
+                return;
 
 
             }
+
+
+            
         }
 
         static int CheckInput(int min, int max)
