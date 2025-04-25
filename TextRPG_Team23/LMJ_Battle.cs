@@ -86,9 +86,7 @@ namespace TextRPG_Team23
             bool isBattle = isEnter;
 
             Console.Clear();
-            Console.Write("몬스터가 등장했다!\n\n" +
-              "전투를 시작하려면 아무키나 누르세요.\n" +
-              ">>>");
+            Console.Write("몬스터가 등장했다!\n\n");
 
             //Console.ReadKey();
             condition.deadMonsterBox = condition.monsterBox.ToList();
@@ -109,6 +107,8 @@ namespace TextRPG_Team23
 
 
                 condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
+                Console.ReadKey();
+                Console.Clear();
 
 
             }
