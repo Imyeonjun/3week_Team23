@@ -145,18 +145,6 @@ namespace TextRPG_Team23
                 condition.monsterBox.Clear();
             }
         }
-
-/*        public void MonsterDead()
-        {
-            //for (int i = condition.monsterBox.Count - 1; i >= 0; i--)
-            //{
-            //    if (condition.monsterBox[i].Hp <= 0)
-            //    {
-            //        condition.monsterBox.RemoveAt(i);
-            //    }
-            //}
-            condition.monsterBox.Clear();
-        }*/
     }
 
     public class BattleUi
@@ -177,7 +165,10 @@ namespace TextRPG_Team23
             foreach (Monster m in condition.monsterBox)
             {
                 m.MonsterInfo(playerTurn, num);
-                num++;
+                if (!m.IsDead)
+                {
+                    num++;
+                }
             }
         }
         public void PrintMonsterLog()
