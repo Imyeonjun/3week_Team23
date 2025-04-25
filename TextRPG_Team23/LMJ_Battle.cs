@@ -24,7 +24,15 @@ namespace TextRPG_Team23
             this.battle = battle;
             deadMonsterBox = monsterBox;
         }
+
+
         public int svainghp;
+        public string healTarget;
+
+
+
+
+
         public void Attack(int damage)
         {
             player.PlayerTakeDamage(damage);
@@ -59,6 +67,7 @@ namespace TextRPG_Team23
             {
                 if (code == m.MobCode && !m.IsDead) 
                 {
+                    healTarget = m.Name;
                     m.Hp += heal;
                 }
             }
@@ -104,7 +113,7 @@ namespace TextRPG_Team23
                 condition.ui.PrintMonster(false);
 
                 StartMonsterTurn();
-
+                turnCount++;
 
                 condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
                 Console.ReadKey();
@@ -128,10 +137,8 @@ namespace TextRPG_Team23
                 {
                     Console.WriteLine("죽은몬스터");
                 }
-
             }
-
-            turnCount++;
+            
         }
 
         public void CheckMonsterDead()
