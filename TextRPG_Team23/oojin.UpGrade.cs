@@ -25,8 +25,7 @@ namespace TextRPG_Team23
                 { 6, 40 },
                 { 7, 30 },
                 { 8, 20 },
-                { 9, 10
-                },
+                { 9, 10 },
             };
         }
         public UpGrade(Player player)
