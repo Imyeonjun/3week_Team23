@@ -65,7 +65,7 @@ namespace TextRPG_Team23
                     Console.ReadLine();
                     break;
                 case 7:
-                    temple.Selection();
+                    temple.Selection(player);
                     Console.ReadLine();
                     break;
                 case 0:
