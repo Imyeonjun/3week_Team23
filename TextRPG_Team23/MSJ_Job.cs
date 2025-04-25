@@ -30,7 +30,7 @@ public abstract class Job
         Console.WriteLine($"\n{enemy.Name}");
         Console.WriteLine($"HP {originalHp} -> {(enemy.CurrentHp <= 0 ? "Dead" : enemy.CurrentHp.ToString())}");
 
-        Console.WriteLine("\n0. 다음\n");
+        Console.WriteLine("\n엔터를 눌러 진행\n");
         Console.Write(">> ");
     }
     public void DisplayAttackResult(Player player, Monster enemy, int originalHp, int finalDamage, string skillName)
@@ -41,7 +41,7 @@ public abstract class Job
         Console.WriteLine($"\n{enemy.Name}");
         Console.WriteLine($"HP {originalHp} -> {(enemy.CurrentHp <= 0 ? "Dead" : enemy.CurrentHp.ToString())}");
 
-        Console.WriteLine("\n0. 다음\n");
+        Console.WriteLine("\n엔터를 눌러 진행\n");
         Console.Write(">> ");
     }
     public void DisplayAttackResult(Player player, List<Monster> enemies, List<int> originalHps, List<int> damages, string skillName)
@@ -59,7 +59,7 @@ public abstract class Job
             Console.WriteLine($"HP {originalHp} -> {(mon.CurrentHp <= 0 ? "Dead" : mon.CurrentHp.ToString())}");
         }
 
-        Console.WriteLine("\n0. 다음\n");
+        Console.WriteLine("\n엔터를 눌러 진행\n");
         Console.Write(">> ");
     }
 
