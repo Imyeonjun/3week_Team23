@@ -31,6 +31,8 @@ namespace TextRPG_Team23
         public int MaxHp { get; set; }
         public int CurrentHp { get; set; }
 
+        public bool IsDead { get; set; }
+
         public int Hp
         {
             get { return CurrentHp; }
@@ -83,10 +85,12 @@ namespace TextRPG_Team23
             Def = 12;
             MaxHp = 34;
             CurrentHp = 34;
+            IsDead = false;
         }
 
         public override void UseSkill(int Turn)
         {
+
             if (BuffDef > 0){BuffDef--;}
 
             if ((Turn % 2) == 0)
