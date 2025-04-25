@@ -12,28 +12,36 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                Console.Clear();
-
+                //Console.Clear();
                 Console.WriteLine(" - 어서오세요 - ");
                 Console.WriteLine("1. 퀘스트 확인 2. 휴식 0. 나가기");
 
                 int.TryParse(Console.ReadLine(), out int input);
-                switch (input)
+                if (input >= 1 && input <= 2)
                 {
-                    case 1:
-                        //Console.Clear();
-                        QuestInfo(questMenu, player);
-                        break;
-                    case 2:
-                        //Console.Clear();
-                        Rest(player);
-                        break;
-                    case 0:
-                        return;
-                    default:
-                        Console.WriteLine("잘못 입력 했습니다.");
-                        break;
+                    switch (input)
+                    {
+                        case 1:
+                            //Console.Clear();
+                            QuestInfo(questMenu, player);
+                            break;
+                        case 2:
+                            //Console.Clear();
+                            Rest(player);
+                            break;
+                    }
                 }
+                else if (input == 0)
+                {
+                    Console.WriteLine("마을로 돌아갑니다.");
+                    Console.WriteLine("Enter키를 눌러주세요");
+                    break;  
+                }
+                else
+                {
+                    Console.WriteLine("잘못 입력했습니다. 다시 입력해 주세요\n");
+                }
+                //return;
             }
         }
         private void Rest(Player player)
@@ -57,15 +65,13 @@ namespace TextRPG_Team23
             {
                 player.CurrentHp = player.MaxHp;
             }
-            Console.WriteLine($"💤 하루가 지나 체력을 회복했습니다. 현재 체력 : {player.CurrentHp}");
+            Console.WriteLine($"하루가 지나 체력을 회복했습니다. 현재 체력 : {player.CurrentHp}");
         }
         private void QuestInfo(QuestMenu questMenu, Player player)
         {
-            //while (true)
-            //{
-                //Console.Clear();
-                questMenu.ShowAllQuests(player);
-            //}
+            //Console.Clear();
+            questMenu.ShowAllQuests(player);
+            return;
         }
     }
 }

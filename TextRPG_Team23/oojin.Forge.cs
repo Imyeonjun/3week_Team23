@@ -30,9 +30,32 @@ namespace TextRPG_Team23
                     case 2:
                         break;
                     case 3:
-                        
+                        Repair();
                         break;
                 }
+            }
+        }
+        private void Repair()
+        {
+            //Console.Clear();
+            Console.WriteLine(" == 수리할 아이템 선택 == ");
+
+            var items = player.Inventory.Items;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {items[i].Item.Name} (내구도: {items[i].Item.Durability}/{items[i].Item.MaxDurability})");
+            }
+
+            Console.WriteLine(" == 수리할 아이템 번호를 입력하세요 == ");
+            int.TryParse(Console.ReadLine(), out int index);
+            if (index > 0 && index <= items.Count)
+            {
+                items[index - 1].Item.RepairMax();  // 여기서 호출!
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
             }
         }
     }

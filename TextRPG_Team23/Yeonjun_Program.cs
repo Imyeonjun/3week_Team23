@@ -36,6 +36,7 @@ namespace TextRPG_Team23
         private Forge Forge;
         private Inn Inn;
         private Temple Temple;
+        private Item Item;
 
         public GameManager(Player player)
         {
