@@ -35,7 +35,7 @@ namespace TextRPG_Team23
 
             if (isVictory)
             {
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine("Battle!! - Result");
                 Console.WriteLine("");
                 Console.WriteLine("Victory!");
@@ -227,8 +227,8 @@ namespace TextRPG_Team23
             Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
             Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
 
-           
-
+            Console.WriteLine("\n\n" + "게임을 계속하려면 엔터를 눌러주세요.");
+            Console.ReadKey();
 
         }
 

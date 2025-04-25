@@ -22,7 +22,7 @@ namespace TextRPG_Team23
             this.monsterBox = monsterBox;
             this.ui = ui;
             this.battle = battle;
-            deadMonsterBox = new List<Monster>();
+            deadMonsterBox = monsterBox;
         }
 
         public void Attack(int damage)
@@ -90,7 +90,7 @@ namespace TextRPG_Team23
               ">>>");
 
             //Console.ReadKey();
-
+            condition.deadMonsterBox = condition.monsterBox.ToList();
             while (isBattle)
             {
                 CheckMonsterDead();
