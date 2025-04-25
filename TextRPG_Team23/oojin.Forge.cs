@@ -56,6 +56,7 @@ namespace TextRPG_Team23
             else
             {
                 Console.WriteLine("잘못된 입력입니다.");
+                return;
             }
         }
     }
