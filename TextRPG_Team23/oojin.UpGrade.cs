@@ -74,6 +74,7 @@ namespace TextRPG_Team23
                             Console.WriteLine();
 
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
+                            Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
                             //Console.Clear();
                             ItemUpgrade();
                             return;
@@ -89,26 +90,30 @@ namespace TextRPG_Team23
         }
         private void ItemUpgrade()
         {
+            
             while (true)
             {
                 //Console.Clear();
-
-                Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
 
                 Console.WriteLine(" - 아이템을 강화하시겠습니까? - ");
                 Console.WriteLine(" 1. [YES] 2. [NO]");
 
                 int.TryParse(Console.ReadLine(), out int input);
-                switch (input)
+                if (input >= 1 && input <= 2)
                 {
-                    case 1:
-                        ItemGamblig();
-                        break;
-                    case 2:
-                        return;
-                    default:
-                        Console.WriteLine("잘못 입력 했습니다.");
-                        break;
+                    switch (input)
+                    {
+                        case 1:
+                            ItemGamblig();
+                            break;
+                        case 2:
+                            return;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못 입력했습니다.");
+                    ItemUpgrade();
                 }
             }
         }
@@ -152,12 +157,6 @@ namespace TextRPG_Team23
                 {
                     Console.WriteLine("더 이상 강화할 수 없습니다.");
                     isFail = true;
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("더 이상 강화할 수 없습니다.");
-                    return;
                 }
                 Console.WriteLine("Enter를 눌러서 계속...");
                 Console.ReadLine();
