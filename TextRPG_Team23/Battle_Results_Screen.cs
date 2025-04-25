@@ -198,7 +198,7 @@ namespace TextRPG_Team23
             }
             if (level != currentLevel)
             {
-                player.RecalculateStats();
+                player.LevelUp();
             }
 
             remainingExp = exp;

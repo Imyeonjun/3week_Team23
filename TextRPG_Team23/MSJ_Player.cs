@@ -257,7 +257,7 @@ namespace TextRPG_Team23
 
         //}
 
-        public void UpdateLevel()
+      /*  public void UpdateLevel()
         {
             switch (Level)
             {
@@ -297,6 +297,13 @@ namespace TextRPG_Team23
                     break;
             }
 
+            RecalculateStats();
+        }*/
+
+        public void LevelUp()
+        {
+            atkDmg += 0.5f;
+            defence += 1;
             RecalculateStats();
         }
 
