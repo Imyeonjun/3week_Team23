@@ -31,7 +31,6 @@ namespace TextRPG_Team23
                             //Console.Clear();
                             upGrade.ItemSelection(forge);
                             break;
-                            break;
                         case 2:
                             Console.WriteLine("미구현");
                             Console.WriteLine("Enter키를 눌러주세요");
@@ -56,7 +55,6 @@ namespace TextRPG_Team23
         }
         private void Repair()
         {
-            bool re = false;
             //Console.Clear();
             Console.WriteLine(" == 수리할 아이템 선택 == \n");
 
