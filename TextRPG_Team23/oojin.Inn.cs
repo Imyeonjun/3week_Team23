@@ -72,7 +72,6 @@ namespace TextRPG_Team23
             {
                 player.CurrentHp = player.MaxHp;
             }
-            //if(player.CurrentHp == )
             Console.WriteLine($"하루가 지나 체력을 회복했습니다. 현재 체력 : {player.CurrentHp}");
             
         }

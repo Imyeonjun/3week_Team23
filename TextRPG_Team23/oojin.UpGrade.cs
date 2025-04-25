@@ -25,7 +25,7 @@ namespace TextRPG_Team23
                 { 6, 40 },
                 { 7, 30 },
                 { 8, 20 },
-                { 9, 10 },
+                { 9, 100 },
             };
         }
         public UpGrade(Player player)
@@ -76,7 +76,7 @@ namespace TextRPG_Team23
                             if (selectedItem.Upgrade == 10)
                             {
                                 Console.WriteLine("더 이상 강화할 수 없습니다, 다른 아이템을 골라 주세요\n");
-                                return;
+                                break;
                             }
                             //Console.Clear();
                             ItemUpgrade(forge);
@@ -106,6 +106,10 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
+                if (selectedItem.Upgrade == 10)
+                {
+                    return;
+                }
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
                 Console.Write(" 1. [YES] 2. [NO] \n>>> ");
 
@@ -125,7 +129,6 @@ namespace TextRPG_Team23
                 {
                     BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
                     //Console.WriteLine("잘못 입력했습니다.");
-                    //ItemUpgrade(forge);
                 }
             }
         }
