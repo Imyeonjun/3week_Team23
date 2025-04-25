@@ -14,7 +14,7 @@ namespace TextRPG_Team23
         public BattleUi ui { get; private set; }
         public Battle battle { get; private set; }
 
-        public void BattleConnect(Player player,List<Monster> monsterBox, BattleUi ui, Battle battle)
+        public void BattleConnect(Player player, List<Monster> monsterBox, BattleUi ui, Battle battle)
         {
             this.player = player;
             this.monsterBox = monsterBox;
@@ -42,16 +42,19 @@ namespace TextRPG_Team23
 
         public void HealAllMonster(int heal)
         {
-            foreach(Monster m in monsterBox)
+            foreach (Monster m in monsterBox)
             {
-                m.Hp += heal;
+                if (!m.IsDead)
+                {
+                    m.Hp += heal;
+                }
             }
         }
-        public void HealMonster(int heal,int code)
+        public void HealMonster(int heal, int code)
         {
-            foreach(Monster m in monsterBox)
+            foreach (Monster m in monsterBox)
             {
-                if(code == m.MobCode)
+                if (code == m.MobCode && !m.IsDead)
                 {
                     m.Hp += heal;
                 }
@@ -95,8 +98,6 @@ namespace TextRPG_Team23
 
                 condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
 
-                Console.WriteLine(condition.monsterBox.Count);
-
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBattle = false;
@@ -107,16 +108,40 @@ namespace TextRPG_Team23
 
         public void StartMonsterTurn()
         {
-            MonsterDead();
+            CheckMonsterDead();
 
             foreach (Monster m in condition.monsterBox)
             {
-                m.UseSkill(turnCount);
-                condition.ui.PrintMonsterLog();
-                
+                if (!m.IsDead)
+                {
+                    m.UseSkill(turnCount);
+                    condition.ui.PrintMonsterLog();
+                }
+                else
+                {
+                    Console.WriteLine("죽은몬스터");
+                }
+
             }
 
-            turnCount += 1;
+            turnCount++;
+        }
+
+        public void CheckMonsterDead()
+        {
+            int DeadCount = 0;
+            foreach (Monster m in condition.monsterBox)
+            {
+                if (m.Hp <= 0)
+                {
+                    m.IsDead = true;
+                    DeadCount++;
+                }
+            }
+            if (DeadCount == condition.monsterBox.Count)
+            {
+                MonsterDead();
+            }
         }
 
         public void MonsterDead()
@@ -124,7 +149,7 @@ namespace TextRPG_Team23
             for (int i = condition.monsterBox.Count - 1; i >= 0; i--)
             {
                 if (condition.monsterBox[i].Hp <= 0)
-                {   
+                {
                     condition.monsterBox.RemoveAt(i);
                 }
             }
