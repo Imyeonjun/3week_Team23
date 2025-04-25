@@ -82,7 +82,8 @@ namespace TextRPG_Team23
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 번호입니다");
+                        BranchManager.ErrorMessage("잘못된 번호입니다, 다시 입력해주세요.");
+                        //Console.WriteLine("잘못된 번호입니다");
                         break;
                     }
                 }
@@ -99,7 +100,7 @@ namespace TextRPG_Team23
                 Console.WriteLine(" 1. [YES] 2. [NO]");
 
                 int.TryParse(Console.ReadLine(), out int input);
-                if (input >= 1 && input <= 2)
+                if (input > 0 && input <= 2)
                 {
                     switch (input)
                     {
@@ -112,7 +113,8 @@ namespace TextRPG_Team23
                 }
                 else
                 {
-                    Console.WriteLine("잘못 입력했습니다.");
+                    BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
+                    //Console.WriteLine("잘못 입력했습니다.");
                     ItemUpgrade();
                 }
             }

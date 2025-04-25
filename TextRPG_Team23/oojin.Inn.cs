@@ -10,14 +10,16 @@ namespace TextRPG_Team23
     {
         public void Selection(Player player, QuestMenu questMenu)
         {
-            while (true)
+            //Console.Clear();
+            Console.WriteLine(" == @@ 여관에 어서오세요 == \n");
+
+            bool re = false;
+            do
             {
-                //Console.Clear();
-                Console.WriteLine(" - 어서오세요 - ");
                 Console.WriteLine("1. 퀘스트 확인 2. 휴식 0. 나가기");
 
                 int.TryParse(Console.ReadLine(), out int input);
-                if (input >= 1 && input <= 2)
+                if (input > 0 && input <= 2)
                 {
                     switch (input)
                     {
@@ -35,14 +37,19 @@ namespace TextRPG_Team23
                 {
                     Console.WriteLine("마을로 돌아갑니다.");
                     Console.WriteLine("Enter키를 눌러주세요");
-                    break;  
+                    break;
                 }
                 else
                 {
-                    Console.WriteLine("잘못 입력했습니다. 다시 입력해 주세요\n");
+                    BranchManager.ErrorMessage("잘못 입력했습니다. Enter를 누른 후 다시 입력해 주세요");
+                    
+                    //Console.WriteLine("잘못 입력했습니다. 다시 입력해 주세요\n");
                 }
-                //return;
             }
+            while (!re);
+           
+
+            
         }
         private void Rest(Player player)
         {
