@@ -43,7 +43,7 @@ namespace TextRPG_Team23
                 }
                 else if (input ==  0)
                 {
-                    Console.WriteLine("마을로 돌아갑니다.");
+                    Console.WriteLine("\n마을로 돌아갑니다.");
                     Console.WriteLine("Enter키를 눌러주세요");
                     break;
                 }
