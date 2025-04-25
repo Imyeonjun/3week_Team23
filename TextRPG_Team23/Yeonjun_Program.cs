@@ -5,26 +5,23 @@ namespace TextRPG_Team23
 {
     internal class Program
     {
+
         public static Random random = new Random();
+         
 
         static void Main(string[] args)
         {
-            List<Monster> monsterBox = new List<Monster>();
+            QuestMenu questMenu = new QuestMenu();
+            Player player;
+            Intro intro = new Intro();
+            intro.CreateCharacter(out player);
 
-            BattleUi ui = new BattleUi();
-
-            Battle battle = new Battle();
-
-            Battlecondition condition = new Battlecondition();
-
-            MonsterFactory factory = new MonsterFactory(monsterBox, condition);
-
-            DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
-
-            condition.BattleConnect(monsterBox, ui, battle);
-
-            GameManager gameManager = new GameManager();
+            GameManager gameManager = new GameManager(player);
+            
             gameManager.StartGame();
+
+            Inn inn = new Inn();
+            inn.Selection(player, questMenu);
         }
 
     }
@@ -32,23 +29,49 @@ namespace TextRPG_Team23
     public class GameManager
     {
         private bool isRunning = true;
-        private Player player;
-
-        private Intro intro = new Intro();
+        private Player _player;
+        private QuestMenu _menu;
         private Town town;
+        private Forge Forge;
+        private Inn Inn;
+        private Temple Temple;
 
-        public GameManager()
+        public GameManager(Player player)
         {
+            _player = player;
+            
             town = new Town(this);
+
+            List<Monster> monsterBox = new List<Monster>();
+
+            Battlecondition condition = new Battlecondition();
+
+            BattleUi ui = new BattleUi(condition);
+
+            Battle battle = new Battle(condition);
+
+            MonsterFactory factory = new MonsterFactory(monsterBox, condition);
+
+            DungeonMaganer dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
+
+            condition.BattleConnect(_player, monsterBox, ui, battle);
+            
+
+            Inn = new Inn();
+            Forge = new Forge(player);
+            Temple = new Temple();
+            _menu = new QuestMenu();
+
+            //dungeon.WorkFactory();
+            //dungeon.Start();
         }
 
         public void StartGame()
         {
-            intro.CreateCharacter(out player);
 
             while (isRunning)
             {
-                town.MainMenu(player);
+                town.MainMenu(_player, _menu, Inn, Forge, Temple);
             }
         }
 
@@ -60,6 +83,7 @@ namespace TextRPG_Team23
 
     public class DungeonTest // 해당 클래스 or 메서드는 던전 관련 클래스로 이동 예정.
     {
+
         public string[] gateOptions = {
                 "하급 던전",
                 "중급 던전",

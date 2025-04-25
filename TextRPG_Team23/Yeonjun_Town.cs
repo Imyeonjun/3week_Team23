@@ -9,6 +9,7 @@ namespace TextRPG_Team23
     public class Town
     {
         private GameManager gameManager;
+       
 
         DungeonTest gate = new DungeonTest();
 
@@ -23,46 +24,57 @@ namespace TextRPG_Team23
                 "인벤토리",
                 "상점",
                 "던전",
-                "여관"
+                "여관",
+                "대장간",
+                "신전"
             };
 
-        public void MainMenu(Player player)
+        public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple)
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("== 메인 메뉴 ==");
             int selected = BranchManager.ReturnSelect(mainMenuOptions, true, "게임 종료");
 
             switch (selected)
             {
                 case 1:
-                    Console.WriteLine("디버그 : 상태창 출력");
-                    Console.ReadKey();
+                    //Console.WriteLine("디버그 : 상태창 출력");
+                    player.PrintStatus();
+                    Console.ReadLine();
                     break;
                 case 2:
                     player.Inventory.PrintInventory(player);
-                    Console.ReadKey();
+                    Console.ReadLine();
                     break;
                 case 3:
                     new Shop(player).ShopPhase();
-                    Console.ReadKey();
+                    Console.ReadLine();
                     break;
                 case 4:
                     Console.WriteLine("디버그 : 던전 출력");
-                    Console.ReadKey();
+                    Console.ReadLine();
                     gate.Gate();
                     break;
                 case 5:
-                    Console.WriteLine("디버그 : 여관 출력");
-                    Console.ReadKey();
+                    inn.Selection(player, quest);
+                    Console.ReadLine();
+                    break;
+                case 6:
+                    forge.Selection();
+                    Console.ReadLine();
+                    break;
+                case 7:
+                    temple.Selection();
+                    Console.ReadLine();
                     break;
                 case 0:
                     Console.WriteLine("게임을 종료합니다.");
-                    Console.ReadKey();
+                    Console.ReadLine();
                     gameManager.StopGame();
                     break;
                 case -1:
                     Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                    Console.ReadKey();
+                    Console.ReadLine();
                     break;
             }
         }

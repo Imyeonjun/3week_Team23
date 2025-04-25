@@ -1,0 +1,144 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TextRPG_Team23
+{
+    class Battlecondition
+    {
+
+        public Player player;
+        public List<Monster> monsterBox { get; private set; }
+        public BattleUi ui { get; private set; }
+        public Battle battle { get; private set; }
+
+        public void BattleConnect(Player player,List<Monster> monsterBox, BattleUi ui, Battle battle)
+        {
+            this.player = player;
+            this.monsterBox = monsterBox;
+            this.ui = ui;
+            this.battle = battle;
+        }
+
+        public void Attack(int damage)
+        {
+            player.PlayerTakeDamage(damage);
+        }
+
+        public void BuffDef(int BuffDef)
+        {
+            foreach (Monster m in monsterBox)
+            {
+                m.BuffDef = BuffDef;
+            }
+        }
+
+        public void BleedingAttack(int damage)
+        {
+            player.PlayerTakeDamage(damage);
+        }
+
+        public void HealAllMonster(int heal)
+        {
+            foreach(Monster m in monsterBox)
+            {
+                m.Hp += heal;
+            }
+        }
+        public void HealMonster(int heal,int code)
+        {
+            foreach(Monster m in monsterBox)
+            {
+                if(code == m.MobCode)
+                {
+                    m.Hp += heal;
+                }
+            }
+        }
+
+    }
+
+
+    class Battle // 턴제루프만 맡는 녀석
+    {
+
+        int turnCount;
+        Battlecondition condition;
+        public Battle(Battlecondition condition)
+        {
+            this.condition = condition;
+        }
+
+
+        public void EnterBattle()
+        {
+            turnCount = 1;
+
+            Console.Clear();
+            Console.Write("몬스터가 등장했다!\n\n" +
+              "전투를 시작하려면 아무키나 누르세요.\n" +
+              ">>>");
+
+            //Console.ReadKey();
+
+            while (condition.monsterBox.Count > 0 &&  condition.player.CurrentHp> 0)
+            {
+
+                condition.ui.PrintMonster(false);
+                //Console.ReadKey();
+                StartMonsterTurn();
+                //Console.ReadKey();
+
+
+
+                condition.player.PlayerDoing(condition.monsterBox, condition.player);
+            }
+        }
+
+        public void StartMonsterTurn()
+        {
+            foreach (Monster m in condition.monsterBox)
+            {
+                m.UseSkill(turnCount);
+                condition.ui.PrintMonsterLog();
+                
+            }
+
+            turnCount += 1;
+        }
+
+
+    }
+
+    class BattleUi
+    {
+        Battlecondition condition;
+
+        public string MonsterLog;
+
+        public BattleUi(Battlecondition condition)
+        {
+            this.condition = condition;
+        }
+
+        public void PrintMonster(bool playerTurn)
+        {
+            int num = 1;
+
+            foreach (Monster m in condition.monsterBox)
+            {
+                m.MonsterInfo(playerTurn, num);
+                num++;
+            }
+            num = 1;
+        }
+        public void PrintMonsterLog()
+        {
+            Console.WriteLine(MonsterLog);
+        }
+
+
+    }
+}

@@ -106,7 +106,7 @@ namespace TextRPG_Team23
                 switch (choiceNumber)
                 {
                     case 0:
-                        Town.MainMenu();
+                        //Town.MainMenu();
                         break;
 
 
@@ -223,7 +223,7 @@ namespace TextRPG_Team23
             Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
             Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
 
-            GameManager.StopGame();
+            //GameManager.StopGame();
 
 
         }

@@ -18,17 +18,17 @@ namespace TextRPG_Team23
         {
             Quantity = Math.Max(Quantity - amount, 0);
         }
-        public bool Use(Player player) 
+        public bool Use(Player player)
         {
             if (Item.Use(player)) //아이템 사용 시도 성공 시
             {
                 if (Item is Consumable) //사용하는 아이템이 소모품일시
                 {
-                    Quantity--; 
-                    
+                    Quantity--;
+
                 }
                 return Quantity > 0;
-                
+
             }
             Console.WriteLine($"{Item.Name}은 사용할수 없는 아이템입니다.");
             return true;
@@ -66,6 +66,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("인벤토리");
                 Console.WriteLine("보유 중인 아이템 목록:");
 
@@ -84,13 +85,18 @@ namespace TextRPG_Team23
                     Console.WriteLine($"{prefix}{invItem}");
                 }
 
-                Console.WriteLine("\n1. 장착 관리\n0. 나가기");
+                Console.WriteLine("\n1. 장착 관리\n2. 아이템 사용\n0. 나가기");
                 string input = Console.ReadLine();
 
                 if (input == "1")
                     ManageEquipment(player, sortedItems);
+                else if (input == "2")
+                    UseItemPhase(player);
                 else if (input == "0")
-                    break;
+                {
+                    Console.WriteLine("인벤토리를 닫습니다.");
+                    return;
+                }
                 else
                     Console.WriteLine("잘못 입력하셨습니다.");
             }
@@ -98,6 +104,7 @@ namespace TextRPG_Team23
 
         public void ManageEquipment(Player player, List<ItemStack> sortedItems)//장비 관리 UI 및 시스템
         {
+            Console.Clear();
             List<IEquipable> equipables = new List<IEquipable>();
             foreach (var invItem in sortedItems)
             {
@@ -108,6 +115,7 @@ namespace TextRPG_Team23
             if (equipables.Count == 0)
             {
                 Console.WriteLine("장착 가능한 아이템이 없습니다.");
+                Console.ReadKey();
                 return;
             }
 
@@ -127,7 +135,11 @@ namespace TextRPG_Team23
 
             if (int.TryParse(sel, out int selected))
             {
-                if (selected == 0) return;
+                if (selected == 0)
+                {
+                    Console.WriteLine("장착 관리를 종료합니다.");
+                    return;
+                }
                 if (selected > 0 && selected <= equipables.Count)
                 {
                     IEquipable selectedItem = equipables[selected - 1];
@@ -135,7 +147,7 @@ namespace TextRPG_Team23
 
                     if (Slots[slotIndex] == selectedItem)
                     {
-                        
+
                         Slots[slotIndex] = null;
                         Console.WriteLine($"{((Item)selectedItem).Name}을(를) 해제했습니다.");
                     }
@@ -144,24 +156,29 @@ namespace TextRPG_Team23
                         selectedItem.Equip(player);
                     }
                     player.RecalculateStats();
+                    Console.ReadKey();
                 }
                 else
                 {
                     Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
+                    Console.ReadKey();
                 }
             }
             else
             {
                 Console.WriteLine("숫자를 입력해주세요.");
+                Console.ReadKey();
             }
         }
         public void UseItemPhase(Player player)//아이템 사용 페이즈
         {
+            Console.Clear();
             var usableItems = Items.Where(i => i.Item is Consumable).ToList();
 
             if (usableItems.Count == 0)
             {
                 Console.WriteLine("사용 가능한 소비 아이템이 없습니다.");
+                Console.ReadKey();
                 return;
             }
             Console.WriteLine("사용 가능한 아이템 목록:");
@@ -180,30 +197,70 @@ namespace TextRPG_Team23
                 {
                     Items.Remove(selectedItem);
                     Console.WriteLine($"{selectedItem.Item.Name}을 모두 사용했습니다.");
+
                 }
+                Console.ReadKey();
             }
-            else if (selected != 0 )
+            else if (selected != 0)
             {
                 Console.WriteLine("잘못된 입력입니다.");
+                Console.ReadKey();
             }
 
         }
-        public void CheckEquipmentDurability(Player player)//전투시에 장비중인 아이템 내구 감소 및 내구0일때 장착해제 기능
-        {
-            for (int i = 0; i < Slots.Length; i++)
-            {
-                if (Slots[i] is Item equiped && equiped.Durability > 0)
-                {
-                    equiped.ReduceDurability();
+        //public void CheckEquipmentDurability(Player player)//전투시에 장비중인 아이템 내구 감소 및 내구0일때 장착해제 기능 현재는 안씀
+        //{
+        //    for (int i = 0; i < Slots.Length; i++)
+        //    {
+        //        if (Slots[i] is Item equiped && equiped.Durability > 0)
+        //        {
+        //            equiped.ReduceDurability();
 
-                    if (equiped.IsBroken)
-                    {
-                        Console.WriteLine($"{equiped.Name}의 내구도가 0이되어 장비가 망가졌습니다.");
-                        Slots[i] = null;
-                        player.RecalculateStats();
-                    }
+        //            if (equiped.IsBroken)
+        //            {
+        //                Console.WriteLine($"{equiped.Name}의 내구도가 0이되어 장비가 망가졌습니다.");
+        //                Slots[i] = null;
+        //                player.RecalculateStats();
+        //                Console.ReadKey();
+        //            }
+        //        }
+        //    }
+        //}
+
+        public void CheckWeaponDurability(Player player)//장착중인 무기 내구감소 및 자동해제
+        {
+            int i = (int)EquipSlot.Weapon;
+
+            if (Slots[i] is Item equiped && equiped.Durability > 0)
+            {
+                equiped.ReduceDurability();
+
+                if (equiped.IsBroken)
+                {
+                    Console.WriteLine($"{equiped.Name}의 내구도가 0이되어 장비가 망가졌습니다.");
+                    Slots[i] = null;
+                    player.RecalculateStats();
                 }
             }
+
         }
+        public void CheckClothesDurability(Player player) //장착중인 방어구 내구감소 및 자동해제
+        {
+            int i = (int)EquipSlot.Clothes;
+
+            if (Slots[i] is Item equiped && equiped.Durability > 0)
+            {
+                equiped.ReduceDurability();
+
+                if (equiped.IsBroken)
+                {
+                    Console.WriteLine($"{equiped.Name}의 내구도가 0이되어 장비가 망가졌습니다.");
+                    Slots[i] = null;
+                    player.RecalculateStats();
+                }
+            }
+
+        }
+
     }
 }
