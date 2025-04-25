@@ -15,7 +15,7 @@ namespace TextRPG_Team23
         public Battle battle { get; private set; }
 
         public List<Monster> deadMonsterBox { get; set; }
-
+        
         public void BattleConnect(Player player, List<Monster> monsterBox, BattleUi ui, Battle battle)
         {
             this.player = player;
@@ -24,7 +24,7 @@ namespace TextRPG_Team23
             this.battle = battle;
             deadMonsterBox = monsterBox;
         }
-
+        public int svainghp;
         public void Attack(int damage)
         {
             player.PlayerTakeDamage(damage);
@@ -71,6 +71,7 @@ namespace TextRPG_Team23
     {
 
         int turnCount;
+
         Battlecondition condition;
         public Battle(Battlecondition condition)
         {
@@ -81,7 +82,7 @@ namespace TextRPG_Team23
         public void EnterBattle(bool isEnter)
         {
             turnCount = 1;
-
+            condition.svainghp = condition.player.CurrentHp;
             bool isBattle = isEnter;
 
             Console.Clear();
@@ -98,7 +99,7 @@ namespace TextRPG_Team23
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBattle = false;
-                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox);
+                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox,condition.svainghp);
                     continue;
                 }
 

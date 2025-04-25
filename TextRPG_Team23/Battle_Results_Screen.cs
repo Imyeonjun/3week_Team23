@@ -16,7 +16,7 @@ namespace TextRPG_Team23
     {
 
 
-        public static void BattleResultUI(Player player, List<Monster> monsters)  
+        public static void BattleResultUI(Player player, List<Monster> monsters, int hp)  
         {
             // 적용 전 
             int oldLevel = player.Level;
@@ -62,7 +62,7 @@ namespace TextRPG_Team23
 
                 Console.WriteLine($"EXP: {oldExp} → {player.Exp}");
 
-                Console.WriteLine($"HP: {player.MaxHp} → {player.CurrentHp}");
+                Console.WriteLine($"HP: {hp} → {player.CurrentHp}"); // 던전을 들어가기전 hp가 있어야한다. {player.CurrentHp} 현재 체력
                 Console.WriteLine("");
 
                 Console.WriteLine($"[획득 아이템]");
