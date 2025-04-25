@@ -107,7 +107,8 @@ namespace TextRPG_Team23
                             ItemGamblig();
                             break;
                         case 2:
-                            return;
+                            // forge 로 돌아가기
+                            break;
                     }
                 }
                 else
@@ -143,7 +144,7 @@ namespace TextRPG_Team23
                 Console.WriteLine(" 강화에 실패...\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8 && !isFail)
                 {
-                    selectedItem.Upgrade--;
+                    //selectedItem.Upgrade--;
                     Console.WriteLine($"아이템 '{selectedItem}' 이(가) + {selectedItem.Upgrade} 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
@@ -151,6 +152,7 @@ namespace TextRPG_Team23
                     
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
                     player.Inventory.RemoveItem(selectedItem);
+                    bool isItem = Array.Exists(player.Inventory.Items, item => item == selectedItem);
                     isFail = true;
                     return;
                 }
@@ -158,6 +160,11 @@ namespace TextRPG_Team23
                 {
                     Console.WriteLine("더 이상 강화할 수 없습니다.");
                     isFail = true;
+                    return;
+                }
+                else
+                {
+                    return;
                 }
                 Console.WriteLine("Enter를 눌러서 계속...");
                 Console.ReadLine();
