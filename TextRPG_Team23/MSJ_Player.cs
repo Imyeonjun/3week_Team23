@@ -97,12 +97,14 @@ namespace TextRPG_Team23
             job.PrintSkillInfo();
         }
 
-        public void PlayerDoing(List<Monster> monBox, Player player)
+        public void PlayerDoing(List<Monster> monBox, Player player, BattleUi ui)
         {
-            foreach (Monster mon in monBox)
-            {
-                mon.MonsterInfo(false, mon.MobCode);
-            }
+            //foreach (Monster mon in monBox)
+            //{
+            //    //mon.MonsterInfo(false, mon.MobCode);
+            //    ui.PrintMonster(true);
+            //}
+            //ui.PrintMonster(true);
             PrintStatusInDungeon();
             string input = Console.ReadLine();
 
@@ -110,10 +112,12 @@ namespace TextRPG_Team23
             {
                 case "1":
                     // 몬스터 목록 출력
-                    foreach (Monster mon in monBox)
-                    {
-                        mon.MonsterInfo(true, mon.MobCode);
-                    }
+                    //foreach (Monster mon in monBox)
+                    //{
+                    //    //mon.MonsterInfo(true, mon.MobCode);
+                    //    ui.PrintMonster(true);
+                    //}
+                    ui.PrintMonster(true);
 
                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
                     if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
@@ -123,8 +127,8 @@ namespace TextRPG_Team23
                     }
                     else
                     {
-                        BranchManager.ErrorMessage("잘못된 입력입니다.");
-                        PlayerDoing(monBox, player);
+                        //PlayerDoing(monBox, player, ui);
+                        Console.WriteLine("잘못된 입력입니다.");
                     }
                     break;
 
@@ -133,6 +137,7 @@ namespace TextRPG_Team23
                     foreach (Monster mon in monBox)
                     {
                         mon.MonsterInfo(false, mon.MobCode);
+
                     }
                     PrintSkillStatus();
                     Console.Write(">>> ");
@@ -151,8 +156,8 @@ namespace TextRPG_Team23
                         }
                         else
                         {
-                            BranchManager.ErrorMessage("잘못된 입력입니다.");
-                            PlayerDoing(monBox, player);
+                            //PlayerDoing(monBox, player, ui);
+                            Console.WriteLine("잘못된 입력입니다.");
                         }
                     }
                     else if (skillInput == "2")
@@ -162,14 +167,14 @@ namespace TextRPG_Team23
                     }
                     else
                     {
-                        BranchManager.ErrorMessage("잘못된 스킬 선택입니다.");
-                        PlayerDoing(monBox, player);
+                        //PlayerDoing(monBox, player, ui);
+                        Console.WriteLine("잘못된 스킬 선택입니다.");
                     }
                     break;
 
                 default:
-                    BranchManager.ErrorMessage("잘못된 입력입니다.");
-                    PlayerDoing(monBox, player);
+                    //PlayerDoing(monBox, player, ui);
+                    Console.WriteLine("잘못된 입력입니다.");
                     break;
             }
 
@@ -278,7 +283,8 @@ namespace TextRPG_Team23
             RecalculateStats();
         }
 
-        public bool QuestCheck(Quest q) {
+        public bool QuestCheck(Quest q)
+        {
             if (Quests != null)
             {
                 foreach (Quest quest in Quests)
@@ -323,7 +329,7 @@ namespace TextRPG_Team23
                 }
             }
 
-           
+
             q.IsActive = true;
             Quests.Add(q);
             Console.WriteLine($"'{q.Title}' 퀘스트를 수락했습니다!");
@@ -369,7 +375,7 @@ namespace TextRPG_Team23
 
         public void PlusKillMonsterCnt()
         {
-            if(MonsterQuest)
+            if (MonsterQuest)
             {
                 KillMon++;
             }
