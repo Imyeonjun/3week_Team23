@@ -51,7 +51,7 @@ namespace TextRPG_Team23
             this.exp = 1;
             this.currentHp = maxHp;
             this.currentMp = maxMp;
-            this.gld = 500;
+            this.gld = 5000;
 
             Inventory = new Inventory();
 

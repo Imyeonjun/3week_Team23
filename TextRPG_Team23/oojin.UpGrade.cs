@@ -11,7 +11,7 @@ namespace TextRPG_Team23
     internal class UpGrade
     {
         private Player player;
-        private Dictionary<int, int> 
+        private Dictionary<int, int>
             UpradeChance()
         {
             return new Dictionary<int, int>
@@ -25,7 +25,8 @@ namespace TextRPG_Team23
                 { 6, 40 },
                 { 7, 30 },
                 { 8, 20 },
-                { 9, 100 },
+                { 9, 10
+                },
             };
         }
         public UpGrade(Player player)
@@ -45,6 +46,7 @@ namespace TextRPG_Team23
                 {
 
                     Console.WriteLine("\n == 강화 할 장비를 (번호)선택하세요 ==");
+                    Console.WriteLine($"보유 골드 : {player.Gold}");
                     int i = 0;
 
                     foreach (var itemList in equipmentItems)
@@ -73,6 +75,10 @@ namespace TextRPG_Team23
                         {
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
                             Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) 선택되었습니다.\n");
+
+
+
+
                             if (selectedItem.Upgrade == 10)
                             {
                                 Console.WriteLine("더 이상 강화할 수 없습니다, 다른 아이템을 골라 주세요\n");
@@ -80,7 +86,11 @@ namespace TextRPG_Team23
                             }
                             //Console.Clear();
                             ItemUpgrade(forge);
+
                             break;
+
+
+
                         }
                         else if (input == 0)
                         {
@@ -102,7 +112,7 @@ namespace TextRPG_Team23
             while (true)
             {
                 //Console.Clear();
-                if(selectedItem == null)
+                if (selectedItem == null)
                 {
                     return;
                 }
@@ -110,7 +120,13 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
+                if (player.Gold < (selectedItem.Upgrade * 50) + 100)
+                {
+                    Console.WriteLine("돈이 부족합니다.");
+                    return;
+                }
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
+                Console.WriteLine($"보유 골드 : {player.Gold}");
                 Console.Write(" 1. [YES] 2. [NO] \n>>> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
@@ -119,6 +135,7 @@ namespace TextRPG_Team23
                     switch (input)
                     {
                         case 1:
+                            player.Gold -= (selectedItem.Upgrade * 50) + 100;
                             ItemGamblig(forge);
                             break;
                         case 2:
@@ -153,12 +170,12 @@ namespace TextRPG_Team23
                 Console.WriteLine($"강화에 실패 했습니다.\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
-                    //selectedItem.Upgrade--;
+                    selectedItem.Upgrade--;
                     Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) \"+ {selectedItem.Upgrade}\" 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
-                    
+
                     Console.WriteLine($"아이템 \"{selectedItem.Name}\"이(가) 파괴되었습니다.\n");
                     player.Inventory.RemoveItem(selectedItem);
                     selectedItem = null;

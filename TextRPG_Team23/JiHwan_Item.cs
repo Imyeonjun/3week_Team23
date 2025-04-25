@@ -176,7 +176,7 @@ namespace TextRPG_Team23
             new Consumable("체력 포션", 50, "체력을 30 회복합니다.", p => p.CurrentHp = Math.Min(p.MaxHp, p.CurrentHp + 30)),
             new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 30)),
             new Consumable("전체 수리 도구", 80, "보유중인 모든 아이템을 수리합니다.", RepairItem.RepairAll),
-            //new Consumable("수리 도구", 40, "하나의 장비를 수리합니다.", Forge.Repair)
+            new Consumable("수리 도구", 40, "하나의 장비를 수리합니다.", Forge.Repair)
         };
     }
 }
