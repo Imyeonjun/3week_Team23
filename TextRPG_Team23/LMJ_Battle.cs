@@ -57,7 +57,7 @@ namespace TextRPG_Team23
         {
             foreach (Monster m in monsterBox)
             {
-                if (code == m.MobCode && !m.IsDead)
+                if (code == m.MobCode && !m.IsDead) 
                 {
                     m.Hp += heal;
                 }

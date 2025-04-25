@@ -427,7 +427,6 @@ namespace TextRPG_Team23
             CurrentHp = 26;
             isDanger = false;
             IsDead = false;
-
         }
 
         public override void UseSkill(int Turn)
@@ -436,14 +435,17 @@ namespace TextRPG_Team23
 
             if (Turn % 2 != 0 && !isDanger)
             {
-                int code = Program.random.Next(1, (condition.monsterBox.Count));
+                int myCode = MobCode;
+                int target = FindFriendly();
+
                 HealPoint = 12;
-                condition.HealMonster(HealPoint, code);
+                condition.HealMonster(HealPoint, target);
 
                 if (CurrentHp < 14)
                 {
                     isDanger = true;
                 }
+
                 condition.ui.MonsterLog = $"\n{Name}의 안개가 아군을 감싸안습니다.";
             }
             else if (Turn % 2 != 0 && isDanger)
@@ -476,6 +478,27 @@ namespace TextRPG_Team23
                 BuffDef--;
                 Hp -= (Damage - (Def * 2));
             }
+        }
+
+        int FindFriendly()
+        {
+            int targetCode = 0;
+            bool isFind = false;
+            while (!isFind)
+            {
+                int code = Program.random.Next(1, (condition.monsterBox.Count));
+
+                if (code == MobCode)
+                {
+                    continue;
+                }
+                else
+                {
+                    targetCode = code;
+                    isFind = true;
+                }
+            }
+            return targetCode;
         }
     }
 }
