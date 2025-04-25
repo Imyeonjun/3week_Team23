@@ -54,7 +54,7 @@ namespace TextRPG_Team23
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
                 Console.WriteLine("");
 
-                Console.WriteLine("\n[캐릭터 정보]");
+                Console.WriteLine("[캐릭터 정보]");
 
                 Console.WriteLine($"Lv. {oldLevel} {player.Name} → Lv. {newLevel} {player.Name}");
 
@@ -99,15 +99,15 @@ namespace TextRPG_Team23
 
 
 
-                Console.WriteLine("\n0. 다음");
-                Console.Write(">> ");
+                Console.WriteLine("0. 다음");
+                Console.Write("\n선택 >>");
 
                 int choiceNumber = CheckInput(0, 0);
                 switch (choiceNumber)
                 {
                     case 0:
-                        //Town.MainMenu();
-                        break;
+                        return;
+                        
 
 
                 }
@@ -119,13 +119,13 @@ namespace TextRPG_Team23
                 Console.WriteLine("");
                 Console.WriteLine("You Lose");
                 Console.WriteLine("");
-                Console.WriteLine("\n[캐릭터 정보]");
+                Console.WriteLine("[캐릭터 정보]");
                 Console.WriteLine($"Lv. {oldLevel}  {player.Name}");
                 Console.WriteLine($"HP {player.MaxHp} → 0");
                 Console.WriteLine("");
 
                 Console.WriteLine("0. 다음");                       
-                Console.Write(">> ");
+                Console.Write("\n선택 >>");
 
                 int choiceNumber = CheckInput(0, 0);
                 switch (choiceNumber)
@@ -153,7 +153,7 @@ namespace TextRPG_Team23
                     if (result >= min && result <= max)
                         return result;
                 }
-                Console.WriteLine("잘못된 입력입니다!!!!");
+                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
             }
         }
     }
@@ -223,7 +223,7 @@ namespace TextRPG_Team23
             Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
             Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
 
-            //GameManager.StopGame();
+           
 
 
         }
