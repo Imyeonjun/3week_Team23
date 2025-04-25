@@ -152,7 +152,7 @@ namespace TextRPG_Team23
                     
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
                     player.Inventory.RemoveItem(selectedItem);
-                    bool isItem = Array.Exists(player.Inventory.Items, item => item == selectedItem);
+                    
                     isFail = true;
                     return;
                 }
