@@ -90,7 +90,8 @@ namespace TextRPG_Team23
         {
             string upgradeText = Upgrade > 0 ? $"+{Upgrade} " : "";
             string durText = (Durability >= 0) ? $" | 내구도 {Durability}/{MaxDurability}" : "";
-            return $"{upgradeText}{Name} | 공격력 +{Atk} | {Description}{durText}";
+            string brokenText = IsBroken ? " (망가짐)" : "";
+            return $"{upgradeText}{Name}{brokenText} | 공격력 +{Atk} | {Description}{durText}";
         }
         public override Item Clone()
         {
@@ -127,7 +128,8 @@ namespace TextRPG_Team23
         {
             string upgradeText = Upgrade > 0 ? $"+{Upgrade} " : "";
             string durText = (Durability >= 0) ? $" | 내구도 {Durability}/{MaxDurability}" : "";
-            return $"{upgradeText}{Name} | 방어력 +{Def} | {Description}{durText}";
+            string brokenText = IsBroken ? " (망가짐)" : "";
+            return $"{upgradeText}{Name}{brokenText} | 방어력 +{Def} | {Description}{durText}";
         }
         public override Item Clone()
         {
