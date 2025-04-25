@@ -124,6 +124,8 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
+                // 업그레이드골드[셀렉아이템]
+                foreach()
                 if(player.Gold > 0)
                 {
                     Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
