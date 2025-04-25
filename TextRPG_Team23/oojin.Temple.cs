@@ -8,6 +8,7 @@ namespace TextRPG_Team23
 {
     public class Temple
     {
+        private int gold;
         public void Selection(Player player)
         {
             // 기능 추가 수정
@@ -23,6 +24,12 @@ namespace TextRPG_Team23
                     {
                         case 1:
                             Offering(player);
+                            break;
+                        case 2:
+                            Buff(player);
+                            break;
+                        case 3:
+                            Console.WriteLine("미구현");
                             break;
                     }
                 }
@@ -41,11 +48,9 @@ namespace TextRPG_Team23
         }
         private void Offering(Player player)
         {
-            int gold = 0;
-            Console.Write("현재 남아있는 돈 : ");
+            Console.Write("현재 가지고 있는 금액 : ");
 
-            int currentGold = player.Gold;
-            Console.WriteLine($"{currentGold}G");
+            Console.WriteLine($"{player.Gold}G");
 
             Console.WriteLine(" == 헌금을 하시겠습니까? ==\n");
             Console.WriteLine("1. YES 2.NO");
@@ -57,7 +62,15 @@ namespace TextRPG_Team23
                 {
                     Console.WriteLine(" == 헌금 할 금액을 입력해주세요 ==\n");
                     int.TryParse(Console.ReadLine(), out int goldInput);
-                    gold = goldInput;
+
+                    player.Gold -= goldInput;
+
+                    gold += goldInput;
+                    Console.WriteLine($"기부된 현재 금액 : {gold}");
+                }
+                else
+                {
+                    return;
                 }
             }
             else
@@ -65,6 +78,10 @@ namespace TextRPG_Team23
                 BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
                 //Console.WriteLine("잘못 입력했습니다.");
             }
+        }
+        private void Buff(Player player)
+        {
+
         }
     }
 }
