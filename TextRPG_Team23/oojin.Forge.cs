@@ -15,10 +15,11 @@ namespace TextRPG_Team23
         public void Selection()
         {
             UpGrade upGrade = new UpGrade(player);
+            Console.WriteLine(" == @@ 대장간에 어서오세요 == \n");
             while (true)
             {
                 //Console.Clear();
-                Console.WriteLine(" == @@대장간에 어서오세요 == \n");
+               
                 Console.WriteLine("1. 강화   2. 제작   3. 수리  0. 나가기");
                 int.TryParse(Console.ReadLine(), out int input);
 
@@ -32,6 +33,9 @@ namespace TextRPG_Team23
                             return;
                             break;
                         case 2:
+                            Console.WriteLine("미구현");
+                            Console.WriteLine("Enter키를 눌러주세요");
+                            return;
                             break;
                         case 3:
                             Repair();
