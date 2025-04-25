@@ -62,7 +62,7 @@ namespace TextRPG_Team23
                 Items.Remove(target);
         }
 
-        public void PrintInventory(Player player) //인벤토리 UI 출력
+        public void PrintInventory(Player player, bool canUseItem = true) //인벤토리 UI 출력
         {
             while (true)
             {
@@ -85,12 +85,17 @@ namespace TextRPG_Team23
                     Console.WriteLine($"{prefix}{invItem}");
                 }
 
-                Console.WriteLine("\n1. 장착 관리\n2. 아이템 사용\n0. 나가기");
+                Console.WriteLine("\n1. 장착 관리");
+                if(canUseItem) //canUseItem가 true일때만 아이템 사용 선택지 보임
+                {
+                    Console.WriteLine("2. 아이템 사용");
+                }
+                Console.WriteLine("0. 나가기");
                 string input = Console.ReadLine();
 
                 if (input == "1")
                     ManageEquipment(player, sortedItems);
-                else if (input == "2")
+                else if (input == "2" && canUseItem) //canUseItem가 true일때만 아이템사용 기능 작동
                     UseItemPhase(player);
                 else if (input == "0")
                 {
