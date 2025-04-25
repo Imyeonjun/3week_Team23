@@ -10,6 +10,7 @@ namespace TextRPG_Team23
     {
         public void Selection()
         {
+            // 기능 추가 수정
             Console.WriteLine(" - @@신전에 어서오세요 - ");
             Console.WriteLine("1. 헌금 2. 세레 3. 축복 4. 나가기");
 

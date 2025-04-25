@@ -118,6 +118,7 @@ namespace TextRPG_Team23
                         selectedQuest.ShowQuestInfo();
                     }
 
+                    // 입력 없을 때 예외처리 수정
                     int answer = int.Parse(Console.ReadLine());
 
                     switch (answer)

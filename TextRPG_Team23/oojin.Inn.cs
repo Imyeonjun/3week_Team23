@@ -15,20 +15,20 @@ namespace TextRPG_Team23
                 Console.Clear();
 
                 Console.WriteLine(" - 어서오세요 - ");
-                Console.WriteLine("1. 퀘스트 확인 2. 휴식 3. 나가기");
+                Console.WriteLine("1. 퀘스트 확인 2. 휴식 0. 나가기");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 switch (input)
                 {
                     case 1:
-                        Console.Clear();
+                        //Console.Clear();
                         QuestInfo(questMenu, player);
                         break;
                     case 2:
-                        Console.Clear();
+                        //Console.Clear();
                         Rest(player);
                         break;
-                    case 3:
+                    case 0:
                         return;
                     default:
                         Console.WriteLine("잘못 입력 했습니다.");
@@ -61,11 +61,11 @@ namespace TextRPG_Team23
         }
         private void QuestInfo(QuestMenu questMenu, Player player)
         {
-            while (true)
-            {
-                Console.Clear();
+            //while (true)
+            //{
+                //Console.Clear();
                 questMenu.ShowAllQuests(player);
-            }
+            //}
         }
     }
 }

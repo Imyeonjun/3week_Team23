@@ -104,7 +104,7 @@ namespace TextRPG_Team23
 
         public void ManageEquipment(Player player, List<ItemStack> sortedItems)//장비 관리 UI 및 시스템
         {
-            Console.Clear();
+            //Console.Clear();
             List<IEquipable> equipables = new List<IEquipable>();
             foreach (var invItem in sortedItems)
             {
@@ -114,8 +114,9 @@ namespace TextRPG_Team23
 
             if (equipables.Count == 0)
             {
+                // ui 추가
                 Console.WriteLine("장착 가능한 아이템이 없습니다.");
-                Console.ReadKey();
+                //Console.ReadKey();
                 return;
             }
 
@@ -156,18 +157,18 @@ namespace TextRPG_Team23
                         selectedItem.Equip(player);
                     }
                     player.RecalculateStats();
-                    Console.ReadKey();
+                    //Console.ReadKey();
                 }
                 else
                 {
                     Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
-                    Console.ReadKey();
+                    //Console.ReadKey();
                 }
             }
             else
             {
                 Console.WriteLine("숫자를 입력해주세요.");
-                Console.ReadKey();
+                //Console.ReadKey();
             }
         }
         public void UseItemPhase(Player player)//아이템 사용 페이즈

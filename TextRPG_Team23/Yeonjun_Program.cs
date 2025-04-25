@@ -20,8 +20,9 @@ namespace TextRPG_Team23
             
             gameManager.StartGame();
 
-            Inn inn = new Inn();
-            inn.Selection(player, questMenu);
+            //Inn inn = new Inn();
+        
+            //inn.Selection(player, questMenu);
         }
 
     }
