@@ -178,50 +178,101 @@ namespace TextRPG_Team23
         }
     }
 
-    class Blightmaw : Monster, TakeDamage
-    {
-
-        Battlecondition condition;
-        public Blightmaw(Battlecondition condition, int code, int level)
+        class Blightmaw : Monster, TakeDamage
         {
-            this.condition = condition;
-            MobCode = code;
-            Level = level;
-            Name = "부패의 턱";
-            Atk = 7;
-            Def = 3;
-            MaxHp = 27;
-            CurrentHp = 27;
-            IsDead = false;
 
-        }
+            Battlecondition condition;
 
-        public override void UseSkill(int Turn)
-        {
-            if (BuffDef > 0) { BuffDef--; }
+            int poisonCount;
+            int poisonDamage;
+            int poisonPower;
+            bool isPowerUp;
 
-            if ((Turn % 2) == 0)
+            public Blightmaw(Battlecondition condition, int code, int level)
             {
+                this.condition = condition;
+                MobCode = code;
+                Level = level;
+                Name = "부패의 턱";
+                Atk = 7;
+                Def = 3;
+                MaxHp = 27;
+                CurrentHp = 27;
+                IsDead = false;
+                isPowerUp = false;
+                poisonDamage = 3;
+                poisonPower = 0;
+                poisonCount = 0;    
 
             }
-            if ((Turn % 2) != 0)
+
+            public override void UseSkill(int Turn)
             {
+                if (BuffDef > 0) { BuffDef--; }
+
+
+                if ((Turn % 2) != 0)
+                {
+                    if (poisonCount >= 0 && poisonCount < 6)
+                    {
+                        poisonCount++;
+                    }
+
+                    if (isPowerUp)
+                    {
+                        condition.ui.MonsterLog = $"\n당신의 공격에 화가 난 {Name}은 아주 치명적인 맹독을 내뿜었다!\n" +
+                                                  $"받게 될 데미지{poisonDamage}";
+                    }
+                    else
+                    {
+                        condition.ui.MonsterLog = $"\n{Name}은 {condition.player.Name}에게 독가스를 분사했다\n" +
+                                                  $"누적된 독수치: {poisonCount}  수치마다 받게 될 데미지{poisonDamage}";
+                    }
+
+                }
+
+                if ((Turn % 2) == 0)
+                {
+                    if(isPowerUp)
+                    {
+                        condition.Attack(poisonCount * poisonDamage);
+                        condition.ui.MonsterLog = $"\n당신의 공격에 화가 난 {Name}은 치명적인 맹독을 분사했다!\n" +
+                                                  $"치명적인독 피해: {poisonCount * poisonDamage}";
+                        isPowerUp = false;
+                        poisonDamage = 3;
+                        poisonPower = 0;
+                    }
+                    else
+                    {
+                        condition.Attack(poisonCount * poisonDamage);
+                        condition.ui.MonsterLog = $"\n{Name}의 독이 {condition.player.Name}을 위협한다!\n" +
+                                                  $"독 피해: {poisonCount * poisonDamage}";
+                    }
+                }
+
+                if (poisonPower == 4)
+                {
+                    isPowerUp = true;
+                    poisonDamage = 40;
+                    poisonCount = 1;
+                }
 
             }
-        }
 
-        public void TakeDamage(int Damage)
-        {
-            if (BuffDef <= 0)
+            public void TakeDamage(int Damage)
             {
-                Hp -= (Damage - (Def));
+                if (BuffDef <= 0)
+                {
+                    Hp -= (Damage - (Def));
+                    poisonPower++;
+                }
+                else if (BuffDef > 0)
+                {
+                    BuffDef--;
+                    Hp -= (Damage - (Def * 2));
+                    poisonPower++;
+                }
             }
-            else if (BuffDef > 0)
-            {
-                BuffDef--;
-                Hp -= (Damage - (Def * 2));
-            }
-        }
     }
 
     class Duskrend : Monster, TakeDamage
