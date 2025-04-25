@@ -30,7 +30,7 @@ namespace TextRPG_Team23
                         case 1:
                             //Console.Clear();
                             upGrade.ItemSelection(forge);
-                            return;
+                            break;
                             break;
                         case 2:
                             Console.WriteLine("미구현");
@@ -60,11 +60,11 @@ namespace TextRPG_Team23
             //Console.Clear();
             Console.WriteLine(" == 수리할 아이템 선택 == \n");
 
-            var items = player.Inventory.Items;
+            var items = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList();
 
-            for (int i = 0; i < items.Count; i++)
+            foreach (var itemList in items)
             {
-                Console.WriteLine($"{i + 1}. {items[i].Item.Name} (내구도: {items[i].Item.Durability}/{items[i].Item.MaxDurability})\n");
+
             }
 
             do
