@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    class MonsterFactory
+    public class MonsterFactory
     {
         //List<Monster> monsterPool = new List<Monster>();
 
@@ -38,7 +38,8 @@ namespace TextRPG_Team23
                         break;
 
                     case 2:
-                        monsterBox.Add(new Blightmaw(condition, giveCode, level));
+                        //monsterBox.Add(new Blightmaw(condition, giveCode, level));
+                        monsterBox.Add(new Gravemoss(condition, giveCode, level));
                         break;
 
                     case 3:

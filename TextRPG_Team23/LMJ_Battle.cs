@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    class Battlecondition
+    public class Battlecondition
     {
 
         public Player player;
@@ -61,7 +61,7 @@ namespace TextRPG_Team23
     }
 
 
-    class Battle // 턴제루프만 맡는 녀석
+    public class Battle // 턴제루프만 맡는 녀석
     {
 
         int turnCount;
@@ -72,9 +72,11 @@ namespace TextRPG_Team23
         }
 
 
-        public void EnterBattle()
+        public void EnterBattle(bool isEnter)
         {
             turnCount = 1;
+
+            bool isBattle = isEnter;
 
             Console.Clear();
             Console.Write("몬스터가 등장했다!\n\n" +
@@ -83,7 +85,7 @@ namespace TextRPG_Team23
 
             //Console.ReadKey();
 
-            while (condition.monsterBox.Count > 0 &&  condition.player.CurrentHp> 0)
+            while (isBattle)
             {
 
                 condition.ui.PrintMonster(false);
@@ -91,14 +93,22 @@ namespace TextRPG_Team23
                 StartMonsterTurn();
                 //Console.ReadKey();
 
+                condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
 
+                Console.WriteLine(condition.monsterBox.Count);
 
-                condition.player.PlayerDoing(condition.monsterBox, condition.player);
+                if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
+                {
+                    isBattle = false;
+                }
+
             }
         }
 
         public void StartMonsterTurn()
         {
+            MonsterDead();
+
             foreach (Monster m in condition.monsterBox)
             {
                 m.UseSkill(turnCount);
@@ -109,10 +119,19 @@ namespace TextRPG_Team23
             turnCount++;
         }
 
-
+        public void MonsterDead()
+        {
+            for (int i = condition.monsterBox.Count - 1; i >= 0; i--)
+            {
+                if (condition.monsterBox[i].Hp <= 0)
+                {   
+                    condition.monsterBox.RemoveAt(i);
+                }
+            }
+        }
     }
 
-    class BattleUi
+    public class BattleUi
     {
         Battlecondition condition;
 
@@ -132,7 +151,6 @@ namespace TextRPG_Team23
                 m.MonsterInfo(playerTurn, num);
                 num++;
             }
-            num = 1;
         }
         public void PrintMonsterLog()
         {

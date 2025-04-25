@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    class DungeonMaganer
+    public class DungeonMaganer
     {
 
-        List<Monster> monsterBox;
-        BattleUi ui;
-        Battle battle;
-        Battlecondition condition;
-        MonsterFactory factory;
+        public List<Monster> monsterBox;
+        public BattleUi ui;
+        public Battle battle;
+        public Battlecondition condition;
+        public MonsterFactory factory;
 
 
         public DungeonMaganer(List<Monster> monsterBox, BattleUi ui, Battle battle, Battlecondition condition, MonsterFactory factory)
@@ -28,7 +28,7 @@ namespace TextRPG_Team23
 
         public void Start()
         {
-            battle.EnterBattle();
+            battle.EnterBattle(true);
         }
         public void WorkFactory()
         {

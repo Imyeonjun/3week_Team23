@@ -46,5 +46,15 @@ namespace TextRPG_Team23
             }
             return -1;
         }
+
+        public static void ErrorMessage(string input)
+        {
+ /*           Console.Clear();*/
+            Console.Write(input);
+            Console.WriteLine();
+            Console.Write("\nPress any key to continue\n" +
+                          ">>>");
+            Console.ReadKey();
+        }
     }
 }

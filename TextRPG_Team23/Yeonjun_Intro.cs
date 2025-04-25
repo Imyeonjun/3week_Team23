@@ -17,8 +17,14 @@ namespace TextRPG_Team23
 
         public void CreateCharacter(out Player player)
         {
-            Console.WriteLine("이름을 입력하세요.");
-            string name = Console.ReadLine();
+            // 이름이 공백도 가능 안되게 수정
+            string name = "";
+
+            while (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("이름을 입력하세요.");
+                name = Console.ReadLine();
+            }
 
             Job job = null;
             bool selected = false;
@@ -40,8 +46,9 @@ namespace TextRPG_Team23
                         selected = true;
                         break;
                     default:
-                        Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                        Console.ReadLine();
+                        BranchManager.ErrorMessage("잘못된 입력입니다.");
+                        //Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                        //Console.ReadLine();
                         //Console.Clear();
                         break;
                 }
