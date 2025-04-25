@@ -71,7 +71,7 @@ namespace TextRPG_Team23
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
             Console.WriteLine("\n0. 나가기");
-            Console.WriteLine("\n>>>");
+            Console.Write("\n>>>");
 
 
         }
@@ -88,7 +88,7 @@ namespace TextRPG_Team23
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
             Console.WriteLine("3. 인벤토리");
-            Console.WriteLine("\n>>>");
+            Console.Write("\n>>>");
 
         }
 
@@ -114,7 +114,7 @@ namespace TextRPG_Team23
             //ui.PrintMonster(true);
             PrintStatusInDungeon();
             string input = Console.ReadLine();
-
+            Console.Clear();
             switch (input)
             {
                 case "1":
@@ -319,6 +319,7 @@ namespace TextRPG_Team23
         {
             atkDmg += 0.5f;
             defence += 1;
+            CurrentMp = MaxHp;
             RecalculateStats();
         }
 
