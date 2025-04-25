@@ -21,6 +21,7 @@ namespace TextRPG_Team23
             // 적용 전 
             int oldLevel = player.Level;
             int oldExp = player.Exp;
+            
             int monsterLevelSum = 0;
 
             for (int i = 0; i < monsters.Count; i++)
@@ -28,7 +29,8 @@ namespace TextRPG_Team23
                 monsterLevelSum += monsters[i].Level;
             }
 
-            int totalExp = monsterLevelSum + player.Exp;
+
+            player.Exp += monsterLevelSum;
 
 
             bool isVictory = player.CurrentHp > 0;
@@ -44,11 +46,11 @@ namespace TextRPG_Team23
 
 
                 // 레벨, 경험치 
-                int newLevel = LevelUp.NewLevel(oldLevel, totalExp, out int remainingExp, player);
+                int newLevel = LevelUp.NewLevel(oldLevel, player.Exp, player);
 
                 //플레이어 정보 업데이트
                 player.Level = newLevel;
-                player.Exp = remainingExp;
+               
 
 
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
@@ -58,7 +60,7 @@ namespace TextRPG_Team23
 
                 Console.WriteLine($"Lv. {oldLevel} {player.Name} → Lv. {newLevel} {player.Name}");
 
-                Console.WriteLine($"EXP: {oldExp} → {remainingExp}");
+                Console.WriteLine($"EXP: {oldExp} → {player.Exp}");
 
                 Console.WriteLine($"HP: {player.MaxHp} → {player.CurrentHp}");
                 Console.WriteLine("");
@@ -186,7 +188,7 @@ namespace TextRPG_Team23
         }
 
 
-        public static int NewLevel(int currentLevel, int totalExp, out int remainingExp, Player player)
+        public static int NewLevel(int currentLevel, int totalExp, Player player)
         {
             int exp = totalExp;
             int level = currentLevel;
@@ -201,7 +203,7 @@ namespace TextRPG_Team23
                 player.LevelUp();
             }
 
-            remainingExp = exp;
+            
             return level;
         }
     }
