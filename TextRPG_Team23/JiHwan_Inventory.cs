@@ -62,7 +62,7 @@ namespace TextRPG_Team23
                 Items.Remove(target);
         }
 
-        public void PrintInventory(Player player, bool canUseItem = true) //인벤토리 UI 출력
+        public void PrintInventory(Player player, bool limitedUse, ref bool alreadyUse) //인벤토리 UI 출력
         {
             while (true)
             {
@@ -85,18 +85,19 @@ namespace TextRPG_Team23
                     Console.WriteLine($"{prefix}{invItem}");
                 }
 
-                Console.WriteLine("\n1. 장착 관리");
-                if(canUseItem) //canUseItem가 true일때만 아이템 사용 선택지 보임
-                {
-                    Console.WriteLine("2. 아이템 사용");
-                }
+                Console.WriteLine("\n1. 장착 관리");               
+                Console.WriteLine("2. 아이템 사용");
                 Console.WriteLine("0. 나가기");
                 string input = Console.ReadLine();
 
                 if (input == "1")
                     ManageEquipment(player, sortedItems);
-                else if (input == "2" && canUseItem) //canUseItem가 true일때만 아이템사용 기능 작동
-                    UseItemPhase(player);
+                else if (input == "2")
+                {
+                    bool used = UseItemPhase(player, limitedUse, alreadyUse);
+                    if (used) alreadyUse = true;
+                }
+
                 else if (input == "0")
                 {
                     Console.WriteLine("인벤토리를 닫습니다.");
@@ -178,43 +179,67 @@ namespace TextRPG_Team23
                 }
             }
         }
-        public void UseItemPhase(Player player)//아이템 사용 페이즈
+        public bool UseItemPhase(Player player, bool limitedUse, bool alreadyUse)//아이템 사용 페이즈
         {
-            //Console.Clear();
-            var usableItems = Items.Where(i => i.Item is Consumable).ToList();
-
-            if (usableItems.Count == 0)
+            while (true)
             {
-                Console.WriteLine("사용 가능한 소비 아이템이 없습니다.");
-                //Console.ReadKey();
-                return;
-            }
-            Console.WriteLine("사용 가능한 아이템 목록:");
-            for (int i = 0; i < usableItems.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {usableItems[i]}");
-            }
-            Console.WriteLine("0: 나가기\n사용할 아이템 번호를 선택하세요: ");
-            string input = Console.ReadLine();
-            if (int.TryParse(input, out int selected) && selected > 0 && selected <= usableItems.Count)
-            {
-                var selectedItem = usableItems[selected - 1];
-                bool isExists = selectedItem.Use(player);
-
-                if (!isExists)
+                //Console.Clear();
+                if (alreadyUse)
                 {
-                    Items.Remove(selectedItem);
-                    Console.WriteLine($"{selectedItem.Item.Name}을 모두 사용했습니다.");
-
+                    Console.WriteLine("이미 아이템을 사용했습니다. 이번 턴에는 사용할 수 없습니다.");
+                    return true;
                 }
-                //Console.ReadKey();
-            }
-            else if (selected != 0)
-            {
-                Console.WriteLine("잘못된 입력입니다.");
-                //Console.ReadKey();
-            }
 
+                var usableItems = Items.Where(i => i.Item is Consumable).ToList();
+
+                if (usableItems.Count == 0)
+                {
+                    Console.WriteLine("사용 가능한 소비 아이템이 없습니다.");
+                    if (limitedUse) return true;
+                    return false;
+                }
+                Console.WriteLine("사용 가능한 아이템 목록:");
+                for (int i = 0; i < usableItems.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {usableItems[i]}");
+                }
+                Console.WriteLine("0: 나가기\n사용할 아이템 번호를 선택하세요: ");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int selected))
+                {
+                    if (selected == 0) 
+                    {
+                        Console.WriteLine("아이템 사용창을 닫습니다.");
+                        return false;
+                    }
+                    if (selected > 0 && selected <= usableItems.Count)
+                    {
+                        var selectedItem = usableItems[selected - 1];
+                        bool isExists = selectedItem.Use(player); //실제 아이템 사용
+
+                        if (!isExists)
+                        {
+                            Items.Remove(selectedItem);
+                            Console.WriteLine($"{selectedItem.Item.Name}을 모두 사용했습니다.");
+
+                        }
+                        if (limitedUse) return true;
+                        return false;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
+                    }
+                
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    
+                }
+                
+            }
         }
         //public void CheckEquipmentDurability(Player player)//전투시에 장비중인 아이템 내구 감소 및 내구0일때 장착해제 기능 현재는 안씀
         //{
