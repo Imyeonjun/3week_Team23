@@ -90,25 +90,27 @@ namespace TextRPG_Team23
 
             while (isBattle)
             {
-
-                condition.ui.PrintMonster(false);
-                //Console.ReadKey();
-                StartMonsterTurn();
-                //Console.ReadKey();
-
-                condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
+                CheckMonsterDead();
 
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBattle = false;
+                    continue;
                 }
+
+                condition.ui.PrintMonster(false);
+
+                StartMonsterTurn();
+
+
+                condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
+
 
             }
         }
 
         public void StartMonsterTurn()
         {
-            CheckMonsterDead();
 
             foreach (Monster m in condition.monsterBox)
             {
@@ -140,20 +142,21 @@ namespace TextRPG_Team23
             }
             if (DeadCount == condition.monsterBox.Count)
             {
-                MonsterDead();
+                condition.monsterBox.Clear();
             }
         }
 
-        public void MonsterDead()
+/*        public void MonsterDead()
         {
-            for (int i = condition.monsterBox.Count - 1; i >= 0; i--)
-            {
-                if (condition.monsterBox[i].Hp <= 0)
-                {
-                    condition.monsterBox.RemoveAt(i);
-                }
-            }
-        }
+            //for (int i = condition.monsterBox.Count - 1; i >= 0; i--)
+            //{
+            //    if (condition.monsterBox[i].Hp <= 0)
+            //    {
+            //        condition.monsterBox.RemoveAt(i);
+            //    }
+            //}
+            condition.monsterBox.Clear();
+        }*/
     }
 
     public class BattleUi

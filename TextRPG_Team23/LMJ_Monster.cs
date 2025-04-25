@@ -56,7 +56,7 @@ namespace TextRPG_Team23
             {
                 Console.WriteLine($"Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}]");
             }
-            else //플레이어가 타겟으로 지정할 때 / 번호출력o
+            else if (!IsDead)//플레이어가 타겟으로 지정할 때 / 번호출력o
             {
                 Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}]");
             }
