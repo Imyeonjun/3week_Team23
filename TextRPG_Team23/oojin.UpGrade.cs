@@ -32,9 +32,9 @@ namespace TextRPG_Team23
         {
             this.player = player;
         }
-
+        bool a = true;
         private Item selectedItem;
-        public void ItemSelection()
+        public void ItemSelection(Forge forge)
         {
             while (true)
             {
@@ -75,7 +75,7 @@ namespace TextRPG_Team23
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
                             Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
                             //Console.Clear();
-                            ItemUpgrade();
+                            ItemUpgrade(forge);
                             return;
                         }
                     }
@@ -88,10 +88,10 @@ namespace TextRPG_Team23
                 }
             }
         }
-        private void ItemUpgrade()
+        private void ItemUpgrade(Forge forge)
         {
-            
-            while (true)
+            a = true;
+            do
             {
                 //Console.Clear();
 
@@ -104,7 +104,7 @@ namespace TextRPG_Team23
                     switch (input)
                     {
                         case 1:
-                            ItemGamblig();
+                            ItemGamblig(forge);
                             break;
                         case 2:
                             // forge 로 돌아가기
@@ -115,11 +115,12 @@ namespace TextRPG_Team23
                 {
                     BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
                     //Console.WriteLine("잘못 입력했습니다.");
-                    ItemUpgrade();
+                    ItemUpgrade(forge);
                 }
             }
+            while (a);
         }
-        private void ItemGamblig()
+        private void ItemGamblig(Forge forge)
         {
 
             Dictionary<int, int> upGradeChance = UpradeChance();
@@ -152,13 +153,19 @@ namespace TextRPG_Team23
                     
                     Console.WriteLine($"아이템 {selectedItem}이(가) 파괴되었습니다.");
                     player.Inventory.RemoveItem(selectedItem);
-                    
+                    a = false;
+                    forge.Selection(forge);
+
+                   
                     isFail = true;
                     return;
                 }
                 else if (selectedItem.Upgrade == 10)
                 {
                     Console.WriteLine("더 이상 강화할 수 없습니다.");
+                    a = false;
+                    forge.Selection(forge);
+                    
                     isFail = true;
                     return;
                 }

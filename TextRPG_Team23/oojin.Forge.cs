@@ -12,7 +12,7 @@ namespace TextRPG_Team23
         public Player player;
         public Forge(Player player) { this.player = player; }
 
-        public void Selection()
+        public void Selection(Forge forge)
         {
             UpGrade upGrade = new UpGrade(player);
             Console.WriteLine(" == @@ 대장간에 어서오세요 == \n");
@@ -23,13 +23,13 @@ namespace TextRPG_Team23
                 Console.WriteLine("1. 강화   2. 제작   3. 수리  0. 나가기");
                 int.TryParse(Console.ReadLine(), out int input);
 
-                if (input > 0 && input <= 2)
+                if (input > 0 && input <= 3)
                 {
                     switch (input)
                     {
                         case 1:
                             //Console.Clear();
-                            upGrade.ItemSelection();
+                            upGrade.ItemSelection(forge);
                             return;
                             break;
                         case 2:
@@ -82,7 +82,6 @@ namespace TextRPG_Team23
                 }
             }
             while (!re);
-           
         }
     }
 }

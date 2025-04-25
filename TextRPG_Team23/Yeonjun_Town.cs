@@ -61,7 +61,7 @@ namespace TextRPG_Team23
                     Console.ReadLine();
                     break;
                 case 6:
-                    forge.Selection();
+                    forge.Selection(forge);
                     Console.ReadLine();
                     break;
                 case 7:
