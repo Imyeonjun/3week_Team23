@@ -128,9 +128,10 @@ namespace TextRPG_Team23
                             Console.WriteLine("나가기 입력");
                             break;
                         case 1:
-                            if(selectedQuest.Title == "더욱 강해지기")
+                            if(selectedQuest.Title == "마을을 위협하는 몬스터 처치")
                             {
                                 player.MonsterQuest = true;
+                                Console.WriteLine("나이스\n");
                             }
                             player.AddQuest(selectedQuest); // 이미 있는지 확인하는 검사가 포함된 AddQuest 사용
                             break;
