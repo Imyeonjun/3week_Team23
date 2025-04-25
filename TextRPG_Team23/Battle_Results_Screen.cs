@@ -96,23 +96,10 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine("");
 
-
-
-
-
-
-                Console.WriteLine("0. 다음");
-                Console.Write("\n선택 >>");
-
-                int choiceNumber = CheckInput(0, 0);
-                switch (choiceNumber)
-                {
-                    case 0:
-                        return;
-                        
-
-
-                }
+                               
+                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.ReadLine();
+                return;
             }
             else
             {
@@ -126,38 +113,20 @@ namespace TextRPG_Team23
                 Console.WriteLine($"HP {player.MaxHp} → 0");
                 Console.WriteLine("");
 
-                Console.WriteLine("0. 다음");                       
-                Console.Write("\n선택 >>");
 
-                int choiceNumber = CheckInput(0, 0);
-                switch (choiceNumber)
-                {
-                    case 0:
-                        End.Eending();
-                        break;
-
-
-                }
+                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.ReadLine();
+                End.Eending();
+                return;
 
 
             }
+
+
+            
         }
 
-        static int CheckInput(int min, int max)
-        {
-            int result;
-            while (true)
-            {
-                string input = Console.ReadLine();
-                bool isNumber = int.TryParse(input, out result);
-                if (isNumber)
-                {
-                    if (result >= min && result <= max)
-                        return result;
-                }
-                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-            }
-        }
+       
     }
 
     public static class LevelUp
