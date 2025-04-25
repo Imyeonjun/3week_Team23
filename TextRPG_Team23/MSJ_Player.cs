@@ -81,9 +81,13 @@ namespace TextRPG_Team23
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
+            Console.WriteLine($"MP {currentMp}/{maxMp}");
+            Console.WriteLine($"ATK : {TotalAtk}");
+            Console.WriteLine($"DEF : {TotalDef}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
+            Console.WriteLine("3. 인벤토리");
             Console.WriteLine("\n>>>");
 
         }
@@ -93,6 +97,9 @@ namespace TextRPG_Team23
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
+            Console.WriteLine($"MP {currentMp}/{maxMp}");
+            Console.WriteLine($"ATK : {TotalAtk}");
+            Console.WriteLine($"DEF : {TotalDef}");
             Console.WriteLine();
             job.PrintSkillInfo();
         }
@@ -189,6 +196,12 @@ namespace TextRPG_Team23
                     }
                     break;
 
+                case "3":
+                    bool limitedUse = true;
+                    bool alreadyUse = false;
+
+                    player.Inventory.PrintInventory(player, limitedUse, ref alreadyUse);
+                    break;
                 default:
                     //PlayerDoing(monBox, player, ui);
                     Console.WriteLine("잘못된 입력입니다.");
@@ -238,6 +251,8 @@ namespace TextRPG_Team23
             {
                 realDamage = dmg - TotalDef;
             }
+
+            this.Inventory.CheckClothesDurability(this);
 
             if (CurrentHp > realDamage)
             {
