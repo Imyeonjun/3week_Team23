@@ -36,56 +36,87 @@ namespace TextRPG_Team23
         private Item selectedItem;
         public void ItemSelection(Forge forge)
         {
-            while (true)
+            bool a = true;
+            while (a)
             {
                 //Console.Clear();
 
-                Console.WriteLine(" - 강화 할 장비를 (번호)선택하세요 - ");
+                Console.WriteLine(" == 계속 하시겠습니까? == ");
+                Console.WriteLine(" 1. [YES] 2. [NO]");
 
-                var equipmentItems = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
-                if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
+                int.TryParse(Console.ReadLine(), out int num);
+                if (num > 0 && num <= 2)
                 {
-                    int i = 0;
-                    foreach (var itemList in equipmentItems) 
+                    if (num == 1)
                     {
-                        bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
-                        string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
+                        var equipmentItems = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
+                        if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
+                        {
 
-                        Console.WriteLine($"{i + 1}. {prefix}{itemList}");
-                        i++;
+                            Console.WriteLine(" - 강화 할 장비를 (번호)선택하세요 - ");
+                            int i = 0;
+                            foreach (var itemList in equipmentItems)
+                            {
+                                bool isEquipped = Array.Exists(player.Inventory.Slots, slots => slots == itemList.Item); // 배열을 돌면서 slots변수에 들어있는 아이템이 있는지 검사해서 bool값을 반환
+                                string prefix = isEquipped ? "[E] " : ""; // true라면 들어있으면 [E]를 넣어줌
+
+                                Console.WriteLine($"{i + 1}. {prefix}{itemList}");
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("강화할 장비 아이템이 없습니다.");
+                            Console.WriteLine("아무키를 누르고 Enter로 나가기");
+                            return;
+                        }
+
+                        int.TryParse(Console.ReadLine(), out int input);
+                        for (int i = 0; i < equipmentItems.Count; i++)
+                        {
+
+                            if (input >= 1 && input <= equipmentItems.Count)
+                            {
+                                if (input == i + 1) // 입력한 숫자와 i값이 같다면
+                                {
+                                    Console.WriteLine();
+
+                                    selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
+                                    Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
+                                    //Console.Clear();
+                                    ItemUpgrade(forge);
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                BranchManager.ErrorMessage("잘못된 번호입니다,  Enter를 누른 후 다시 입력해주세요.");
+                                //Console.WriteLine("잘못된 번호입니다");
+                                break;
+                            }
+                        }
+                    }
+                    else if(num == 2)
+                    {
+                        a = false;
+                        forge.Selection(forge);
+
+                        return;
+                    }
+                    else
+                    {
+                        BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
+                        //Console.WriteLine("잘못 입력했습니다.");
+                        ItemUpgrade(forge);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("강화할 장비 아이템이 없습니다.");
-                    Console.WriteLine("아무키를 누르고 Enter로 나가기");
-                    return;
+                    BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
+                    //Console.WriteLine("잘못 입력했습니다.");
+                    ItemUpgrade(forge);
                 }
                 
-                int.TryParse(Console.ReadLine(), out int input);
-                for (int i = 0; i < equipmentItems.Count; i++) 
-                {
-                    
-                    if (input >= 1 && input <= equipmentItems.Count)
-                    {
-                        if (input == i  + 1) // 입력한 숫자와 i값이 같다면
-                        {
-                            Console.WriteLine();
-
-                            selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
-                            Console.WriteLine($"아이템 '{selectedItem}' 이(가) 선택되었습니다.\n");
-                            //Console.Clear();
-                            ItemUpgrade(forge);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        BranchManager.ErrorMessage("잘못된 번호입니다,  Enter를 누른 후 다시 입력해주세요.");
-                        //Console.WriteLine("잘못된 번호입니다");
-                        break;
-                    }
-                }
             }
         }
         private void ItemUpgrade(Forge forge)
@@ -107,8 +138,7 @@ namespace TextRPG_Team23
                             ItemGamblig(forge);
                             break;
                         case 2:
-                            // forge 로 돌아가기
-                            break;
+                            return;
                     }
                 }
                 else

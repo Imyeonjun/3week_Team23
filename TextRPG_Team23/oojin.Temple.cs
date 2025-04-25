@@ -44,8 +44,7 @@ namespace TextRPG_Team23
             int gold = 0;
             Console.Write("현재 남아있는 돈 : ");
 
-            int currentGold = player.Gold;
-            Console.WriteLine($"{currentGold}G");
+            Console.WriteLine($"{player.Gold}G");
 
             Console.WriteLine(" == 헌금을 하시겠습니까? ==\n");
             Console.WriteLine("1. YES 2.NO");
@@ -55,9 +54,11 @@ namespace TextRPG_Team23
             {
                 if (input == 1)
                 {
-                    Console.WriteLine(" == 헌금 할 금액을 입력해주세요 ==\n");
-                    int.TryParse(Console.ReadLine(), out int goldInput);
-                    gold = goldInput;
+                    //Console.WriteLine(" == 헌금 할 금액을 입력해주세요 ==\n");
+                    //Console.WriteLine($"{currentGold}G");
+                    //int.TryParse(Console.ReadLine(), out int goldInput);
+                    //currentGold -= goldInput;
+                    //Console.WriteLine($"{currentGold}G");
                 }
             }
             else
