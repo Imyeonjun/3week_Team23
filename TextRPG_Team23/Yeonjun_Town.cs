@@ -45,6 +45,7 @@ namespace TextRPG_Team23
                 case 2:
                     bool limitedUse = false;
                     bool alreadyUse = false;
+
                     player.Inventory.PrintInventory(player, limitedUse, ref alreadyUse);
                     Console.ReadLine();
                     break;
