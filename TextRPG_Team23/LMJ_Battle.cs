@@ -165,6 +165,7 @@ namespace TextRPG_Team23
         Battlecondition condition;
 
         public string MonsterLog;
+        public string SpecialMonsterLog = "";
 
         public BattleUi(Battlecondition condition)
         {
@@ -184,6 +185,11 @@ namespace TextRPG_Team23
 
         public void PrintMonsterLog()
         {
+            if (!string.IsNullOrWhiteSpace(SpecialMonsterLog)) //만약 몬스터가 특수한 행동을 했을 경우에 출력
+            {
+                Console.WriteLine(SpecialMonsterLog);
+                SpecialMonsterLog = "";
+            }
             Console.WriteLine(MonsterLog);
         }
 

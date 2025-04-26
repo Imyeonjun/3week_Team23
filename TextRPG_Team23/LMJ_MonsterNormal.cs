@@ -2,7 +2,6 @@
 {
     class HollowshadeBeast : Monster, TakeDamage
     {
-        int Shield { get; set; }
         int Anger;
         string newName = "틴달로스의 사냥개";
 
@@ -15,9 +14,9 @@
             Level = level;
             Name = "그림자 짐승";
             Atk = 10;
-            Def = 10;
-            MaxHp = 6;
-            CurrentHp = 6;
+            Def = 15;
+            MaxHp = 7;
+            CurrentHp = 7;
             IsDead = false;
 
             Anger = 0;
@@ -107,4 +106,194 @@
             }
         }
     }
+
+    class BloodrootSentinel : Monster, TakeDamage
+    {
+
+        bool isCounting;
+        bool isHungry;
+        int temp;
+        Battlecondition condition;
+
+        public BloodrootSentinel(Battlecondition condition, int code, int level)
+        {
+            this.condition = condition;
+            MobCode = code;
+            Level = level;
+            Name = "흡혈 파수병";
+            Atk = 0;
+            Def = 30;
+            MaxHp = 100;
+            CurrentHp = 100;
+            IsDead = false;
+            isCounting = false;
+            isHungry = false;
+        }
+
+        public override void UseSkill(int Turn)
+        {
+
+            if (BuffDef > 0) { BuffDef--; }
+
+            if (Turn % 4 == 0)
+            {
+                isHungry = true;
+                if (isHungry)
+                {
+                    HungryAttack(Def / 2);
+                }    
+            }
+
+            if (Turn % 2 != 0 && Def <= 30)
+            {
+                isCounting = true;
+                condition.ui.MonsterLog = $"\n▷{Name}의 눈에서 불길한 빛이 일렁인다!\n" +
+                                          $"< 반격 활성화 >";
+                if (Def >= 35)
+                {
+                    isCounting = true;
+                    condition.ui.MonsterLog = $"\n▷피맛을 본 {Name}은 입고리를 올린다.\n" +
+                                              $"< 반격 활성화 | 방어력 ({temp}) -> ({Def}) >";
+                }
+
+            }
+
+            if (Turn % 2 == 0)
+            {
+                isCounting = false;
+                condition.ui.MonsterLog = $"\n▷{Name}의 눈에서 빛이 사라졌다.\n" +
+                                          $"< 반격 비활성화 >";
+            }
+
+
+        }
+
+        public void HungryAttack(int dmg)
+        {
+            condition.Attack(dmg);
+            condition.ui.SpecialMonsterLog = $"▶{Name}에게 충분한 피가 공급되지 않았습니다." +
+                                             $"< [{Name}의 특수공격] | 받은 데미지: {dmg} >";
+            temp = Def;
+            Def += 5;
+        }
+
+        public void TakeItBack(int dmg)
+        {
+            isHungry = false;
+            condition.Attack(dmg);
+            Console.WriteLine($"▶{Name}의 반격!" +
+                              $"< 받은 데미지: ({dmg}) | {Name}의 회복량 ({dmg}) >");
+        }
+
+
+        public void TakeDamage(int Damage)
+        {
+            int realDamage;
+
+            if (BuffDef <= 0)
+            {
+                realDamage = Damage - Def;
+
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+
+                if (isCounting)
+                {
+                    Hp += realDamage;
+                    TakeItBack(realDamage);
+                }
+                else
+                {
+                    Hp -= realDamage;
+                }
+
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+
+                realDamage = Damage - (Def * 2);
+
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+
+                if (isCounting)
+                {
+                    Hp += realDamage;
+                    TakeItBack(realDamage);
+                }
+                else
+                {
+                    Hp -= realDamage;
+                }
+            }
+        }
+    }
+
+/*    class Roothelm : Monster, TakeDamage
+    {
+        Battlecondition condition;
+
+        public Roothelm(Battlecondition condition, int code, int level)
+        {
+            this.condition = condition;
+            MobCode = code;
+            Level = level;
+            Name = "뿌리투구 수호자";
+            Atk = 5;
+            Def = 7;
+            MaxHp = 40;
+            CurrentHp = 40;
+            IsDead = false;
+        }
+
+        public override void UseSkill(int Turn)
+        {
+            if (BuffDef > 0) { BuffDef--; }
+
+            if ((Turn % 2) != 0)
+            {
+                condition.Attack(Atk + BuffDef);
+                condition.ui.MonsterLog = $"\n▶{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다.\n" +
+                                          $"< 받은 데미지: ({Atk + BuffDef}) >";
+            }
+
+            if ((Turn % 2) == 0)
+            {
+                BuffDef++;
+                condition.BuffDef(1);
+                condition.ui.MonsterLog = $"\n▷{Name}는 아군 전체를 축복합니다.\n" +
+                                          $"< 아군 전체에게 방어력 2배 증가 버프 한턴 >";
+            }
+        }
+
+
+        public void TakeDamage(int Damage)
+        {
+            int realDamage;
+            if (BuffDef <= 0)
+            {
+                realDamage = Damage - Def;
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+                Hp -= realDamage;
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+                Hp -= realDamage;
+            }
+        }
+    }*/
 }
