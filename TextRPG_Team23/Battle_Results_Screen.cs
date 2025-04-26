@@ -256,7 +256,10 @@ namespace TextRPG_Team23
                         drops.Add(ItemDB.Items[5]);
                         drops.Add(ItemDB.Items[6]);
                         break;
-
+                    case "그림자 짐승":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
                 }
             }
 
