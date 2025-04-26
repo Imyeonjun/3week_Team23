@@ -264,6 +264,10 @@ namespace TextRPG_Team23
                         drops.Add(ItemDB.Items[1]);
                         drops.Add(ItemDB.Items[6]);
                         break;
+                    case "흡혈 파수병":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
                 }
             }
 
