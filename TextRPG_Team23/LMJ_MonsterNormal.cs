@@ -234,21 +234,25 @@
         }
     }
 
-/*    class Roothelm : Monster, TakeDamage
+    class HollowCaller : Monster, TakeDamage
     {
         Battlecondition condition;
 
-        public Roothelm(Battlecondition condition, int code, int level)
+        bool isSpawn;
+        int SpawnCount;
+
+        public HollowCaller(Battlecondition condition, int code, int level)
         {
             this.condition = condition;
             MobCode = code;
             Level = level;
-            Name = "뿌리투구 수호자";
-            Atk = 5;
-            Def = 7;
-            MaxHp = 40;
-            CurrentHp = 40;
+            Name = "공허를 부르는 자";
+            Atk = 4;
+            Def = 3;
+            MaxHp = 50;
+            CurrentHp = 50;
             IsDead = false;
+            isSpawn = false;
         }
 
         public override void UseSkill(int Turn)
@@ -257,27 +261,47 @@
 
             if ((Turn % 2) != 0)
             {
-                condition.Attack(Atk + BuffDef);
-                condition.ui.MonsterLog = $"\n▶{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다.\n" +
-                                          $"< 받은 데미지: ({Atk + BuffDef}) >";
+                isSpawn = false;
+                condition.ui.MonsterLog = $"\n▷{Name}는 공허와의 접촉을 준비합니다.\n" +
+                                          $"< 다음 턴에 공허 송곳니 추적자를 소환합니다. >";
             }
 
-            if ((Turn % 2) == 0)
+            if (Turn % 2 == 0 && !isSpawn)
             {
-                BuffDef++;
-                condition.BuffDef(1);
-                condition.ui.MonsterLog = $"\n▷{Name}는 아군 전체를 축복합니다.\n" +
-                                          $"< 아군 전체에게 방어력 2배 증가 버프 한턴 >";
+                condition.ui.MonsterLog = $"\n▷{Name}이 공허와 접촉에 실패했습니다.\n" +
+                          $"< 아무일도 일어나지 않음 >";
+            }
+            else if (Turn % 2 == 0 && isSpawn)
+            {
+                isSpawn = true;
+                condition.ui.MonsterLog = $"\n▶{Name}는 마침내 공허와의 접촉에 성공하였고 전장에 사냥꾼을 호출합니다.\n" +
+                          $"< 공허 송곳니 추적자 소환됨 >";
+                Spawn();
             }
         }
 
+        public void Spawn()
+        {
+            if (SpawnCount < 6)
+            {
+                SpawnCount++;
+                condition.SpawnHunter();
+            }
+            else
+            {
+                isSpawn = false;
+            }
+
+        }
 
         public void TakeDamage(int Damage)
         {
             int realDamage;
+
             if (BuffDef <= 0)
             {
                 realDamage = Damage - Def;
+
                 if (realDamage < 0)
                 {
                     realDamage = 1;
@@ -287,7 +311,9 @@
             else if (BuffDef > 0)
             {
                 BuffDef--;
+
                 realDamage = Damage - (Def * 2);
+
                 if (realDamage < 0)
                 {
                     realDamage = 1;
@@ -295,5 +321,85 @@
                 Hp -= realDamage;
             }
         }
-    }*/
+    }
+
+    class HollowFangstalker : Monster, TakeDamage
+    {
+        Battlecondition condition;
+
+        bool isSpawnerAlive;
+        bool isAttack;
+        public HollowFangstalker(Battlecondition condition, int code, int level)
+        {
+            this.condition = condition;
+            MobCode = code;
+            Level = level;
+            Name = "공허 송곳니 추적자";
+            Atk = 9;
+            Def = 0;
+            MaxHp = 17;
+            CurrentHp = 17;
+            IsDead = false;
+            isSpawnerAlive = true;
+            isAttack = false;
+        }
+
+        public override void UseSkill(int Turn)
+        {
+            if (BuffDef > 0) { BuffDef--; }
+
+            if (!isAttack)
+            {
+                condition.Attack(Atk);
+                isAttack = true;
+                condition.ui.MonsterLog = $"\n{Name}은 {condition.player.Name}에게 돌진해 송곳니를 박아넣습니다.\n" +
+                                          $"< 받은 데미지: ({Atk}) >";
+            }
+            else
+            {
+                isAttack = false;
+                condition.ui.MonsterLog = $"\n{Name}은 공격을 준비하고 있습니다.\n" +
+                                          $"< 다음 턴에 공격함 >";
+            }
+
+
+        }
+        public void CheckSpawnerAlive(bool result)
+        {
+            isSpawnerAlive = result; 
+            if (!isSpawnerAlive)
+            {
+                CurrentHp = 0;
+            }
+        }
+
+
+        public void TakeDamage(int Damage)
+        {
+            int realDamage;
+
+            if (BuffDef <= 0)
+            {
+                realDamage = Damage - Def;
+
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+                Hp -= realDamage;
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+
+                realDamage = Damage - (Def * 2);
+
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+                Hp -= realDamage;
+            }
+        }
+    }
 }

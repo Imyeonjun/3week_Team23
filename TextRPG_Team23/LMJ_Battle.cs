@@ -73,6 +73,12 @@ namespace TextRPG_Team23
             }
         }
 
+        public void SpawnHunter()
+        {
+
+        }
+
+
     }
 
 
