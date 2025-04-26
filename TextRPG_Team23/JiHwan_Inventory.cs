@@ -241,6 +241,25 @@ namespace TextRPG_Team23
                 
             }
         }
+        public bool CheckAllDurabilityIsFull()
+        {
+            foreach (var stack in Items)
+            {
+                if (stack.Item is Weapon || stack.Item is Clothes)
+                {
+                    if (stack.Item.Durability != stack.Item.MaxDurability)
+                    {
+                        // 내구도가 깎인 장비가 있다
+                        return false;
+                    }
+                }
+            }
+            // 모든 장비가 풀내구도다
+            return true;
+        }
+
+
+
         //public void CheckEquipmentDurability(Player player)//전투시에 장비중인 아이템 내구 감소 및 내구0일때 장착해제 기능 현재는 안씀
         //{
         //    for (int i = 0; i < Slots.Length; i++)
