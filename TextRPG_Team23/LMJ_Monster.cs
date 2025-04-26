@@ -167,7 +167,7 @@ namespace TextRPG_Team23
             if ((Turn % 2) != 0)
             {
                 condition.Attack(Atk + BuffDef);
-                condition.ui.MonsterLog = $"\n▶{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다." +
+                condition.ui.MonsterLog = $"\n▶{Name}는 거대한 줄기로 {condition.player.Name}을 강타합니다.\n" +
                                           $"< 받은 데미지: ({Atk + BuffDef}) >";
             }
 
@@ -175,7 +175,8 @@ namespace TextRPG_Team23
             {
                 BuffDef++;
                 condition.BuffDef(1);
-                condition.ui.MonsterLog = $"\n▷{Name}는 아군 전체를 축복합니다.";
+                condition.ui.MonsterLog = $"\n▷{Name}는 아군 전체를 축복합니다.\n" +
+                                          $"< 아군 전체에게 방어력 2배 증가 버프 한턴 >";
             }
         }
 
