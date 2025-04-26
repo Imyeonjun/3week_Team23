@@ -6,73 +6,77 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    //class Rainwisp : Monster, TakeDamage
-    //{
+    class HollowshadeBeast : Monster, TakeDamage
+    {
+        int Shield { get; set; }
 
-    //    Battlecondition condition;
-    //    int HealPoint;
-    //    bool isDanger;
-    //    public Rainwisp(Battlecondition condition, int code, int level)
-    //    {
-    //        this.condition = condition;
-    //        MobCode = code;
-    //        Level = level;
-    //        Name = "비안개 정령";
-    //        Atk = 0;
-    //        Def = 7;
-    //        MaxHp = 26;
-    //        CurrentHp = 26;
-    //        isDanger = false;
-    //        IsDead = false;
+        Battlecondition condition;
 
-    //    }
+        public HollowshadeBeast(Battlecondition condition, int code, int level)
+        {
+            this.condition = condition;
+            MobCode = code;
+            Level = level;
+            Name = "그림자 짐승";
+            Atk = 4;
+            Def = 10;
+            MaxHp = 34;
+            CurrentHp = 34;
+            IsDead = false;
+        }
 
-    //    public override void UseSkill(int Turn)
-    //    {
-    //        if (BuffDef > 0) { BuffDef--; }
+        public override void UseSkill(int Turn)
+        {
 
-    //        if (Turn % 2 != 0 && !isDanger)
-    //        {
-    //            int code = Program.random.Next(1, (condition.monsterBox.Count));
-    //            HealPoint = 12;
-    //            condition.HealMonster(HealPoint, code);
+            if (BuffDef > 0) { BuffDef--; }
 
-    //            if (CurrentHp < 14)
-    //            {
-    //                isDanger = true;
-    //            }
-    //            condition.ui.MonsterLog = $"\n{Name}의 안개가 아군을 감싸안습니다.";
-    //        }
-    //        else if (Turn % 2 != 0 && isDanger)
-    //        {
-    //            condition.ui.MonsterLog = $"\n{Name}이 안개를 준비하고 있습니다.";
-    //        }
+            if (Turn % 2 != 0)
+            {
+                condition.Attack(Atk + (Shield / 2));
+                condition.ui.MonsterLog = $"\n▶{Name}은 {condition.player.Name}을 등껍질로 후려친다!\n" +
+                                          $"< 받은 데미지: ({Atk + (Shield / 2)}) >";
+            }
 
+            if (Turn % 2 == 0)
+            {
+                Shield += 3;
+                Hp += Shield;
+                condition.ui.MonsterLog = $"\n▷{Name}의 등껍질이 자라나기 시작한다.\n" +
+                                          $"< 누적된 재생등껍질: ({Shield}) >";
+            }
 
-    //        if (Turn % 2 == 0 && !isDanger)
-    //        {
-    //            condition.ui.MonsterLog = $"\n{Name}이 안개를 준비하고 있습니다.";
-    //        }
-    //        else if (Turn % 2 == 0 && isDanger)
-    //        {
-    //            condition.HealAllMonster((HealPoint = Program.random.Next(5, 9)));
-    //            condition.ui.MonsterLog = $"\n자욱하게 퍼진 안개는 몬스터들을 회복시켰습니다.";
-    //        }
+            if (Turn % 8 == 0)
+            {
+                Shield = 0;
+                condition.ui.MonsterLog = $"\n▷{Name}의 덩껍질이 바스라졌다 \n" +
+                                          $"< 재생 보호막 파괴 ({Shield}) >";
 
-    //    }
+            }
+        }
 
 
-    //    public void TakeDamage(int Damage)
-    //    {
-    //        if (BuffDef <= 0)
-    //        {
-    //            Hp -= (Damage - (Def));
-    //        }
-    //        else if (BuffDef > 0)
-    //        {
-    //            BuffDef--;
-    //            Hp -= (Damage - (Def * 2));
-    //        }
-    //    }
-    //}
+        public void TakeDamage(int Damage)
+        {
+            int realDamage;
+            if (BuffDef <= 0)
+            {
+                realDamage = Damage - Def;
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+                Hp -= realDamage;
+            }
+            else if (BuffDef > 0)
+            {
+                BuffDef--;
+                realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+                Hp -= realDamage;
+            }
+        }
+    }
 }

@@ -54,11 +54,11 @@ namespace TextRPG_Team23
         {
             if (!isAction) //플레이어가 타겟으로 지정하지 않을 때 / 번호출력x
             {
-                Console.WriteLine($"Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {MaxHp}/{CurrentHp}] {(IsDead ? "Dead" : "Alive")}");
+                Console.WriteLine($"Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}/{MaxHp}] {(IsDead ? "Dead" : "Alive")}");
             }
             else /*if (!IsDead)*///플레이어가 타겟으로 지정할 때 / 번호출력o
             {
-                Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {MaxHp}/{CurrentHp}]  {(IsDead ? "Dead" : "Alive" )}");
+                Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}/{MaxHp}]  {(IsDead ? "Dead" : "Alive" )}");
             }
         }
 
@@ -81,8 +81,8 @@ namespace TextRPG_Team23
             MobCode = code;
             Level = level;
             Name = "모혈의 이끼거북";
-            Atk = 2;
-            Def = 12;
+            Atk = 4;
+            Def = 10;
             MaxHp = 34;
             CurrentHp = 34;
             IsDead = false;
@@ -120,17 +120,24 @@ namespace TextRPG_Team23
 
         public void TakeDamage(int Damage)
         {
+            int realDamage;
             if (BuffDef <= 0)
             {
-                int realDamage;
                 realDamage = Damage - Def;
+                if(realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                int realDamage;
                 realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
         }
@@ -146,8 +153,8 @@ namespace TextRPG_Team23
             MobCode = code;
             Level = level;
             Name = "뿌리투구 수호자";
-            Atk = 4;
-            Def = 10;
+            Atk = 5;
+            Def = 7;
             MaxHp = 40;
             CurrentHp = 40;
             IsDead = false;
@@ -175,17 +182,24 @@ namespace TextRPG_Team23
 
         public void TakeDamage(int Damage)
         {
+            int realDamage;
             if (BuffDef <= 0)
             {
-                int realDamage;
                 realDamage = Damage - Def;
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                int realDamage;
                 realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
         }
@@ -208,7 +222,7 @@ namespace TextRPG_Team23
             Level = level;
             Name = "부패의 턱";
             Atk = 7;
-            Def = 3;
+            Def = 2;
             MaxHp = 27;
             CurrentHp = 27;
             IsDead = false;
@@ -274,19 +288,24 @@ namespace TextRPG_Team23
 
         public void TakeDamage(int Damage)
         {
+            int realDamage;
             if (BuffDef <= 0)
             {
-                poisonPower += 1;
-                int realDamage;
                 realDamage = Damage - Def;
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
-                poisonPower += 1;
                 BuffDef--;
-                int realDamage;
                 realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
         }
@@ -308,8 +327,8 @@ namespace TextRPG_Team23
             Name = "일몰 좀도둑";
             Atk = 15;
             Def = 0;
-            MaxHp = 19;
-            CurrentHp = 19;
+            MaxHp = 14;
+            CurrentHp = 14;
             IsDead = false;
         }
 
@@ -355,17 +374,24 @@ namespace TextRPG_Team23
 
         public void TakeDamage(int Damage)
         {
+            int realDamage;
             if (BuffDef <= 0)
             {
-                int realDamage;
                 realDamage = Damage - Def;
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                int realDamage;
                 realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
         }
@@ -417,20 +443,26 @@ namespace TextRPG_Team23
             }
         }
 
-
         public void TakeDamage(int Damage)
         {
+            int realDamage;
             if (BuffDef <= 0)
             {
-                int realDamage;
                 realDamage = Damage - Def;
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                int realDamage;
                 realDamage = Damage - (Def * 2);
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
                 Hp -= realDamage;
             }
         }
@@ -449,9 +481,9 @@ namespace TextRPG_Team23
             Level = level;
             Name = "비안개 정령";
             Atk = 0;
-            Def = 7;
-            MaxHp = 26;
-            CurrentHp = 26;
+            Def = 2;
+            MaxHp = 25;
+            CurrentHp = 25;
             isDanger = false;
             IsDead = false;
         }
@@ -474,7 +506,7 @@ namespace TextRPG_Team23
             {
                 int myCode = MobCode;
                 int target = FindFriendly();
-                HealPoint = 12;
+                HealPoint = 8;
                 condition.HealMonster(HealPoint, target);
                 
                 condition.ui.MonsterLog = $"\n▶{Name}의 안개가 아군을 회복시킵니다.\n" +
@@ -482,7 +514,7 @@ namespace TextRPG_Team23
             }
             else if (Turn % 2 == 0 && isDanger)
             {
-                condition.HealAllMonster((HealPoint = Program.random.Next(5, 9)));
+                condition.HealAllMonster((HealPoint = Program.random.Next(3, 7)));
                 condition.ui.MonsterLog = $"\n▶자욱하게 퍼진 안개는 몬스터들을 회복시켰습니다.\n" +
                                           $"< 회복량: ({HealPoint}) >";
             }
@@ -491,11 +523,18 @@ namespace TextRPG_Team23
 
         public void TakeDamage(int Damage)
         {
+            int realDamage;
             if (BuffDef <= 0)
             {
-                int realDamage;
                 realDamage = Damage - Def;
+
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+
                 Hp -= realDamage;
+
                 if (CurrentHp < 14)
                 {
                     isDanger = true;
@@ -504,9 +543,16 @@ namespace TextRPG_Team23
             else if (BuffDef > 0)
             {
                 BuffDef--;
-                int realDamage;
+
                 realDamage = Damage - (Def * 2);
+
+                if (realDamage < 0)
+                {
+                    realDamage = 1;
+                }
+
                 Hp -= realDamage;
+
                 if (CurrentHp < 14)
                 {
                     isDanger = true;
