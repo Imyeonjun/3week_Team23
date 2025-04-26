@@ -57,10 +57,6 @@ namespace TextRPG_Team23
                     // 던전 입장 코드 수정
                     Console.WriteLine("디버그 : 던전 출력");
                     Console.ReadLine();
-                    if(player.buff == true)
-                    {
-                        
-                    }
                     gate.Gate(dungeon);
                     break;
                 case 5:
