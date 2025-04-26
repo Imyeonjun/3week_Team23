@@ -252,7 +252,7 @@
             MaxHp = 50;
             CurrentHp = 50;
             IsDead = false;
-            isSpawn = false;
+            isSpawn = true;
         }
 
         public override void UseSkill(int Turn)
@@ -261,7 +261,6 @@
 
             if ((Turn % 2) != 0)
             {
-                isSpawn = false;
                 condition.ui.MonsterLog = $"\n▷{Name}는 공허와의 접촉을 준비합니다.\n" +
                                           $"< 다음 턴에 공허 송곳니 추적자를 소환합니다. >";
             }
@@ -269,20 +268,19 @@
             if (Turn % 2 == 0 && !isSpawn)
             {
                 condition.ui.MonsterLog = $"\n▷{Name}이 공허와 접촉에 실패했습니다.\n" +
-                          $"< 아무일도 일어나지 않음 >";
+                                          $"< 아무일도 일어나지 않음 >";
             }
             else if (Turn % 2 == 0 && isSpawn)
             {
-                isSpawn = true;
                 condition.ui.MonsterLog = $"\n▶{Name}는 마침내 공허와의 접촉에 성공하였고 전장에 사냥꾼을 호출합니다.\n" +
-                          $"< 공허 송곳니 추적자 소환됨 >";
+                                          $"< 공허 송곳니 추적자 소환됨 >";
                 Spawn();
             }
         }
 
         public void Spawn()
         {
-            if (SpawnCount < 6)
+            if (SpawnCount < 5)
             {
                 SpawnCount++;
                 condition.SpawnHunter();
@@ -293,6 +291,7 @@
             }
 
         }
+
 
         public void TakeDamage(int Damage)
         {
@@ -352,25 +351,28 @@
             {
                 condition.Attack(Atk);
                 isAttack = true;
-                condition.ui.MonsterLog = $"\n{Name}은 {condition.player.Name}에게 돌진해 송곳니를 박아넣습니다.\n" +
+                condition.ui.MonsterLog = $"\n▶{Name}은 {condition.player.Name}에게 돌진해 송곳니를 박아넣습니다.\n" +
                                           $"< 받은 데미지: ({Atk}) >";
             }
             else
             {
                 isAttack = false;
-                condition.ui.MonsterLog = $"\n{Name}은 공격을 준비하고 있습니다.\n" +
+                condition.ui.MonsterLog = $"\n▷{Name}은 공격을 준비하고 있습니다.\n" +
                                           $"< 다음 턴에 공격함 >";
             }
 
 
         }
-        public void CheckSpawnerAlive(bool result)
+        public void MyLifeWithSpawner(bool result)
         {
             isSpawnerAlive = result; 
             if (!isSpawnerAlive)
             {
-                CurrentHp = 0;
+                Hp = 0;
+                condition.ui.SpecialMonsterLog = $"\n▶소환사가 없어진 공허생물체가 쓰러집니다.\n" +
+                                                 $"< 공허 송곳니 추적자 파괴 >";
             }
+
         }
 
 

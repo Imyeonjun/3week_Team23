@@ -265,6 +265,18 @@ namespace TextRPG_Team23
             }
         }
 
+        public void IgnoreDefenseDamage(int dmg)
+        {
+            if (CurrentHp > dmg)
+            {
+                CurrentHp -= dmg;
+            }
+            else
+            {
+                CurrentHp = 0;
+            }
+        }
+
         //public void AddDungeonClear()
         //{
 
@@ -272,48 +284,48 @@ namespace TextRPG_Team23
 
         //}
 
-      /*  public void UpdateLevel()
-        {
-            switch (Level)
-            {
-                case 1:
-                    if (exp >= 10)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                case 2:
-                    if (exp >= 35)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                case 3:
-                    if (exp >= 65)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                case 4:
-                    if (exp >= 100)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                default:
-                    break;
-            }
+        /*  public void UpdateLevel()
+          {
+              switch (Level)
+              {
+                  case 1:
+                      if (exp >= 10)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  case 2:
+                      if (exp >= 35)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  case 3:
+                      if (exp >= 65)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  case 4:
+                      if (exp >= 100)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  default:
+                      break;
+              }
 
-            RecalculateStats();
-        }*/
+              RecalculateStats();
+          }*/
 
         public void LevelUp()
         {

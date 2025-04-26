@@ -35,5 +35,6 @@ namespace TextRPG_Team23
             int spawnCount = Program.random.Next(2, 5);
             factory.MakeMonster(spawnCount);
         }
+
     }
 }

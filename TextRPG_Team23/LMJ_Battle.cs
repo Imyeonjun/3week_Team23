@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,11 +33,16 @@ namespace TextRPG_Team23
 
 
 
-
         public void Attack(int damage)
         {
             player.PlayerTakeDamage(damage);
         }
+
+        public void IgnoreAttack(int damage) //방무뎀 넣기
+        {
+            player.IgnoreDefenseDamage(damage);
+        }
+
 
         public void BuffDef(int BuffDef)
         {
@@ -75,10 +81,31 @@ namespace TextRPG_Team23
 
         public void SpawnHunter()
         {
-
+            monsterBox.Add(new HollowFangstalker(this, 10, 1));
         }
 
+        public void CheckSpawner()
+        {
+            foreach(Monster m in monsterBox)
+            {
+                if (m.Name == "공허를 부르는 자" && m.Hp <= 0)
+                {
+                    KillAllSpawnMob();
+                }
+            }
+        }
 
+        public void KillAllSpawnMob()
+        {
+            foreach(HollowFangstalker fang in monsterBox)
+            {
+                if (!fang.IsDead)
+                {
+                    fang.MyLifeWithSpawner(false);
+                    ui.PrintDestroySpawnMob();
+                }
+            }
+        }
     }
 
 
@@ -107,6 +134,7 @@ namespace TextRPG_Team23
             condition.deadMonsterBox = condition.monsterBox.ToList();
             while (isBattle)
             {
+                condition.CheckSpawner();
                 CheckMonsterDead();
 
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
@@ -197,6 +225,12 @@ namespace TextRPG_Team23
                 SpecialMonsterLog = "";
             }
             Console.WriteLine(MonsterLog);
+        }
+
+        public void PrintDestroySpawnMob()
+        {
+            Console.WriteLine(SpecialMonsterLog);
+            SpecialMonsterLog = "";
         }
 
 
