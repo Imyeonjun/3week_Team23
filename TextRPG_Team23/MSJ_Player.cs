@@ -34,8 +34,11 @@ namespace TextRPG_Team23
         public int Gold { get => gld; set => gld = value; }
         public int KillMon { get => killingMonsterCnt; set => killingMonsterCnt = value; }
         public bool MonsterQuest { get; set; }
+
+        public bool buff = false;
         public Inventory Inventory { get; private set; }
         public List<Quest>? Quests = new List<Quest>();
+        
 
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정
