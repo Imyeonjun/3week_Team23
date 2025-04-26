@@ -30,10 +30,14 @@ namespace TextRPG_Team23
         {
             battle.EnterBattle(true);
         }
-        public void WorkFactory()
+        public void WorkFactory(string where)
         {
-            int spawnCount = Program.random.Next(2, 5);
-            factory.MakeMonster(spawnCount);
+            factory.MakeMonster(where);
+        }
+
+        public void BossBattleStart()
+        {
+            battle.EnterBoss(true);
         }
 
     }

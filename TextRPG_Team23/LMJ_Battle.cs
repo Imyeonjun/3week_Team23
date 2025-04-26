@@ -98,17 +98,33 @@ namespace TextRPG_Team23
                 }
             }
         }
-        public bool CheckStar()
+        public void WatcherDead()
         {
-            bool isStarExist = false;
+            List<Monster> removelist = new List<Monster>();
+
             foreach (var m in monsterBox)
             {
-                if (m is Star)
+                if (m is Watcher eye && eye.Hp <= 0)
                 {
-                    isStarExist = true;
+                    removelist.Add(eye);
                 }
             }
-            return isStarExist;
+            foreach (var m in removelist)
+            {
+                monsterBox.Remove(m);
+            }
+        }
+        public bool CheckStar()
+        {
+            bool isStarAlive = false;
+            foreach (var m in monsterBox)
+            {
+                if (m is Star star && !star.IsDead)
+                {
+                    isStarAlive = true;
+                }
+            }
+            return isStarAlive;
         }
         public void StarExplode(bool Explode)
         {
@@ -116,7 +132,7 @@ namespace TextRPG_Team23
 
             foreach (var m in monsterBox)
             {
-                if (m is Star star && star.isExplode)
+                if (m is Star star)
                 {
                     removelist.Add(star);
                 }
@@ -201,7 +217,6 @@ namespace TextRPG_Team23
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBattle = false;
-                    condition.monsterBox.Clear();
                     BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox,condition.svainghp);
                     continue;
                 }
@@ -219,10 +234,53 @@ namespace TextRPG_Team23
             }
         }
 
+        public void EnterBoss(bool isEnter)
+        {
+            turnCount = 1;
+            condition.svainghp = condition.player.CurrentHp;
+            bool isBossBattle = isEnter;
+
+            Console.Clear();
+            Console.Write("당신은 태양이 가려진 왕성에 도달했다...\n\n" +
+                          "왕좌에서 몸을 일으킨 폭군은 당신을 즉시 공격했다.\n\n");
+
+            condition.deadMonsterBox = condition.monsterBox.ToList();
+
+            while (isBossBattle)
+            {
+                CheckBossMonsterDead();
+                CheckBossDead();
+
+                if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
+                {
+                    isBossBattle = false;
+                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox, condition.svainghp);
+                    continue;
+                }
+
+                condition.ui.PrintMonster(false);
+
+                StartBossTurn();
+                turnCount++;
+
+                condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
+
+                Console.ReadKey();
+                Console.Clear();
+
+                if (turnCount == 6)
+                {
+                    turnCount = 1;
+                }
+
+                condition.CheckWatcher();
+                condition.WatcherDead();
+            }
+        }
+
         public void StartMonsterTurn()
         {
-
-            foreach (Monster m in condition.monsterBox)
+            foreach (Monster m in condition.monsterBox.ToList())
             {
                 if (!m.IsDead)
                 {
@@ -234,7 +292,21 @@ namespace TextRPG_Team23
                     Console.WriteLine("죽은몬스터");
                 }
             }
-            
+        }
+        public void StartBossTurn()
+        {
+            foreach (Monster m in condition.monsterBox.ToList())
+            {
+                if (!m.IsDead)
+                {
+                    m.UseSkill(turnCount);
+                    condition.ui.PrintBossMonsterLog();
+                }
+                else
+                {
+                    Console.WriteLine("죽은몬스터");
+                }
+            }
         }
 
         public void CheckMonsterDead()
@@ -249,6 +321,34 @@ namespace TextRPG_Team23
                 }
             }
             if (DeadCount == condition.monsterBox.Count)
+            {
+                condition.monsterBox.Clear();
+            }
+        }
+        
+        public void CheckBossMonsterDead()
+        {
+            foreach(Monster m in condition.monsterBox)
+            {
+                if (m.Hp <= 0)
+                {
+                    m.IsDead= true;
+                }
+            }
+        }
+
+        public void CheckBossDead()
+        {
+            bool isOver = false;
+            foreach(var m in condition.monsterBox)
+            {
+                if(m is EclipseTyrant boss && boss.Hp <= 0)
+                {
+                    m.IsDead = true;
+                    isOver = true;
+                }
+            }
+            if (isOver)
             {
                 condition.monsterBox.Clear();
             }
@@ -288,12 +388,27 @@ namespace TextRPG_Team23
             Console.WriteLine(MonsterLog);
         }
 
+
         public void PrintDestroySpawnMob()
         {
             Console.WriteLine(SpecialMonsterLog);
             SpecialMonsterLog = "";
         }
 
+
+
+        public void PrintBossMonsterLog() //보스전을 위해 따로 준비한 출력장치
+        {
+            Console.WriteLine(MonsterLog);
+        }
+        public void PrintSpecialMonsterLog() //보스전을 위해 따로 준비한 출력장치
+        {
+            if (!string.IsNullOrWhiteSpace(SpecialMonsterLog))
+            {
+                Console.WriteLine(SpecialMonsterLog);
+                SpecialMonsterLog = "";
+            }
+        }
 
     }
 }

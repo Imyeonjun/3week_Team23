@@ -102,16 +102,20 @@ namespace TextRPG_Team23
                 case 1:
                     Console.WriteLine("디버그 : 하급 던전 입장");
                     Console.ReadKey();
-                    dungeon.WorkFactory();
+                    dungeon.WorkFactory("1단계던전");
                     dungeon.Start();    
                     break;
                 case 2:
                     Console.WriteLine("디버그 : 중급 던전 입장");
                     Console.ReadKey();
+                    dungeon.WorkFactory("2단계던전");
+                    dungeon.Start();
                     break;
                 case 3:
                     Console.WriteLine("디버그 : 상급 던전 입장");
                     Console.ReadKey();
+                    dungeon.WorkFactory("보스던전");
+                    dungeon.BossBattleStart();
                     break;
                 case 0:
                     Console.WriteLine("마을로 돌아갑니다.");
