@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,11 @@ namespace TextRPG_Team23
     public class Temple
     {
         private int gold;
-        
+        float totalBuffATk = 10.0f;
+        float totalBuffDef = 10.0f;
+
+        float buffAtkVelue = 0.0f;
+        int buffDefVelue = 0;
         public void Selection(Player player)
         {
             // 기능 추가 수정
@@ -27,6 +32,7 @@ namespace TextRPG_Team23
                             Offering(player);
                             break;
                         case 2:
+                            player.buff = false;
                             Buff(player);
                             break;
                         case 3:
@@ -82,16 +88,14 @@ namespace TextRPG_Team23
         }
         private void Buff(Player player)
         {
-            float totalBuffATk = 10.0f;
-            float totalBuffDef = 10.0f;
-
             Console.WriteLine("\n버프를 받으시겠습니까?");
-            Console.WriteLine($"차감되는 골드 : 1000G");
+            Console.WriteLine($"현재 남아있는 골드 : {player.Gold} | 차감되는 골드 : 1000G");
             Console.Write("1. YES 2. NO \n>>> ");
+
             int.TryParse(Console.ReadLine(), out int input);
             if (input == 1)
             {
-                if(player.Gold < 1000)
+                if (player.Gold < 1000)
                 {
                     Console.WriteLine("돈이 부족하여 버프를 받을 수 없습니다.");
                     return;
@@ -100,44 +104,66 @@ namespace TextRPG_Team23
                 {
                     player.buff = true;
                     player.Gold -= 1000;
-                    if (gold > 16000)
+                    if (gold >= 16000)
                     {
                         totalBuffATk *= 5.0f;
                         totalBuffDef *= 5.0f;
                     }
-                    else if (gold > 12000)
+                    else if (gold >= 12000)
                     {
                         totalBuffATk *= 3.5f;
                         totalBuffDef *= 3.5f;
                     }
-                    else if (gold > 80000)
+                    else if (gold >= 80000)
                     {
                         totalBuffATk *= 2.5f;
                         totalBuffDef *= 2.5f;
                     }
-                    else if (gold > 5000)
+                    else if (gold >= 5000)
                     {
                         totalBuffATk *= 2.0f;
                         totalBuffDef *= 2.0f;
                     }
-                    else if (gold > 3000)
+                    else if (gold >= 3000)
                     {
-                        totalBuffATk *= 0.5f;
-                        totalBuffDef *= 0.5f;
+                        totalBuffATk *= 1.5f;
+                        totalBuffDef *= 1.5f;
                     }
-                    player.Atk += totalBuffATk;
-                    player.Def += (int)totalBuffDef;
+                    player.TotalAtk += totalBuffATk;
+                    player.TotalDef += (int)totalBuffDef;
+
+                    buffAtkVelue += totalBuffATk;
+                    buffDefVelue += (int)totalBuffDef;
                 }
                 Console.WriteLine("버프를 받으셨습니다.\n");
+                return;
             }            
             else if (input == 2)
             {
-                return;
+                Buff(player);
             }
             else
             {
                 Console.WriteLine("잘못 입력했습니다, 다시 확인해주세요");
             }
+        }
+        public float BuffAtk(Player player)
+        {
+             float buffATk = 0.0f;
+            if(player.buff)
+            {
+                buffATk = buffAtkVelue;
+            }
+            return buffATk;
+        }
+        public int BuffDef(Player player)
+        {
+            int buffDef = 0;
+            if (player.buff)
+            {
+                buffDef = buffDefVelue;
+            }
+            return buffDef;
         }
     }
 }

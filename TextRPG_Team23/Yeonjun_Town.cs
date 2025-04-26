@@ -39,7 +39,7 @@ namespace TextRPG_Team23
             {
                 case 1:
                     //Console.WriteLine("디버그 : 상태창 출력");
-                    player.PrintStatus();
+                    player.PrintStatus(player, temple);
                     Console.ReadLine();
                     break;
                 case 2:
