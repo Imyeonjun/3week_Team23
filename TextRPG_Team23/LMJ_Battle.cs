@@ -79,11 +79,6 @@ namespace TextRPG_Team23
             }
         }
 
-        public void SpawnHunter()
-        {
-            monsterBox.Add(new HollowFangstalker(this, 10, 1));
-        }
-
         public void CheckSpawner()
         {
             foreach(Monster m in monsterBox)
@@ -105,6 +100,15 @@ namespace TextRPG_Team23
                     ui.PrintDestroySpawnMob();
                 }
             }
+        }
+        public void SpawnHunter()
+        {
+            monsterBox.Add(new HollowFangstalker(this, 10, 1));
+        }
+
+        public void SpawnStar()
+        {
+            monsterBox.Add(new Star(this, 9, 10));
         }
     }
 
