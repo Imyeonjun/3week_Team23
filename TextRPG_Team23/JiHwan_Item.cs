@@ -13,6 +13,8 @@ namespace TextRPG_Team23
 
         public int Upgrade { get; set; } = 0;
 
+        public bool IsHidden { get; set; } = false;
+
         protected Item(int upgrade, string name, int price, string description, int durability = -1)//장비아이템 용 생성자
         {
             Upgrade = upgrade;
@@ -182,7 +184,8 @@ namespace TextRPG_Team23
             new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 30)),
             new Consumable("상급 마나 포션", 100, "마나를 60 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 60)),
             new Consumable("수리 요정 출장권(전체 수리)", 80, "보유중인 모든 아이템을 수리합니다.", RepairItem.RepairAll),
-            new Consumable("수리 요정 출장권(단일 수리)", 40, "하나의 장비를 수리합니다.", p => Forge.Repair(p ,false))
+            new Consumable("수리 요정 출장권(단일 수리)", 40, "하나의 장비를 수리합니다.", p => Forge.Repair(p ,false)),
+            new Consumable("보스몬스터 완벽 공략집", 1000, "보스몬스터의 약점을 드러냅니다.", RepairItem.RepairAll) {IsHidden = true }//숨겨진 아이템
         };
     }
 }
