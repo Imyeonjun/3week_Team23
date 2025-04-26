@@ -37,8 +37,8 @@ namespace TextRPG_Team23
                             return;
                             break;
                         case 3:
-
-                            Repair(player);
+                            bool needGold = true;
+                            Repair(player, needGold);
                             break;
                     }
                 }
@@ -54,9 +54,20 @@ namespace TextRPG_Team23
                 }
             }
         }
-        public static void Repair(Player player)
+        public static void Repair(Player player, bool needGold)
         {
             //Console.Clear();
+            
+            if (player.Inventory.CheckAllDurabilityIsFull())
+            {
+                Console.WriteLine("수리할 아이템이 없습니다.");
+                if (!needGold)
+                {
+                    Console.WriteLine("하지만 수리요정은 출장권을 환불해주지않았습니다.");
+                }
+                return;
+            }
+
             Console.WriteLine("\n == 수리할 아이템을 선택하세요 == \n");
 
             int i = 0;
@@ -77,8 +88,31 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
-                items[index - 1].Item.RepairMax();  // 여기서 호출!
-                return;
+                var selectedItem = items[index - 1].Item;
+                int cost = (selectedItem.MaxDurability - selectedItem.Durability) * 10;
+                if (needGold)
+                {
+                    if (player.Gold >= cost)
+                    {
+                        
+                        player.Gold -= cost;
+                        selectedItem.RepairMax();
+                        Console.WriteLine($"수리가 완료되었습니다. {cost}G 소모");
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("골드가 부족해 수리할수 없습니다.");
+                        return;
+                    }
+                }
+                else
+                {
+                    selectedItem.RepairMax();  // 여기서 호출!
+                    return;
+                }
+
+                
             }
             else
             {
