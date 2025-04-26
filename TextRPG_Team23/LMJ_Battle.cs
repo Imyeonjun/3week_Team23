@@ -79,6 +79,54 @@ namespace TextRPG_Team23
             }
         }
 
+        public void CheckWatcher()
+        {
+            int mobCount = 0;
+            foreach(var m in monsterBox)
+            {
+                if(m is Watcher)
+                {
+                    mobCount++;
+                }
+            }
+            if (mobCount > 0)
+            {
+                foreach(var m in monsterBox)
+                {
+                    if (m is Watcher w)
+                        w.entityDamage += mobCount;
+                }
+            }
+        }
+        public bool CheckStar()
+        {
+            bool isStarExist = false;
+            foreach (var m in monsterBox)
+            {
+                if (m is Star)
+                {
+                    isStarExist = true;
+                }
+            }
+            return isStarExist;
+        }
+        public void StarExplode(bool Explode)
+        {
+            List<Monster> removelist = new List<Monster>();
+
+            foreach (var m in monsterBox)
+            {
+                if (m is Star star && star.isExplode)
+                {
+                    removelist.Add(star);
+                }
+            }
+            foreach (var m in removelist)
+            {
+                monsterBox.Remove(m);
+            }
+        }
+
         public void CheckSpawner()
         {
             foreach(Monster m in monsterBox)
@@ -92,15 +140,16 @@ namespace TextRPG_Team23
 
         public void KillAllSpawnMob()
         {
-            foreach(HollowFangstalker fang in monsterBox)
+            foreach (var mob in monsterBox)
             {
-                if (!fang.IsDead)
+                if (mob is HollowFangstalker fang && !fang.IsDead)
                 {
                     fang.MyLifeWithSpawner(false);
                     ui.PrintDestroySpawnMob();
                 }
             }
         }
+
         public void SpawnHunter()
         {
             monsterBox.Add(new HollowFangstalker(this, 10, 1));
@@ -108,7 +157,15 @@ namespace TextRPG_Team23
 
         public void SpawnStar()
         {
-            monsterBox.Add(new Star(this, 9, 10));
+            monsterBox.Add(new Star(this, 111, 10));
+        }
+
+        public void SpawnWatcher()
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                monsterBox.Add(new Watcher(this, 222, 5));
+            }
         }
     }
 

@@ -33,44 +33,49 @@ namespace TextRPG_Team23
         public override void UseSkill(int Turn)
         {
 
-            if (SuperAttack) //체력이 100일때 존나 쎈 데미지 한번
-            {
-                SuperAttack = false;
-                condition.IgnoreAttack(90);
-                condition.ui.SpecialMonsterLog = $"\n※{Name}: 난 아직 죽을 수 없다!\n" +
-                                                 $"▶엄청난 폭발이 일어납니다!◀\n" +
-                                                 $"< 받은 방어무시 데미지: ({90}) >";
-            }
 
             switch (Turn)  
             {
-                case 1: //두번 촤촥 때리기 공격력 강화가 걸려있으면 때리고 해제
+                case 1: //두번 촤촥 때리기 공격력 강화가 걸려있으면 때리고 해제 완성
                     SuperArmour = true;
                     BlazingCleave();
                     break;
 
-                case 2: //별 떨구기 별이 몬스터리스트에 추가
+                case 2: //별 떨구기 별이 몬스터리스트에 추가 완성
+                    SuperArmour = true;
                     StarfallSear();
                     break;
 
-                case 3: // 개구라 패턴 
+                case 3: // 개구라 패턴 이때 딜링타임 만들기 - 때릴 수 있게 하는 아이템을 사용하는 것 추가해야함
                     SolarBetrayal();
+
+                    if (SuperAttack && Hp == 100) //체력이 100일때 존나 쎈 데미지 한번
+                    {
+                        SuperAttack = false;
+                        condition.IgnoreAttack(90);
+                        condition.ui.SpecialMonsterLog = $"\n※{Name}: 난 아직 죽을 수 없다!\n" +
+                                                         $"▶엄청난 폭발이 일어납니다!◀\n" +
+                                                         $"< 받은 방어무시 데미지: ({90}) >";
+                    }
                     break;
 
-                case 4: //이때 별폭발 패턴 && 만약 폭발 안하면 자신의 공격력 강화
+                case 4: //이때 별폭발 패턴 && 만약 폭발 안하면 자신의 공격력 강화 
+                    SuperArmour = true;
                     SolarCoronation();
                     break;
 
-                case 5: //이때 거대한 눈 소환 죽이지 않으면 필드에 남아있고 눈은 짝수 턴 마다 플레이어에게 검을 떨굼
+                case 5: //이때 거대한 눈 2개 소환 죽이지 않으면 필드에 남아있고 눈은 매턴 마다 플레이어에게 피해를 줌 완성
+                    SuperArmour = true;
                     CallingWatcher();
                     break;
 
-                case 6: //Dawnbreaker Slam 크게 한방때리기
+                case 6: //Dawnbreaker Slam 크게 한방때리기 완성
+                    SuperArmour = true;
                     DawnbreakerSlam();
                     break;
-                case 0:
-                    YouCanHit();
-                    break;
+                //case 0:
+                //    YouCanHit();
+                //    break;
             }
 
         }
@@ -110,23 +115,31 @@ namespace TextRPG_Team23
         void SolarCoronation()
         {
             //별 탐색하고 조건 추가
-            StrengthOfSun = true;   
-            
-            condition.ui.MonsterLog = $"\n※{Name}: 허... 설마 별을 파괴할 줄이야... 하지만 그 정도로 나를 막을 수 있으리라 생각하지마라\n" +
-                                      $"▶{Name}은 태양의 왕좌에서 힘을 끌어옵니다.◀\n" +
-                                      $"< 추가된 공격력: (+{7}) >";
+            bool isStarHere = condition.CheckStar();
+
+            if (isStarHere) //별이 있다면 실행
+            {
+                condition.ui.MonsterLog = $"\n※{Name}: 고작 이 정도 시련도 이겨내지 못하는가\n" +
+                                          $"▶{Name}은 당신을 비웃습니다.◀\n" +
+                                          $"< 별의 폭발이 시작됩니다. >";
+            }
+            else //별이 없으면 실행
+            {
+                StrengthOfSun = true;
+
+                condition.ui.MonsterLog = $"\n※{Name}: 허... 설마 별을 파괴할 줄이야... 하지만 그 정도로 나를 막을 수 있으리라 생각하지마라\n" +
+                                          $"▶{Name}은 태양의 왕좌에서 힘을 끌어옵니다.◀\n" +
+                                          $"< 추가된 공격력: (+{7}) >";
+            }
             
         }
 
-
-
-
-
         void CallingWatcher()
         {
+            condition.SpawnWatcher();
             condition.ui.MonsterLog = $"\n※{Name}: 열기를 품은 눈이 네놈을 통구이로 만들 것이다.\n" +
-                                      $"▶{Name}은 일식의 눈을 소환합니다.◀\n" +
-                                      $"< 일식의 눈은 매 2턴마다 당신을 공격합니다. >";
+                                      $"▶{Name}은 일식의 눈을 2개 소환합니다.◀\n" +
+                                      $"< 일식의 눈은 매턴마다 당신을 공격합니다. >";
         }
 
         void DawnbreakerSlam()
@@ -176,6 +189,7 @@ namespace TextRPG_Team23
     {
         Battlecondition condition;
         int ExplosionDmg;
+        public bool isExplode;
 
         public Star(Battlecondition condition, int code, int level)
         {
@@ -188,6 +202,7 @@ namespace TextRPG_Team23
             MaxHp = 50;
             CurrentHp = 50;
             IsDead = false;
+            isExplode = false;
             ExplosionDmg = 30;
         }
 
@@ -211,6 +226,8 @@ namespace TextRPG_Team23
                     condition.IgnoreAttack(ExplosionDmg);
                     condition.ui.MonsterLog = $"\n▶{Name}은 엄청난 충격을 만들어냅니다.\n" +
                                               $"< 받은 방어무시 데미지 ({ExplosionDmg}) >";
+                    isExplode = true;
+
                     break;
             }
 
@@ -221,6 +238,41 @@ namespace TextRPG_Team23
         {
             Hp -= Damage;
 
+        }
+    }
+
+    class Watcher : Monster, TakeDamage
+    {
+        Battlecondition condition;
+        public int entityDamage;
+
+        public Watcher(Battlecondition condition, int code, int level)
+        {
+            this.condition = condition;
+            MobCode = code;
+            Level = level;
+            Name = "일식의 눈";
+            Atk = 0;
+            Def = 0;
+            MaxHp = 20;
+            CurrentHp = 20;
+            IsDead = false;
+            entityDamage = 5;
+        }
+
+        public override void UseSkill(int Turn)
+        {
+            
+            condition.IgnoreAttack(entityDamage);
+            condition.ui.MonsterLog = $"▶{Name}이 {condition.player.Name}의 신체 내부에 열기를 터트립니다." +
+                                      $"< 받은 방어무시 데미지: ({entityDamage}) >";
+
+        }
+
+
+        public void TakeDamage(int Damage)
+        {
+            Hp -= Damage;
         }
     }
 }
