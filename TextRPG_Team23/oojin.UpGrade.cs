@@ -45,7 +45,7 @@ namespace TextRPG_Team23
                 {
 
                     Console.WriteLine("\n == 강화 할 장비를 (번호)선택하세요 ==");
-                    Console.WriteLine($"보유 골드 : {player.Gold}");
+                    Console.WriteLine($"보유 골드 : {player.Gold}\n");
                     int i = 0;
 
                     foreach (var itemList in equipmentItems)
@@ -108,8 +108,10 @@ namespace TextRPG_Team23
         }
         private void ItemUpgrade(Forge forge)
         {
+           
             while (true)
             {
+                int deductedGold = (selectedItem.Upgrade * 50) + 100;
                 //Console.Clear();
                 if (selectedItem == null)
                 {
@@ -119,13 +121,13 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
-                if (player.Gold < (selectedItem.Upgrade * 50) + 100)
+                if (player.Gold < deductedGold)
                 {
                     Console.WriteLine("돈이 부족합니다.");
                     return;
                 }
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
-                Console.WriteLine($"보유 골드 : {player.Gold}");
+                Console.WriteLine($"보유 골드 : {player.Gold} | 차감될 골드 : {deductedGold}");
                 Console.Write(" 1. [YES] 2. [NO] \n>>> ");
 
                 int.TryParse(Console.ReadLine(), out int input);

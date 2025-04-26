@@ -94,11 +94,9 @@ namespace TextRPG_Team23
                 {
                     if (player.Gold >= cost)
                     {
-                        
                         player.Gold -= cost;
                         selectedItem.RepairMax();
                         Console.WriteLine($"수리가 완료되었습니다. {cost}G 소모");
-
                     }
                     else
                     {
