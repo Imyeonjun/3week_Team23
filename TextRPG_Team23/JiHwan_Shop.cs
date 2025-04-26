@@ -57,6 +57,8 @@ namespace TextRPG_Team23
                 for (int i = 0; i < ItemDB.Items.Count; i++)
                 {
                     Item item = ItemDB.Items[i];
+                    if (item.IsHidden) continue;
+
                     bool alreadyOwned = !(item is Consumable) &&
                         player.Inventory.Items.Any(stack => stack.Item.Name == item.Name);
 
