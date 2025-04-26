@@ -260,11 +260,15 @@ namespace TextRPG_Team23
                         drops.Add(ItemDB.Items[1]);
                         drops.Add(ItemDB.Items[6]);
                         break;
-                    case "틴달로스의 사냥개":
+                    case "공허를 부르는 자":
                         drops.Add(ItemDB.Items[1]);
                         drops.Add(ItemDB.Items[6]);
                         break;
                     case "흡혈 파수병":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
+                    case "공허 송곳니 추적자":
                         drops.Add(ItemDB.Items[1]);
                         drops.Add(ItemDB.Items[6]);
                         break;
