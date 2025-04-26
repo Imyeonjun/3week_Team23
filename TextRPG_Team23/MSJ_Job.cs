@@ -30,7 +30,7 @@ public abstract class Job
         Console.WriteLine($"\n{enemy.Name}");
         Console.WriteLine($"HP {originalHp} -> {(enemy.CurrentHp <= 0 ? "Dead" : enemy.CurrentHp.ToString())}");
 
-        Console.WriteLine("\n0. 다음\n");
+        Console.WriteLine("\n엔터를 눌러 진행\n");
         Console.Write(">> ");
     }
     public void DisplayAttackResult(Player player, Monster enemy, int originalHp, int finalDamage, string skillName)
@@ -41,7 +41,7 @@ public abstract class Job
         Console.WriteLine($"\n{enemy.Name}");
         Console.WriteLine($"HP {originalHp} -> {(enemy.CurrentHp <= 0 ? "Dead" : enemy.CurrentHp.ToString())}");
 
-        Console.WriteLine("\n0. 다음\n");
+        Console.WriteLine("\n엔터를 눌러 진행\n");
         Console.Write(">> ");
     }
     public void DisplayAttackResult(Player player, List<Monster> enemies, List<int> originalHps, List<int> damages, string skillName)
@@ -59,7 +59,7 @@ public abstract class Job
             Console.WriteLine($"HP {originalHp} -> {(mon.CurrentHp <= 0 ? "Dead" : mon.CurrentHp.ToString())}");
         }
 
-        Console.WriteLine("\n0. 다음\n");
+        Console.WriteLine("\n엔터를 눌러 진행\n");
         Console.Write(">> ");
     }
 
@@ -75,8 +75,8 @@ public abstract class Job
 public class Warrior : Job
 {
     public override string JobName => "전사";
-    public override float BaseAtkDmg => 1.0f;
-    public override int BaseDefence => 1;
+    public override float BaseAtkDmg => 5.0f;
+    public override int BaseDefence => 3;
 
     public override void PrintSkillInfo()
     {

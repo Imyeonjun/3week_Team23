@@ -51,7 +51,7 @@ namespace TextRPG_Team23
             this.exp = 1;
             this.currentHp = maxHp;
             this.currentMp = maxMp;
-            this.gld = 500;
+            this.gld = 5000;
 
             Inventory = new Inventory();
 
@@ -71,7 +71,7 @@ namespace TextRPG_Team23
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
             Console.WriteLine("\n0. 나가기");
-            Console.WriteLine("\n>>>");
+            Console.Write("\n>>>");
 
 
         }
@@ -81,10 +81,14 @@ namespace TextRPG_Team23
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
+            Console.WriteLine($"MP {currentMp}/{maxMp}");
+            Console.WriteLine($"ATK : {TotalAtk}");
+            Console.WriteLine($"DEF : {TotalDef}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
-            Console.WriteLine("\n>>>");
+            Console.WriteLine("3. 인벤토리");
+            Console.Write("\n>>>");
 
         }
 
@@ -93,82 +97,113 @@ namespace TextRPG_Team23
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
+            Console.WriteLine($"MP {currentMp}/{maxMp}");
+            Console.WriteLine($"ATK : {TotalAtk}");
+            Console.WriteLine($"DEF : {TotalDef}");
             Console.WriteLine();
             job.PrintSkillInfo();
         }
 
-        public void PlayerDoing(List<Monster> monBox, Player player)
+        public void PlayerDoing(List<Monster> monBox, Player player, BattleUi ui)
         {
-            foreach (Monster mon in monBox)
-            {
-                mon.MonsterInfo(false, mon.MobCode);
-            }
+            //foreach (Monster mon in monBox)
+            //{
+            //    //mon.MonsterInfo(false, mon.MobCode);
+            //    ui.PrintMonster(true);
+            //}
+            //ui.PrintMonster(true);
             PrintStatusInDungeon();
             string input = Console.ReadLine();
-
+            Console.Clear();
             switch (input)
             {
                 case "1":
                     // 몬스터 목록 출력
-                    foreach (Monster mon in monBox)
-                    {
-                        mon.MonsterInfo(true, mon.MobCode);
-                    }
+                    //foreach (Monster mon in monBox)
+                    //{
+                    //    //mon.MonsterInfo(true, mon.MobCode);
+                    //    ui.PrintMonster(true);
+                    //}
+                    ui.PrintMonster(true);
 
                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
                     if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
                     {
+                        if(monBox[targetIndex - 1].IsDead)
+                        {
+                            Console.WriteLine("이미 죽은 몬스터 입니다.");
+                            PlayerDoing(monBox, player, ui);
+                        }
                         //공격 로직 작성
                         job.Attack(monBox[targetIndex - 1], TotalAtk, player);
                     }
                     else
                     {
-                        PlayerDoing(monBox, player);
+                        //PlayerDoing(monBox, player, ui);
                         Console.WriteLine("잘못된 입력입니다.");
                     }
                     break;
 
                 case "2":
                     // 몬스터 목록 출력
-                    foreach (Monster mon in monBox)
+                    /*foreach (Monster mon in monBox)
                     {
                         mon.MonsterInfo(false, mon.MobCode);
-                    }
+
+                    }*/
+                    ui.PrintMonster(false);
+
                     PrintSkillStatus();
                     Console.Write(">>> ");
                     string skillInput = Console.ReadLine();
 
                     if (skillInput == "1")
                     {
-                        foreach (Monster mon in monBox)
+                        /*foreach (Monster mon in monBox)
                         {
                             mon.MonsterInfo(true, mon.MobCode);
-                        }
+                        }*/
+                        ui.PrintMonster(true);
+
                         if (int.TryParse(Console.ReadLine(), out int tgIndex) && tgIndex >= 1 && tgIndex <= monBox.Count)
                         {
+                            if (monBox[tgIndex - 1].IsDead)
+                            {
+                                Console.WriteLine("이미 죽은 몬스터 입니다.");
+                                PlayerDoing(monBox, player, ui);
+                            }
                             //공격 로직 작성(단일딜)
                             job.SkillA(monBox[tgIndex - 1], TotalAtk, player);
                         }
                         else
                         {
-                            PlayerDoing(monBox, player);
+                            //PlayerDoing(monBox, player, ui);
                             Console.WriteLine("잘못된 입력입니다.");
                         }
                     }
                     else if (skillInput == "2")
                     {
-                        // 공격 로직 작성 (광역딜)
-                        job.SkillB(monBox, TotalAtk, player);
+                        //살아있는 몬스터만 필터링
+                        List<Monster> aliveMonsters = monBox.FindAll(mon => mon.IsDead == false);
+
+                        //광역 공격
+                        job.SkillB(aliveMonsters, TotalAtk, player);
                     }
                     else
                     {
-                        PlayerDoing(monBox, player);
+                        //PlayerDoing(monBox, player, ui);
                         Console.WriteLine("잘못된 스킬 선택입니다.");
                     }
                     break;
 
+                case "3":
+                    bool limitedUse = true;
+                    bool alreadyUse = false;
+
+                    player.Inventory.PrintInventory(player, limitedUse, ref alreadyUse);
+                    break;
                 default:
-                    PlayerDoing(monBox, player);
+                    //PlayerDoing(monBox, player, ui);
                     Console.WriteLine("잘못된 입력입니다.");
                     break;
             }
@@ -217,6 +252,8 @@ namespace TextRPG_Team23
                 realDamage = dmg - TotalDef;
             }
 
+            this.Inventory.CheckClothesDurability(this);
+
             if (CurrentHp > realDamage)
             {
                 CurrentHp -= realDamage;
@@ -235,7 +272,7 @@ namespace TextRPG_Team23
 
         //}
 
-        public void UpdateLevel()
+      /*  public void UpdateLevel()
         {
             switch (Level)
             {
@@ -276,9 +313,18 @@ namespace TextRPG_Team23
             }
 
             RecalculateStats();
+        }*/
+
+        public void LevelUp()
+        {
+            atkDmg += 0.5f;
+            defence += 1;
+            CurrentMp = MaxHp;
+            RecalculateStats();
         }
 
-        public bool QuestCheck(Quest q) {
+        public bool QuestCheck(Quest q)
+        {
             if (Quests != null)
             {
                 foreach (Quest quest in Quests)
@@ -323,7 +369,7 @@ namespace TextRPG_Team23
                 }
             }
 
-           
+
             q.IsActive = true;
             Quests.Add(q);
             Console.WriteLine($"'{q.Title}' 퀘스트를 수락했습니다!");
@@ -369,7 +415,7 @@ namespace TextRPG_Team23
 
         public void PlusKillMonsterCnt()
         {
-            if(MonsterQuest)
+            if (MonsterQuest)
             {
                 KillMon++;
             }

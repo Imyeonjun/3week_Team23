@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    class Battlecondition
+    public class Battlecondition
     {
 
         public Player player;
@@ -14,13 +14,24 @@ namespace TextRPG_Team23
         public BattleUi ui { get; private set; }
         public Battle battle { get; private set; }
 
-        public void BattleConnect(Player player,List<Monster> monsterBox, BattleUi ui, Battle battle)
+        public List<Monster> deadMonsterBox { get; set; }
+        
+        public void BattleConnect(Player player, List<Monster> monsterBox, BattleUi ui, Battle battle)
         {
             this.player = player;
             this.monsterBox = monsterBox;
             this.ui = ui;
             this.battle = battle;
+            deadMonsterBox = monsterBox;
         }
+
+
+        public int svainghp;
+        public string healTarget;
+
+
+
+
 
         public void Attack(int damage)
         {
@@ -42,17 +53,21 @@ namespace TextRPG_Team23
 
         public void HealAllMonster(int heal)
         {
-            foreach(Monster m in monsterBox)
+            foreach (Monster m in monsterBox)
             {
-                m.Hp += heal;
+                if (!m.IsDead)
+                {
+                    m.Hp += heal;
+                }
             }
         }
-        public void HealMonster(int heal,int code)
+        public void HealMonster(int heal, int code)
         {
-            foreach(Monster m in monsterBox)
+            foreach (Monster m in monsterBox)
             {
-                if(code == m.MobCode)
+                if (code == m.MobCode && !m.IsDead) 
                 {
+                    healTarget = m.Name;
                     m.Hp += heal;
                 }
             }
@@ -61,10 +76,11 @@ namespace TextRPG_Team23
     }
 
 
-    class Battle // 턴제루프만 맡는 녀석
+    public class Battle // 턴제루프만 맡는 녀석
     {
 
         int turnCount;
+
         Battlecondition condition;
         public Battle(Battlecondition condition)
         {
@@ -72,47 +88,79 @@ namespace TextRPG_Team23
         }
 
 
-        public void EnterBattle()
+        public void EnterBattle(bool isEnter)
         {
             turnCount = 1;
+            condition.svainghp = condition.player.CurrentHp;
+            bool isBattle = isEnter;
 
             Console.Clear();
-            Console.Write("몬스터가 등장했다!\n\n" +
-              "전투를 시작하려면 아무키나 누르세요.\n" +
-              ">>>");
+            Console.Write("몬스터가 등장했다!\n\n");
 
             //Console.ReadKey();
-
-            while (condition.monsterBox.Count > 0 &&  condition.player.CurrentHp> 0)
+            condition.deadMonsterBox = condition.monsterBox.ToList();
+            while (isBattle)
             {
+                CheckMonsterDead();
+
+                if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
+                {
+                    isBattle = false;
+                    condition.monsterBox.Clear();
+                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox,condition.svainghp);
+                    continue;
+                }
 
                 condition.ui.PrintMonster(false);
-                //Console.ReadKey();
+
                 StartMonsterTurn();
-                //Console.ReadKey();
+                turnCount++;
+
+                condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
+                Console.ReadKey();
+                Console.Clear();
 
 
-
-                condition.player.PlayerDoing(condition.monsterBox, condition.player);
             }
         }
 
         public void StartMonsterTurn()
         {
+
             foreach (Monster m in condition.monsterBox)
             {
-                m.UseSkill(turnCount);
-                condition.ui.PrintMonsterLog();
-                
+                if (!m.IsDead)
+                {
+                    m.UseSkill(turnCount);
+                    condition.ui.PrintMonsterLog();
+                }
+                else
+                {
+                    Console.WriteLine("죽은몬스터");
+                }
             }
-
-            turnCount += 1;
+            
         }
 
-
+        public void CheckMonsterDead()
+        {
+            int DeadCount = 0;
+            foreach (Monster m in condition.monsterBox)
+            {
+                if (m.Hp <= 0)
+                {
+                    m.IsDead = true;
+                    DeadCount++;
+                }
+            }
+            if (DeadCount == condition.monsterBox.Count)
+            {
+                condition.monsterBox.Clear();
+            }
+        }
     }
 
-    class BattleUi
+    public class BattleUi
     {
         Battlecondition condition;
 
@@ -132,8 +180,8 @@ namespace TextRPG_Team23
                 m.MonsterInfo(playerTurn, num);
                 num++;
             }
-            num = 1;
         }
+
         public void PrintMonsterLog()
         {
             Console.WriteLine(MonsterLog);

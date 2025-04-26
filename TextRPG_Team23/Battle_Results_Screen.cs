@@ -16,11 +16,12 @@ namespace TextRPG_Team23
     {
 
 
-        public static void BattleResultUI(Player player, List<Monster> monsters)  
+        public static void BattleResultUI(Player player, List<Monster> monsters, int hp)
         {
             // 적용 전 
             int oldLevel = player.Level;
             int oldExp = player.Exp;
+
             int monsterLevelSum = 0;
 
             for (int i = 0; i < monsters.Count; i++)
@@ -28,14 +29,15 @@ namespace TextRPG_Team23
                 monsterLevelSum += monsters[i].Level;
             }
 
-            int totalExp = monsterLevelSum + player.Exp;
+
+            player.Exp += monsterLevelSum;
 
 
             bool isVictory = player.CurrentHp > 0;
 
             if (isVictory)
             {
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine("Battle!! - Result");
                 Console.WriteLine("");
                 Console.WriteLine("Victory!");
@@ -44,23 +46,23 @@ namespace TextRPG_Team23
 
 
                 // 레벨, 경험치 
-                int newLevel = LevelUp.NewLevel(oldLevel, totalExp, out int remainingExp);
+                int newLevel = LevelUp.NewLevel(oldLevel, player.Exp, player);
 
                 //플레이어 정보 업데이트
                 player.Level = newLevel;
-                player.Exp = remainingExp;
+
 
 
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
                 Console.WriteLine("");
 
-                Console.WriteLine("\n[캐릭터 정보]");
+                Console.WriteLine("[캐릭터 정보]");
 
                 Console.WriteLine($"Lv. {oldLevel} {player.Name} → Lv. {newLevel} {player.Name}");
 
-                Console.WriteLine($"EXP: {oldExp} → {remainingExp}");
+                Console.WriteLine($"EXP: {oldExp} → {player.Exp}");
 
-                Console.WriteLine($"HP: {player.MaxHp} → {player.CurrentHp}");
+                Console.WriteLine($"HP: {hp} → {player.CurrentHp}"); // 던전을 들어가기전 hp가 있어야한다. {player.CurrentHp} 현재 체력
                 Console.WriteLine("");
 
                 Console.WriteLine($"[획득 아이템]");
@@ -81,7 +83,7 @@ namespace TextRPG_Team23
                         foreach (string n in itemNames)
                         {
                             if (n == name)
-                                
+
                                 count++;
                         }
 
@@ -95,22 +97,9 @@ namespace TextRPG_Team23
                 Console.WriteLine("");
 
 
-
-
-
-
-                Console.WriteLine("\n0. 다음");
-                Console.Write(">> ");
-
-                int choiceNumber = CheckInput(0, 0);
-                switch (choiceNumber)
-                {
-                    case 0:
-                        //Town.MainMenu();
-                        break;
-
-
-                }
+                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.ReadLine();
+                return;
             }
             else
             {
@@ -119,43 +108,25 @@ namespace TextRPG_Team23
                 Console.WriteLine("");
                 Console.WriteLine("You Lose");
                 Console.WriteLine("");
-                Console.WriteLine("\n[캐릭터 정보]");
+                Console.WriteLine("[캐릭터 정보]");
                 Console.WriteLine($"Lv. {oldLevel}  {player.Name}");
                 Console.WriteLine($"HP {player.MaxHp} → 0");
                 Console.WriteLine("");
 
-                Console.WriteLine("0. 다음");                       
-                Console.Write(">> ");
 
-                int choiceNumber = CheckInput(0, 0);
-                switch (choiceNumber)
-                {
-                    case 0:
-                        End.Eending();
-                        break;
-
-
-                }
+                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.ReadLine();
+                End.Eending();
+                return;
 
 
             }
+
+
+
         }
 
-        static int CheckInput(int min, int max)
-        {
-            int result;
-            while (true)
-            {
-                string input = Console.ReadLine();
-                bool isNumber = int.TryParse(input, out result);
-                if (isNumber)
-                {
-                    if (result >= min && result <= max)
-                        return result;
-                }
-                Console.WriteLine("잘못된 입력입니다!!!!");
-            }
-        }
+
     }
 
     public static class LevelUp
@@ -186,7 +157,7 @@ namespace TextRPG_Team23
         }
 
 
-        public static int NewLevel(int currentLevel, int totalExp, out int remainingExp)
+        public static int NewLevel(int currentLevel, int totalExp, Player player)
         {
             int exp = totalExp;
             int level = currentLevel;
@@ -196,8 +167,12 @@ namespace TextRPG_Team23
                 exp -= MaxExp(level);
                 level++;
             }
+            if (level != currentLevel)
+            {
+                player.LevelUp();
+            }
 
-            remainingExp = exp;
+
             return level;
         }
     }
@@ -216,15 +191,15 @@ namespace TextRPG_Team23
             Console.WriteLine("");
             Console.WriteLine("                       제작 ");
             Console.WriteLine("");
-            Console.WriteLine("메인 메뉴                             : 임연준 (팀장)");
+            Console.WriteLine("메인 메뉴, 세이브 로드                : 임연준 (팀장)");
             Console.WriteLine("던전, 몬스터, 전투시스템              : 이명준");
             Console.WriteLine("Player 클래스, 상태보기, Quest 클래스 : 문승준");
             Console.WriteLine("아이템, 인벤토리, 상점                : 박지환");
             Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
             Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
 
-            //GameManager.StopGame();
-
+            Console.WriteLine("\n\n" + "게임을 계속하려면 엔터를 눌러주세요.");
+            Console.ReadKey();
 
         }
 
@@ -258,48 +233,89 @@ namespace TextRPG_Team23
                 switch (monsternam.Name)
                 {
                     case "모혈의 이끼거북":
-                        drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[2]);
                         break;
                     case "부패의 턱":
-                        drops.Add(ItemDB.Items[5]);
+                        drops.Add(ItemDB.Items[3]);
                         drops.Add(ItemDB.Items[4]);
                         break;
                     case "뿌리투구 수호자":
                         drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[6]);
                         break;
                     case "일몰 좀도둑":
-                        drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[2]);
                         break;
                     case "어스름 예언자":
-                        drops.Add(ItemDB.Items[5]);
+                        drops.Add(ItemDB.Items[3]);
                         drops.Add(ItemDB.Items[4]);
                         break;
                     case "비안개 정령":
                         drops.Add(ItemDB.Items[5]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[6]);
                         break;
-
+                    case "그림자 짐승":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
                 }
             }
 
+          
+            List<Weapon> weapons = drops.OfType<Weapon>().ToList();
+            List<Clothes> armors = drops.OfType<Clothes>().ToList();
+            List<Consumable> consumable = drops.OfType<Consumable>().ToList();
 
-            foreach (Item item in drops)
+            
+            var uniqueWeapons = new HashSet<Weapon>(weapons);
+            var uniqueArmors = new HashSet<Clothes>(armors);
+
+
+            
+            var existingNames = new HashSet<string>(
+                player.Inventory.Items.Select(stack => stack.Item.Name)
+            );
+
+            
+            var rewardNames = new List<string>();
+
+           
+            foreach (var armor in uniqueArmors)
             {
-                player.Inventory.AddItem(item);
+                if (!existingNames.Contains(armor.Name))
+                {
+                    player.Inventory.AddItem(armor.Clone());
+                    rewardNames.Add(armor.Name);
+                    existingNames.Add(armor.Name);
+                }
+            }
+
+            
+            foreach (var weapon in uniqueWeapons)
+            {
+                if (!existingNames.Contains(weapon.Name))
+                {
+                    player.Inventory.AddItem(weapon.Clone());
+                    rewardNames.Add(weapon.Name);
+                    existingNames.Add(weapon.Name);
+                }
+            }
+
+            
+            foreach (var con in consumable)
+            {
+
+
+                player.Inventory.AddItem(con.Clone());
+                rewardNames.Add(con.Name);
+                existingNames.Add(con.Name);
 
             }
 
-
-            var itemName = new string[drops.Count];
-
-            for (int i = 0; i < drops.Count; i++)
-            {
-                itemName[i] = drops[i].Name;
-            }
-            return itemName;
+            
+            return rewardNames.ToArray();
 
 
         }
@@ -315,10 +331,10 @@ namespace TextRPG_Team23
 
     internal class Battle_Results_Screen
     {
-      
+
     }
 
-    
+
 
 
 

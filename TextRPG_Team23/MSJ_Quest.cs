@@ -96,7 +96,8 @@ namespace TextRPG_Team23
                 Console.WriteLine($"[{i + 1}] {allQuests[i].Title}");
             }
 
-            Console.Write("\n자세히 볼 퀘스트 번호를 입력하세요 (0: 취소): ");
+            Console.Write("\n자세히 볼 퀘스트 번호를 입력하세요: ");
+            Console.WriteLine("\n0. 나가기");
             if (int.TryParse(Console.ReadLine(), out int input))
             {
                 if (input == 0)
@@ -118,6 +119,7 @@ namespace TextRPG_Team23
                         selectedQuest.ShowQuestInfo();
                     }
 
+                    // 입력 없을 때 예외처리 수정
                     int answer = int.Parse(Console.ReadLine());
 
                     switch (answer)
@@ -126,9 +128,10 @@ namespace TextRPG_Team23
                             Console.WriteLine("나가기 입력");
                             break;
                         case 1:
-                            if(selectedQuest.Title == "더욱 강해지기")
+                            if(selectedQuest.Title == "마을을 위협하는 몬스터 처치")
                             {
                                 player.MonsterQuest = true;
+                                Console.WriteLine("나이스\n");
                             }
                             player.AddQuest(selectedQuest); // 이미 있는지 확인하는 검사가 포함된 AddQuest 사용
                             break;

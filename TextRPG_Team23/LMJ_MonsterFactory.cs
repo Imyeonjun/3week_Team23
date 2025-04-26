@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TextRPG_Team23
+﻿namespace TextRPG_Team23
 {
-    class MonsterFactory
+    public class MonsterFactory
     {
         //List<Monster> monsterPool = new List<Monster>();
 
