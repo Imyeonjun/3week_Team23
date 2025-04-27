@@ -12,6 +12,7 @@ namespace TextRPG_Team23
         bool SuperAttack;
         bool StrengthOfSun;
         int realDamage;
+        bool isArmourRemove;
 
         Battlecondition condition;
 
@@ -46,27 +47,30 @@ namespace TextRPG_Team23
                     StarfallSear();
                     break;
 
-                case 3: // 개구라 패턴 이때 딜링타임 만들기 - 때릴 수 있게 하는 아이템을 사용하는 것 추가해야함
+                case 3: // 딜 타임 패턴
                     SolarBetrayal();
-                    
-                    if (condition.HasBossGuideItem()) //보스몹 무적 기믹 해제 판별
-                    {
-                        YouCanHit(); // 슈퍼아머 해제
-                    }
-                    
+
                     if (SuperAttack && Hp == 100) //체력이 100일때 존나 쎈 데미지 한번 미완
                     {
                         SuperAttack = false;
-                        condition.IgnoreAttack(90);
+                        condition.IgnoreAttack(80);
                         condition.ui.SpecialMonsterLog = $"\n※ {Name}: 난 아직 죽을 수 없다!\n" +
-                                                         $"▶엄청난 폭발이 일어납니다!◀\n" +
-                                                         $"< 받은 방어무시 데미지: ({90}) >";
+                                                         $"▶ 엄청난 폭발이 일어납니다! ◀\n" +
+                                                         $"< 받은 방어무시 데미지: ({80}) >";
                         condition.ui.PrintSpecialMonsterLog();
                     }
                     break;
 
                 case 4: //이때 별폭발 패턴 && 만약 폭발 안하면 자신의 공격력 강화 미완
-                    SuperArmour = true;
+                    if (!SuperArmour)
+                    {
+                        SuperArmour = true;
+                        condition.ui.SpecialMonsterLog = $"\n※ {Name}: 갑옷 따위 얼마든 다시 만들면 그만이다..\n" +
+                                                         $"▶ {Name}은 다시 무적상태에 들어섭니다. ◀\n" +
+                                                         $"< 무적 활성화: ({SuperArmour}) >";
+                        condition.ui.PrintBossMonsterLog();
+                    }
+
                     SolarCoronation();
                     break;
 
@@ -95,7 +99,7 @@ namespace TextRPG_Team23
             condition.Attack(realDamage);
             condition.Attack(realDamage);
             condition.ui.MonsterLog = $"\n※ {Name}: 내게 대적 할 수는 없다. 어리석은 너의 머리통을 산산조각 내주마!\n" +
-                                      $"▶{Name}은 {condition.player.Name}에게 대검을 크게 휘둘렀습니다!◀\n" +
+                                      $"▶ {Name}은 {condition.player.Name}에게 대검을 크게 휘둘렀습니다! ◀\n" +
                                       $"< 받은 피해: ({realDamage} x 2회) >";
             StrengthOfSun = false;
         }
@@ -104,15 +108,22 @@ namespace TextRPG_Team23
         {
             condition.SpawnStar();
             condition.ui.MonsterLog = $"\n※ {Name}: 우주적 공포를 느끼게 해주마.\n" +
-                                      $"▶{Name}은 별을 낙하시킵니다.◀\n" +
+                                      $"▶ {Name}은 별을 낙하시킵니다. ◀\n" +
                                       $"< 별 낙하까지 두턴 >";
         }
 
         void SolarBetrayal() //때리면 감지해서 문자출력시키게 하면 됨
         {
-            condition.ui.MonsterLog = $"\n※ {Name}: 이 정도 거리라면 별을 폭발시켰을 때 네놈이 죽을 수도 있겠군\n" +
-                                      $"▶{Name}은 즉시 별을 폭발시키려 합니다.◀\n" +
-                                      $"< 공격하여 저지하거나 별의 폭발을 견디십시오 >";
+            if (isArmourRemove = condition.HasBossGuideItem()) //보스몹 무적 기믹 해제 판별
+            {
+                YouCanHit(); // 슈퍼아머 해제
+            }
+            else
+            {
+                condition.ui.MonsterLog = $"\n※ {Name}: 그 어떠한 공격도 통하지 않는다.\n" +
+                                          $"▶ 공격을 시도한다면 뜨거운 열기에 되려 피해를 입습니다. ◀\n" +
+                                          $"< 공격 시 받게 될 방어무시 데미지: ({15}) >";
+            }
         }
 
         void SolarCoronation()
@@ -123,7 +134,7 @@ namespace TextRPG_Team23
             if (isStarHere) //별이 살아있다면 실행
             {
                 condition.ui.MonsterLog = $"\n※ {Name}: 고작 이 정도 시련도 이겨내지 못하는가\n" +
-                                          $"▶{Name}은 당신을 비웃습니다.◀\n" +
+                                          $"▶ {Name}은 당신을 비웃습니다. ◀\n" +
                                           $"< 별의 폭발이 시작됩니다. >";
 
                 condition.StarExplode(isStarHere); //리스트에서 별 삭제
@@ -133,7 +144,7 @@ namespace TextRPG_Team23
                 StrengthOfSun = true;
 
                 condition.ui.MonsterLog = $"\n※ {Name}: 허... 설마 별을 파괴할 줄이야... 하지만 그 정도로 나를 막을 수 있으리라 생각하지마라\n" +
-                                          $"▶{Name}은 태양의 왕좌에서 힘을 끌어옵니다.◀\n" +
+                                          $"▶ {Name}은 태양의 왕좌에서 힘을 끌어옵니다. ◀\n" +
                                           $"< 추가된 공격력: (+{7}) >";
                 condition.StarExplode(isStarHere);
             }
@@ -150,7 +161,7 @@ namespace TextRPG_Team23
 
         void DawnbreakerSlam()
         {
-            realDamage = 68;
+            realDamage = 60;
             condition.Attack(realDamage);
             condition.ui.MonsterLog = $"\n※ {Name}: 이젠 죽을 때도 되었지않나?.\n" +
                                       $"▶{Name}은 막대한 질량을 품은 열기를 {condition.player.Name}에게 방출합니다!◀\n" +
@@ -161,17 +172,9 @@ namespace TextRPG_Team23
         public void YouCanHit()
         {
             SuperArmour = false;    
-            condition.ui.SpecialMonsterLog = $"\n※ 일식의 폭군이 잠시동안 피격 가능한 상태가 되었습니다!\n" +
+            condition.ui.SpecialMonsterLog = $"\n※ {Name}: 이런 망할놈이!!! 대체 언제 그 물건을 손에 넣은거냐!\n" +
+                                             $"▶공략집에 의해 일식의 폭군이 잠시동안 피격 가능한 상태가 되었습니다!!◀\n" +
                                              $"< 이번 턴에 가하는 공격은 반드시 {Name}에게 큰 피해를 줍니다! >";
-            condition.ui.PrintSpecialMonsterLog();
-        }
-
-        public void CantHit()
-        {
-            condition.IgnoreAttack(15);
-            condition.ui.SpecialMonsterLog = $"\n※ {Name}: 그 어떠한 공격도 통하지 않는다.\n" +
-                                             $"▶공격을 시도한 {condition.player.Name}은 뜨거운 열기에 되려 피해를 입습니다.◀\n" +
-                                             $"< 받은 방어무시 데미지: ({15}) >";
             condition.ui.PrintSpecialMonsterLog();
         }
 
@@ -186,7 +189,7 @@ namespace TextRPG_Team23
             else if (SuperArmour)
             {
                 realDamage = 0;
-                CantHit();
+                condition.IgnoreAttack(15);
             }
         }
 
