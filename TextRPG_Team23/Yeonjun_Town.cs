@@ -57,7 +57,7 @@ namespace TextRPG_Team23
                 case 4:
                     // 던전 입장 코드 수정
                     Console.Clear();
-                    gate.Gate(dungeon);
+                    gate.Gate(dungeon,player);
                     break;
                 case 5:
                     Console.Clear();

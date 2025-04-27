@@ -92,7 +92,7 @@ namespace TextRPG_Team23
                 $"보스 던전 - 권장 능력치 Atk: ({40}) Def: ({35}) 이상",
             };
 
-        public void Gate(DungeonMaganer dungeon)
+        public void Gate(DungeonMaganer dungeon,Player player)
         {
             Console.WriteLine("== 던전 선택 ==");
             int selected = BranchManager.ReturnSelect(gateOptions, true, "돌아가기");
@@ -100,23 +100,35 @@ namespace TextRPG_Team23
             switch (selected)
             {
                 case 1:
-                    Console.Write("\n당신은 어둠을 향해 몸을 던집니다.\n\n" +
-                                  "1단계 던전을 진행하려면 아무키나 입력하세요.\n\n" +
-                                  ">>>");
-                    Console.ReadKey();
-                    dungeon.WorkFactory("1단계던전");
-                    dungeon.StartDungeonStep1();    
-                    break;
-                case 2:
-                    if (!DungeonMaganer.isClearStep1)
+                    if (player.CurrentHp <= 0)
                     {
-                        Console.Write("\n1단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
-                                      "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
+                        Console.Write("\n체력이 0일 때는 던전에 도전 할 자격이 없다.\n\n" +
+                                      "메인메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
                                       ">>>");
                         Console.ReadKey();
                         break;
                     }
                     else
+                    {
+                        Console.Write("\n당신은 어둠을 향해 몸을 던집니다.\n\n" +
+                                      "1단계 던전을 진행하려면 아무키나 입력하세요.\n\n" +
+                                      ">>>");
+                        Console.ReadKey();
+                        dungeon.WorkFactory("1단계던전");
+                        dungeon.StartDungeonStep1();
+                        break;
+                    } 
+                case 2:
+                    if (!DungeonMaganer.isClearStep1 || player.CurrentHp <= 0)
+                    {
+                        Console.Write("\n1단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
+                                      "\n패배하여 체력이 0이 된 자 또한 자격없음이다.\n\n" +
+                                      "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
+                                      ">>>");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else 
                     {
                         Console.Write("자격을 증명한 자에게 문이 열린다.\n" +
                                       "2단계 던전을 진행하려면 아무키나 입력하세요.\n\n" +
@@ -127,9 +139,10 @@ namespace TextRPG_Team23
                         break;
                     }
                 case 3:
-                    if (!DungeonMaganer.isClearStep1 && !DungeonMaganer.isClearStep2)
+                    if (!DungeonMaganer.isClearStep2 || player.CurrentHp <= 0)
                     {
                         Console.Write("\n2단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
+                                      "\n패배하여 체력이 0이 된 자 또한 자격없음이다.\n\n" +
                                       "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
                                       ">>>");
                         Console.ReadKey();
