@@ -156,13 +156,13 @@ namespace TextRPG_Team23
         {
             if (IsUsable)
             {
-                effect?.Invoke(player);
                 Console.WriteLine($"{Name}을 사용했습니다. {Description}");
+                effect?.Invoke(player);
                 return true;
             }
             else
             {
-                Console.WriteLine("아무일도 일어나지 않았다...");
+                Console.WriteLine("아무일도 일어나지 않았습니다...");
                 return false;
             }
         }
