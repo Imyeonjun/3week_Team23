@@ -49,14 +49,14 @@ namespace TextRPG_Team23
                     case 2:
                         if(isClear)
                         {
-                            DungeonMaganer.isClearStep1 = true;
+                            DungeonMaganer.isClearStep2 = true;
                         }
                         break;
 
                     case 3:
                         if(isClear)
                         {
-                            DungeonMaganer.isClearStep1 = true;
+                            DungeonMaganer.isClearStep3 = true;
                         }
                         break;
                 }
@@ -121,6 +121,16 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine("");
 
+                if (step == 2 && isClear)
+                {
+                    Item hiddenItem = ItemDB.Items.FirstOrDefault(x => x.Name == "보스몬스터 완벽 공략집");
+                    if (hiddenItem != null && hiddenItem.IsHidden)
+                    {
+                        hiddenItem.IsHidden = false;
+                        Console.WriteLine("\n[상점 신규 입고]");
+                        Console.WriteLine($"=> '보스몬스터 완벽 공략집'이 상점에 입고되었습니다!");
+                    }
+                }
 
                 Console.WriteLine("\n 아무 키나 누르세요");
                 Console.ReadLine();
