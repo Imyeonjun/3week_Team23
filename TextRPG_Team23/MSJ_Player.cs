@@ -73,7 +73,7 @@ namespace TextRPG_Team23
             Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})(+{temple.BuffDef(player)})");
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
-            Console.WriteLine("\n0. 나가기");
+            Console.WriteLine("\n메인 메뉴로 돌아가려면 아무키나 입력하세요.");
             Console.Write("\n>>>");
 
 
@@ -268,6 +268,18 @@ namespace TextRPG_Team23
             }
         }
 
+        public void IgnoreDefenseDamage(int dmg)
+        {
+            if (CurrentHp > dmg)
+            {
+                CurrentHp -= dmg;
+            }
+            else
+            {
+                CurrentHp = 0;
+            }
+        }
+
         //public void AddDungeonClear()
         //{
 
@@ -275,48 +287,48 @@ namespace TextRPG_Team23
 
         //}
 
-      /*  public void UpdateLevel()
-        {
-            switch (Level)
-            {
-                case 1:
-                    if (exp >= 10)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                case 2:
-                    if (exp >= 35)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                case 3:
-                    if (exp >= 65)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                case 4:
-                    if (exp >= 100)
-                    {
-                        Level++;
-                        atkDmg += 0.5f;
-                        defence += 1;
-                    }
-                    break;
-                default:
-                    break;
-            }
+        /*  public void UpdateLevel()
+          {
+              switch (Level)
+              {
+                  case 1:
+                      if (exp >= 10)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  case 2:
+                      if (exp >= 35)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  case 3:
+                      if (exp >= 65)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  case 4:
+                      if (exp >= 100)
+                      {
+                          Level++;
+                          atkDmg += 0.5f;
+                          defence += 1;
+                      }
+                      break;
+                  default:
+                      break;
+              }
 
-            RecalculateStats();
-        }*/
+              RecalculateStats();
+          }*/
 
         public void LevelUp()
         {

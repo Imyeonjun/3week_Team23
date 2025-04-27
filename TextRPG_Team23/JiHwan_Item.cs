@@ -13,6 +13,8 @@ namespace TextRPG_Team23
 
         public int Upgrade { get; set; } = 0;
 
+        public bool IsHidden { get; set; } = false;
+
         protected Item(int upgrade, string name, int price, string description, int durability = -1)//장비아이템 용 생성자
         {
             Upgrade = upgrade;
@@ -139,19 +141,30 @@ namespace TextRPG_Team23
 
     public class Consumable : Item
     {
+        public bool IsUsable { get; private set; }
+
         private Action<Player> effect;
 
-        public Consumable(string name, int price, string description, Action<Player> effect)
+        public Consumable(string name, int price, string description, Action<Player> effect, bool isUsable = true)
             : base(name, price, description)
         {
             this.effect = effect;
+            IsUsable = isUsable;
         }
 
         public override bool Use(Player player) //소비 아이템 
         {
-            effect?.Invoke(player); 
-            Console.WriteLine($"{Name}을 사용했습니다. {Description}");
-            return true;
+            if (IsUsable)
+            {
+                effect?.Invoke(player);
+                Console.WriteLine($"{Name}을 사용했습니다. {Description}");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("아무일도 일어나지 않았다...");
+                return false;
+            }
         }
 
         public override string ToString()
@@ -169,14 +182,21 @@ namespace TextRPG_Team23
 
         public static List<Item> Items = new List<Item>()
         {
-            new Weapon(0, "철검", 100, "단순한 철검이다.", 10, 10),
-            new Weapon(0, "은검", 200, "은으로 제작된 검이다.", 20, 15),
-            new Clothes(0, "낡은 옷", 50, "낡은 방어구입니다.", 5, 8),
-            new Clothes(0, "가죽 갑옷", 150, "튼튼한 가죽 방어구입니다.", 10, 12),
+            new Weapon(0, "철검", 100, "단순한 철검이다.", 10, 20),
+            new Weapon(0, "은검", 200, "은으로 제작된 검이다.", 20, 30),
+            new Weapon(0, "금검", 300, "금으로 제작된 검이다.", 30, 40),
+            new Weapon(0, "다이아검", 500, "다이아몬드로 제작된 검이다.", 50, 60),
+            new Weapon(0, "집행검", 99999, "모든걸 다 파괴하는 전설의 검", 999, 100),
+            new Clothes(0, "낡은 옷", 50, "낡은 방어구입니다.", 5, 30),
+            new Clothes(0, "가죽 갑옷", 150, "튼튼한 가죽 방어구입니다.", 10, 50),
+            new Clothes(0, "판금 갑옷", 300, "매우 튼튼한 방어구입니다.", 20, 80),
             new Consumable("체력 포션", 50, "체력을 30 회복합니다.", p => p.CurrentHp = Math.Min(p.MaxHp, p.CurrentHp + 30)),
+            new Consumable("상급 체력 포션", 100, "체력을 60 회복합니다.", p => p.CurrentHp = Math.Min(p.MaxHp, p.CurrentHp + 60)),
             new Consumable("마나 포션", 50, "마나를 30 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 30)),
+            new Consumable("상급 마나 포션", 100, "마나를 60 회복합니다.", p => p.CurrentMp = Math.Min(p.MaxMp, p.CurrentMp + 60)),
             new Consumable("수리 요정 출장권(전체 수리)", 80, "보유중인 모든 아이템을 수리합니다.", RepairItem.RepairAll),
-            new Consumable("수리 요정 출장권(단일 수리)", 40, "하나의 장비를 수리합니다.", p => Forge.Repair(p ,false))
+            new Consumable("수리 요정 출장권(단일 수리)", 40, "하나의 장비를 수리합니다.", p => Forge.Repair(p ,false)),
+            new Consumable("보스몬스터 완벽 공략집", 1000, "보스몬스터의 약점을 드러냅니다.", RepairItem.RepairAll/*가짜기능 어차피 이부분 작동안함*/, isUsable: false) {IsHidden = true }//숨겨진 아이템
         };
     }
 }

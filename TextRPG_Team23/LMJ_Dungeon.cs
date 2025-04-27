@@ -14,7 +14,9 @@ namespace TextRPG_Team23
         public Battle battle;
         public Battlecondition condition;
         public MonsterFactory factory;
-
+        public static bool isClearStep1;
+        public static bool isClearStep2;
+        public static bool isClearStep3;
 
         public DungeonMaganer(List<Monster> monsterBox, BattleUi ui, Battle battle, Battlecondition condition, MonsterFactory factory)
         {
@@ -24,16 +26,28 @@ namespace TextRPG_Team23
             this.battle = battle;
             this.condition = condition;
             this.factory = factory;
+            isClearStep1 = false;
+            isClearStep2 = false;
+            isClearStep3 = false;
         }
 
-        public void Start()
+        public void StartDungeonStep1()
         {
-            battle.EnterBattle(true);
+            battle.EnterBattle(true,1);
         }
-        public void WorkFactory()
+        public void StartDungeonStep2()
         {
-            int spawnCount = Program.random.Next(2, 5);
-            factory.MakeMonster(spawnCount);
+            battle.EnterBattle(true, 2);
         }
+        public void WorkFactory(string where)
+        {
+            factory.MakeMonster(where);
+        }
+
+        public void BossBattleStart()
+        {
+            battle.EnterBoss(true,3);
+        }
+
     }
 }

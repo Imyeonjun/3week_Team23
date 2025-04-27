@@ -20,7 +20,8 @@ namespace TextRPG_Team23
                 Console.WriteLine("=== 상점 ===");
                 Console.WriteLine($"[보유 골드] {player.Gold}G\n");
                 Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
-                Console.Write("원하시는 행동을 입력해주세요: ");
+                Console.WriteLine("\n원하는 행동의 숫자를 입력해주세요.");
+                Console.Write("\n>>>");
                 string input = Console.ReadLine();
 
                 switch (input)
@@ -57,6 +58,8 @@ namespace TextRPG_Team23
                 for (int i = 0; i < ItemDB.Items.Count; i++)
                 {
                     Item item = ItemDB.Items[i];
+                    if (item.IsHidden) continue;
+
                     bool alreadyOwned = !(item is Consumable) &&
                         player.Inventory.Items.Any(stack => stack.Item.Name == item.Name);
 
@@ -71,7 +74,8 @@ namespace TextRPG_Team23
                 }
 
                 Console.WriteLine("0. 나가기");
-                Console.Write("구매할 아이템 번호를 입력하세요: ");
+                Console.WriteLine("\n판매할 아이템 번호를 입력하세요.");
+                Console.Write("\n>>>");
                 string selectedInput = Console.ReadLine();
 
                 if (int.TryParse(selectedInput, out int selected))
@@ -143,7 +147,8 @@ namespace TextRPG_Team23
                     Console.WriteLine($"{i + 1}. {prefix}{stack} | 판매가 {stack.Item.Price * 0.85f}G");
                 }
                 Console.WriteLine("0. 나가기");
-                Console.Write("판매할 아이템 번호를 입력하세요: ");
+                Console.WriteLine("\n판매할 아이템 번호를 입력하세요.");
+                Console.Write("\n>>>");
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out int selected))

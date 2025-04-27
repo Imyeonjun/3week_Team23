@@ -16,7 +16,7 @@ namespace TextRPG_Team23
     {
 
 
-        public static void BattleResultUI(Player player, List<Monster> monsters, int hp)
+        public static void BattleResultUI(Player player, List<Monster> monsters, int hp, int step,bool isClear)
         {
             // 적용 전 
             int oldLevel = player.Level;
@@ -37,6 +37,31 @@ namespace TextRPG_Team23
 
             if (isVictory)
             {
+                switch(step)
+                {
+                    case 1:
+                        if(isClear)
+                        {
+                            DungeonMaganer.isClearStep1 = true;
+                        }
+                        break;
+
+                    case 2:
+                        if(isClear)
+                        {
+                            DungeonMaganer.isClearStep2 = true;
+                        }
+                        break;
+
+                    case 3:
+                        if(isClear)
+                        {
+                            DungeonMaganer.isClearStep3 = true;
+                        }
+                        break;
+                }
+
+
                 //Console.Clear();
                 Console.WriteLine("Battle!! - Result");
                 Console.WriteLine("");
@@ -96,6 +121,16 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine("");
 
+                if (step == 2 && isClear)
+                {
+                    Item hiddenItem = ItemDB.Items.FirstOrDefault(x => x.Name == "보스몬스터 완벽 공략집");
+                    if (hiddenItem != null && hiddenItem.IsHidden)
+                    {
+                        hiddenItem.IsHidden = false;
+                        Console.WriteLine("\n[상점 신규 입고]");
+                        Console.WriteLine($"=> '보스몬스터 완벽 공략집'이 상점에 입고되었습니다!");
+                    }
+                }
 
                 Console.WriteLine("\n 아무 키나 누르세요");
                 Console.ReadLine();
@@ -256,7 +291,22 @@ namespace TextRPG_Team23
                         drops.Add(ItemDB.Items[5]);
                         drops.Add(ItemDB.Items[6]);
                         break;
-
+                    case "그림자 짐승":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
+                    case "공허를 부르는 자":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
+                    case "흡혈 파수병":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
+                    case "공허 송곳니 추적자":
+                        drops.Add(ItemDB.Items[1]);
+                        drops.Add(ItemDB.Items[6]);
+                        break;
                 }
             }
 

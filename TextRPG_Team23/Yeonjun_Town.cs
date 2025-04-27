@@ -31,43 +31,46 @@ namespace TextRPG_Team23
 
         public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple, DungeonMaganer dungeon)
         {
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine("== 메인 메뉴 ==");
             int selected = BranchManager.ReturnSelect(mainMenuOptions, true, "게임 종료");
 
             switch (selected)
             {
                 case 1:
-                    //Console.WriteLine("디버그 : 상태창 출력");
-                    player.PrintStatus(player, temple);
+                    Console.Clear();
+                    player.PrintStatus();
                     Console.ReadLine();
                     break;
                 case 2:
                     bool limitedUse = false;
                     bool alreadyUse = false;
-
+                    Console.Clear();
                     player.Inventory.PrintInventory(player, limitedUse, ref alreadyUse);
                     Console.ReadLine();
                     break;
                 case 3:
+                    Console.Clear();
                     new Shop(player).ShopPhase();
                     Console.ReadLine();
                     break;
                 case 4:
                     // 던전 입장 코드 수정
-                    Console.WriteLine("디버그 : 던전 출력");
-                    Console.ReadLine();
-                    gate.Gate(dungeon);
+                    Console.Clear();
+                    gate.Gate(dungeon,player);
                     break;
                 case 5:
+                    Console.Clear();
                     inn.Selection(player, quest);
                     Console.ReadLine();
                     break;
                 case 6:
+                    Console.Clear();
                     forge.Selection(forge);
                     Console.ReadLine();
                     break;
                 case 7:
+                    Console.Clear();
                     temple.Selection(player);
                     Console.ReadLine();
                     break;
