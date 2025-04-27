@@ -95,7 +95,7 @@ namespace TextRPG_Team23
                             Console.WriteLine("Enter키를 눌러주세요");
                             return;
                         }
-                        else
+                        if (input > equipmentItems.Count)
                         {
                             Console.WriteLine("\n == 잘못 입력했습니다, 다시 입력해주세요. == ");
                             ItemSelection(forge);

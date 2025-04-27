@@ -16,7 +16,7 @@ namespace TextRPG_Team23
             bool re = false;
             do
             {
-                Console.WriteLine("\n1. 퀘스트 확인\n2. 휴식\n0. 나가기 \n선택 >> ");
+                Console.Write("\n1. 퀘스트 확인\n2. 휴식\n0. 나가기 \n선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)
@@ -35,7 +35,7 @@ namespace TextRPG_Team23
                 }
                 else if (input == 0)
                 {
-                    Console.WriteLine("마을로 돌아갑니다.");
+                    Console.WriteLine("\n마을로 돌아갑니다.");
                     Console.WriteLine("Enter키를 눌러주세요");
                     break;
                 }
@@ -73,7 +73,8 @@ namespace TextRPG_Team23
                 player.CurrentHp = player.MaxHp;
             }
             Console.WriteLine($"하루가 지나 체력을 회복했습니다. 현재 체력 : {player.CurrentHp}");
-            
+            Console.WriteLine("무엇을 하시겠습니까?");
+
         }
         private void QuestInfo(QuestMenu questMenu, Player player)
         {

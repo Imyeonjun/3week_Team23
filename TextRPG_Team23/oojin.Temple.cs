@@ -23,7 +23,7 @@ namespace TextRPG_Team23
             Console.WriteLine(" == @@ 신전에 어서오세요 ==");
             while (true)
             {
-                Console.WriteLine("\n1. 헌금\n2. 버프\n0. 나가기 \n\n선택 >> ");
+                Console.Write("\n1. 헌금\n2. 버프\n0. 나가기 \n\n선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);// 헌금만 해서 돈이 싸이면 버프의 효과가 상승 세례(버프) 축복(상태이상해제)
                 if (input > 0 && input <= 3)
@@ -31,9 +31,11 @@ namespace TextRPG_Team23
                     switch (input)
                     {
                         case 1:
+                            Console.Clear();
                             Offering(player);
                             break;
                         case 2:
+                            Console.Clear();
                             Buff(player);
                             break;
                     }
@@ -66,7 +68,7 @@ namespace TextRPG_Team23
                 {
                     if (input == 1)
                     {
-                        Console.WriteLine($" == 헌금 할 금액을 입력해주세요 ==\n>> ");
+                        Console.Write($" == 헌금 할 금액을 입력해주세요 ==\n>> ");
                         int.TryParse(Console.ReadLine(), out int goldInput);
 
                         player.Gold -= goldInput;
