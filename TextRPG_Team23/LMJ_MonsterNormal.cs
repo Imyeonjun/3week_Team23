@@ -1,4 +1,6 @@
-﻿namespace TextRPG_Team23
+﻿using System.Runtime;
+
+namespace TextRPG_Team23
 {
     class HollowshadeBeast : Monster, TakeDamage
     {
@@ -58,9 +60,9 @@
                 }
                 else if (Anger == 5 && isEvolution)
                 {
-                    condition.Attack(Atk);
+                    condition.IgnoreAttack(Atk);
                     condition.ui.MonsterLog = $"\n▶{newName}는 사각지대에서 차원의 틈을 찢고 급습했다!\n" +
-                                              $"< 받은 데미지: ({Atk}) >";
+                                              $"< 받은 방어무시 데미지: ({Atk}) >";
                 }
             }
 
@@ -83,10 +85,11 @@
             }
             else if(Anger == 5)
             {
-                Atk = 30;
+                Atk = 20;
                 string temp = Name;
                 condition.ui.MonsterLog = $"\n▷{Name}은 또 다른 존재가 되었다.\n" +
-                                          $"< [진화 성공] {temp} -> {newName} >";
+                                          $"< [진화 성공] {temp} -> {newName} >" +
+                                          $"< {Name}의 모든 공격은 방어를 무시합니다. >";
                 isEvolution = true;
                 Name = newName;
             }
@@ -98,15 +101,7 @@
         public void TakeDamage(int Damage)
         {
             Damage = 1;
-            if (BuffDef <= 0)
-            {
-                Hp -= Damage;
-            }
-            else if (BuffDef > 0)
-            {
-                BuffDef--;
-                Hp -= Damage;
-            }
+            Hp -= Damage;
         }
     }
 
@@ -115,6 +110,7 @@
 
         bool isCounting;
         bool isHungry;
+        bool isCountAttack;
         int temp;
         Battlecondition condition;
 
@@ -131,6 +127,7 @@
             IsDead = false;
             isCounting = false;
             isHungry = false;
+            isCountAttack = false;
         }
 
         public override void UseSkill(int Turn)
@@ -138,27 +135,9 @@
 
             if (BuffDef > 0) { BuffDef--; }
 
-            if (Turn % 4 == 0)
+            if (Turn % 2 != 0)
             {
-                isHungry = true;
-                if (isHungry)
-                {
-                    HungryAttack(Def / 2);
-                }    
-            }
-
-            if (Turn % 2 != 0 && Def <= 30)
-            {
-                isCounting = true;
-                condition.ui.MonsterLog = $"\n▷{Name}의 눈에서 불길한 빛이 일렁인다!\n" +
-                                          $"< 반격 활성화 >";
-                if (Def >= 35)
-                {
-                    isCounting = true;
-                    condition.ui.MonsterLog = $"\n▷피맛을 본 {Name}은 입고리를 올린다.\n" +
-                                              $"< 반격 활성화 | 방어력 ({temp}) -> ({Def}) >";
-                }
-
+                Satisfaction();
             }
 
             if (Turn % 2 == 0)
@@ -168,7 +147,35 @@
                                           $"< 반격 비활성화 >";
             }
 
+            if (Turn % 3 == 0 && !isHungry)
+            {
+                isHungry = true;
+                condition.ui.SpecialMonsterLog = $"\n▷{Name}은 피맛을 보지 못했다.\n" +
+                                                 $"< 다음 턴에 특수공격 활성화 >";
+            }
 
+            if (Turn % 4 == 0 && isHungry)
+            {
+                HungryAttack(Def);
+            }
+
+        }
+
+        public void Satisfaction()
+        {
+            if (!isCountAttack)
+            {
+                isCounting = true;
+                condition.ui.MonsterLog = $"\n▷{Name}의 눈에서 불길한 빛이 일렁인다!\n" +
+                                          $"< 반격 활성화 >";
+            }
+
+            if (isCountAttack)
+            {
+                isCounting = true;
+                condition.ui.MonsterLog = $"\n▷피맛을 본 {Name}은 입고리를 올린다.\n" +
+                                          $"< 반격 활성화 >";
+            }
         }
 
         public void HungryAttack(int dmg)
@@ -176,16 +183,18 @@
             condition.Attack(dmg);
             condition.ui.SpecialMonsterLog = $"\n▶{Name}에게 충분한 피가 공급되지 않았습니다.\n" +
                                              $"< [{Name}의 특수공격] | 받은 데미지: {dmg} >";
-            temp = Def;
-            Def += 5;
+            condition.ui.PrintSpecialMonsterLog();
+            isHungry = false;
+            isCountAttack = true;
         }
 
         public void TakeItBack(int dmg)
         {
             isHungry = false;
             condition.Attack(dmg);
-            condition.ui.SpecialMonsterLog = $"\n▶{Name}의 반격!\n" +
-                                             $"< 받은 데미지: ({dmg}) | {Name}의 회복량 ({dmg}) >";
+            condition.ui.SpecialMonsterLog = $"\n▶{Name}의 반격! | {Name}에게 피가 공급되었습니다.\n" +
+                                             $"< 받은 데미지: ({dmg}) | {Name}의 회복량 ({dmg}) >\n" +
+                                             $"< 특수공격 비활성 >";
             condition.ui.PrintSpecialMonsterLog();
         }
 
