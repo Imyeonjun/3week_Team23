@@ -30,6 +30,17 @@ namespace TextRPG_Team23
         public int svainghp;
         public string healTarget;
 
+        public bool HasBossGuideItem() //인벤토리에 보스가디으 공략집이 있는지 체크 
+        {
+            foreach (var itemStack in player.Inventory.Items)
+            {
+                if (itemStack.Item.Name == "보스몬스터 완벽 공략집")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
 
