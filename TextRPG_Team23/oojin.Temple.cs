@@ -61,7 +61,7 @@ namespace TextRPG_Team23
                 Console.WriteLine($"\"현재 가지고 있는 금액 :{player.Gold}G\n");
                 Console.WriteLine("헌금 했을 시 얻는 해택 정보");
                 Console.WriteLine("3000G : 공격력 / 방어력 15↑\n5000G : 공격력 / 방어력 20↑\n8000G : 공격력 / 방어력 25↑\n12000G : 공격력 / 방어력 35↑\n16000G : 공격력 / 방어력 50↑");
-                Console.Write("1. YES\n2. NO \n선택 >> ");
+                Console.Write("1. YES\n2. NO \n\n선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)
@@ -92,7 +92,7 @@ namespace TextRPG_Team23
         {
             Console.WriteLine("\n버프를 받으시겠습니까?");
             Console.WriteLine($"현재 남아있는 골드 : {player.Gold} | 차감되는 골드 : 1000G");
-            Console.Write("1. YES\n2. NO \n선택 >> ");
+            Console.Write("1. YES\n2. NO \n\n선택 >> ");
 
             int.TryParse(Console.ReadLine(), out int input);
             if (input == 1)
@@ -142,12 +142,12 @@ namespace TextRPG_Team23
                         isBuff = true;
                     }
                 }
-                Console.WriteLine("버프를 받으셨습니다.\n");
+                Console.WriteLine("\n버프를 받았습니다.");
                 return;
             }            
             else if (input == 2)
             {
-                Buff(player);
+                Selection(player);
             }
             else
             {

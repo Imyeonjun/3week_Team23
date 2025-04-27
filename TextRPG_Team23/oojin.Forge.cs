@@ -100,6 +100,7 @@ namespace TextRPG_Team23
                 }
                 else
                 {
+                    Console.Clear();
                     selectedItem.RepairMax();  // 여기서 호출!
                     Console.WriteLine("Enter키를 눌러주세요");
                     return;
