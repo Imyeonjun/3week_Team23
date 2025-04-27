@@ -75,7 +75,7 @@ namespace TextRPG_Team23
                 Console.WriteLine($"{i + 1}. {Mounting}{itemList}");
                 i++;
             }
-            Console.Write("0. 나가기 \n>>> ");
+            Console.Write("0. 나가기 \n선택 >> ");
             int.TryParse(Console.ReadLine(), out int index);
             if (index >= 0 && index <= items.Count)
             {

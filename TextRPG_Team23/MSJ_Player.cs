@@ -35,6 +35,9 @@ namespace TextRPG_Team23
         public int KillMon { get => killingMonsterCnt; set => killingMonsterCnt = value; }
         public bool MonsterQuest { get; set; }
 
+        public float BuffAtk { get; set; }
+        public int BuffDef { get; set; }
+
         public bool buff = false;
         public Inventory Inventory { get; private set; }
         public List<Quest>? Quests = new List<Quest>();
@@ -69,7 +72,7 @@ namespace TextRPG_Team23
             Console.WriteLine($"직업: {jobName}");
             Console.WriteLine($"레벨: {level}");
             Console.WriteLine($"체력: {currentHp}");
-            Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()}) (+{temple.BuffAtk(player)})");
+            Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()})(+{temple.BuffAtk(player)})");
             Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})(+{temple.BuffDef(player)})");
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
