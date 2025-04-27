@@ -37,6 +37,7 @@ namespace TextRPG_Team23
         private Inn Inn;
         private Temple Temple;
         public DungeonMaganer dungeon;
+        Inventory inven;
 
         public GameManager(Player player)
         {
@@ -60,7 +61,7 @@ namespace TextRPG_Team23
             
             this.dungeon = dungeon;
             Inn = new Inn();
-            Forge = new Forge(player);
+            Forge = new Forge(_player);
             Temple = new Temple();
             _menu = new QuestMenu();
 
@@ -81,6 +82,30 @@ namespace TextRPG_Team23
         {
             isRunning = false;
         }
+
+        public void SaveGame(Player pl, Inventory inv)
+        {
+            SaveSystem.SaveGame(pl,inv);
+        }
+
+        public void LoadGame()
+        {
+            SaveSystem.LoadGame(out _player, out inven);
+            _player.Inventory = inven;
+
+            Forge = new Forge(_player);
+
+            // BattleCondition 다시 세팅
+            List<Monster> monsterBox = new List<Monster>();
+            Battlecondition condition = new Battlecondition();
+            BattleUi ui = new BattleUi(condition);
+            Battle battle = new Battle(condition);
+            MonsterFactory factory = new MonsterFactory(monsterBox, condition);
+            dungeon = new DungeonMaganer(monsterBox, ui, battle, condition, factory);
+
+            condition.BattleConnect(_player, monsterBox, ui, battle);
+        }
+
     }
 
     public class DungeonTest // 해당 클래스 or 메서드는 던전 관련 클래스로 이동 예정.

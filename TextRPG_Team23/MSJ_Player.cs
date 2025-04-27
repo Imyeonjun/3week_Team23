@@ -16,7 +16,7 @@ namespace TextRPG_Team23
         private int currentMp;
         private int maxMp = 50;
         private int gld;
-        private Job job;
+        public Job job;
         private string jobName;
         private int killingMonsterCnt = 0;
         public int killCntForEnding = 0;
@@ -38,10 +38,15 @@ namespace TextRPG_Team23
         public bool MonsterQuest { get; set; }
         public int BuffAtk { get; set; }
         public int BuffDef { get; set; }
-        public Inventory Inventory { get; private set; }
-        public List<Quest>? Quests = new List<Quest>();
-        
+        public Inventory Inventory { get; set; }
+        public List<Quest>? Quests { get; set; }
 
+
+        public Player()
+        {
+            Inventory = new Inventory();
+            RecalculateStats();
+        }
 
         public Player(string name, Job job) // 인벤토리 구현되면 추가예정
         {
@@ -59,7 +64,27 @@ namespace TextRPG_Team23
             this.gld = 5000;
 
             Inventory = new Inventory();
+            Quests = new List<Quest>();
 
+            RecalculateStats();
+        }
+
+        public Player(string name, Job job, int level, int exp, int Hp, int Mp, int gld) // 인벤토리 구현되면 추가예정
+        {
+            this.name = name;
+            this.job = job;
+
+            this.jobName = job.JobName;
+            this.atkDmg = job.BaseAtkDmg;
+            this.defence = job.BaseDefence;
+
+            this.level = level;
+            this.exp = exp;
+            this.currentHp = Hp;
+            this.currentMp = Mp;
+            this.gld = gld;
+
+            Inventory = new Inventory();
 
             RecalculateStats();
         }
@@ -102,8 +127,8 @@ namespace TextRPG_Team23
         {
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
-            Console.WriteLine($"HP: {currentHp}/{maxHp}");
-            Console.WriteLine($"MP: {currentMp}/{maxMp}");
+            Console.WriteLine($"HP : {currentHp}/{maxHp}");
+            Console.WriteLine($"MP : {currentMp}/{maxMp}");
             Console.WriteLine($"ATK : {TotalAtk} | BuffAtk: {BuffAtk}");
             Console.WriteLine($"DEF : {TotalDef} | BuffDef: {BuffDef}");
             Console.WriteLine();
@@ -118,8 +143,8 @@ namespace TextRPG_Team23
         {
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
-            Console.WriteLine($"HP: {currentHp}/{maxHp}");
-            Console.WriteLine($"MP: {currentMp}/{maxMp}");
+            Console.WriteLine($"HP {currentHp}/{maxHp}");
+            Console.WriteLine($"MP {currentMp}/{maxMp}");
             Console.WriteLine($"ATK : {TotalAtk} | BuffAtk: {BuffAtk}");
             Console.WriteLine($"DEF : {TotalDef} | BuffDef: {BuffDef}");
             Console.WriteLine();
@@ -151,7 +176,7 @@ namespace TextRPG_Team23
                     Console.Write("\n공격할 몬스터 번호를 선택하세요 >>> ");
                     if (int.TryParse(Console.ReadLine(), out int targetIndex) && targetIndex >= 1 && targetIndex <= monBox.Count)
                     {
-                        if(monBox[targetIndex - 1].IsDead)
+                        if (monBox[targetIndex - 1].IsDead)
                         {
                             Console.WriteLine("이미 죽은 몬스터 입니다.");
                             PlayerDoing(monBox, player, ui);
@@ -258,7 +283,7 @@ namespace TextRPG_Team23
         {
             TotalAtk = atkDmg + ItemAttack();
             TotalDef = defence + ItemDefense();
-            
+
         }
 
         public void PlayerTakeDamage(int dmg)

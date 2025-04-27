@@ -26,7 +26,9 @@ namespace TextRPG_Team23
                 "던전",
                 "여관",
                 "대장간",
-                "신전"
+                "신전",
+                "저장하기",
+                "불러오기"
             };
 
         public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple, DungeonMaganer dungeon)
@@ -72,6 +74,16 @@ namespace TextRPG_Team23
                 case 7:
                     Console.Clear();
                     temple.Selection(player);
+                    Console.ReadLine();
+                    break;
+                case 8: // 게임 저장
+                    Console.Clear();
+                    gameManager.SaveGame(player, player.Inventory);
+                    Console.ReadLine();
+                    break;
+                case 9: // 게임 불러오기
+                    Console.Clear();
+                    gameManager.LoadGame();
                     Console.ReadLine();
                     break;
                 case 0:
