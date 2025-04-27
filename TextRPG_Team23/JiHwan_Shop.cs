@@ -76,7 +76,7 @@ namespace TextRPG_Team23
                 }
 
                 Console.WriteLine("0. 나가기");
-                Console.WriteLine("\n판매할 아이템 번호를 입력하세요.");
+                Console.WriteLine("\n구매할 아이템 번호를 입력하세요.");
                 Console.Write("\n>>>");
                 string selectedInput = Console.ReadLine();
 
@@ -97,31 +97,31 @@ namespace TextRPG_Team23
                         if (alreadyOwned)
                         {
                             Console.WriteLine($"이미 보유 중인 아이템입니다: {item.Name}");
-                            //Console.ReadKey();
+                            Console.ReadKey();
                         }
                         else if (player.Gold >= item.Price)
                         {
                             player.Gold -= item.Price;
                             player.Inventory.AddItem(item.Clone());
                             Console.WriteLine($"{item.Name}을 구매했습니다!");
-                            //Console.ReadKey();
+                            Console.ReadKey();
                         }
                         else
                         {
                             Console.WriteLine("골드가 부족합니다.");
-                            //Console.ReadKey();
+                            Console.ReadKey();
                         }
                     }
                     else
                     {
                         Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
-                        //Console.ReadKey();
+                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.WriteLine("숫자를 입력해주세요.");
-                    //Console.ReadKey();
+                    Console.ReadKey();
                 }
             }
         }
@@ -191,13 +191,13 @@ namespace TextRPG_Team23
                     else
                     {
                         Console.WriteLine("해당 번호의 아이템은 존재하지 않습니다.");
-                        //Console.ReadKey();
+                        Console.ReadKey();
                     }
                 }
                 else
                 {
-                    Console.WriteLine("숫자를 입력해주세요.");
-                    //Console.ReadKey();
+                    Console.WriteLine("올바른 숫자를 입력해주세요.");
+                    Console.ReadKey();
                 }
 
 

@@ -11,11 +11,13 @@ namespace TextRPG_Team23
         public void Selection(Player player, QuestMenu questMenu)
         {
             Console.Clear();
-            Console.WriteLine(" == @@ 여관에 어서오세요 ==");
+            Console.WriteLine("주인장: 숙박하실겁니까?\n\n");
 
             bool re = false;
             do
             {
+                Console.WriteLine(" == 태양의 스튜 여관 ==\n");
+
                 Console.Write("\n1. 퀘스트 확인\n" +
                               "2. 휴식\n" +
                               "0. 나가기\n\n" +
@@ -44,7 +46,6 @@ namespace TextRPG_Team23
                 {
                     BranchManager.ErrorMessage("잘못 입력했습니다. Enter를 누른 후 다시 입력해 주세요");
                     
-                    //Console.WriteLine("잘못 입력했습니다. 다시 입력해 주세요\n");
                 }
             }
             while (!re);
@@ -81,6 +82,7 @@ namespace TextRPG_Team23
         {
             Console.Clear();
             questMenu.ShowAllQuests(player);
+            Console.Clear();
             return;
         }
     }
