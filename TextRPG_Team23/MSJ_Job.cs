@@ -124,7 +124,7 @@ public class Warrior : Job
         //enemy.CurrentHp -= finalDamage;
         if(enemy is TakeDamage a)
         {
-            a.TakeDamage(finalDamage);
+            a.TakeDamage(finalDamage + player.BuffAtk);
         }
         CheckKillQuest(enemy.CurrentHp, player);
         DisplayAttackResult(player, enemy, originalHp, finalDamage, isCritical, isMiss);

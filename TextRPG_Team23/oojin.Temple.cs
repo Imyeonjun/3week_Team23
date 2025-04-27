@@ -10,8 +10,6 @@ namespace TextRPG_Team23
     public class Temple
     {
         private int gold;
-        float totalBuffATk = 10.0f;
-        float totalBuffDef = 10.0f;
 
         float buffAtkVelue = 0.0f;
         int buffDefVelue = 0;
@@ -32,7 +30,6 @@ namespace TextRPG_Team23
                             Offering(player);
                             break;
                         case 2:
-                            player.buff = false;
                             Buff(player);
                             break;
                     }
@@ -57,7 +54,9 @@ namespace TextRPG_Team23
             Console.WriteLine($"{player.Gold}G");
 
             Console.WriteLine(" == 헌금을 하시겠습니까? ==\n");
-            Console.WriteLine("1. YES\n2.NO \n선택 >> ");
+            Console.WriteLine("헌금 했을 시 얻는 해택 정보");
+            Console.WriteLine("3000G : 공격력 / 방어력 15↑\n5000G : 공격력 / 방어력 20↑\n8000G : 공격력 / 방어력 25↑\n12000G : 공격력 / 방어력 35↑\n16000G : 공격력 / 방어력 50↑");
+            Console.Write("1. YES\n2. NO \n선택 >> ");
 
             int.TryParse(Console.ReadLine(), out int input);
             if (input > 0 && input <= 2)
@@ -98,38 +97,44 @@ namespace TextRPG_Team23
                 }    
                 else
                 {
-                    player.buff = true;
                     player.Gold -= 1000;
                     if (gold >= 16000)
                     {
-                        totalBuffATk *= 5.0f;
-                        totalBuffDef *= 5.0f;
+                        player.BuffAtk = 50;
+                        player.BuffDef = 50;
                     }
                     else if (gold >= 12000)
                     {
-                        totalBuffATk *= 3.5f;
-                        totalBuffDef *= 3.5f;
+                        player.BuffAtk = 35;
+                        player.BuffDef = 35;
                     }
                     else if (gold >= 8000)
                     {
-                        totalBuffATk *= 2.5f;
-                        totalBuffDef *= 2.5f;
+                        player.BuffAtk = 25;
+                        player.BuffDef = 25;
                     }
                     else if (gold >= 5000)
                     {
-                        totalBuffATk *= 2.0f;
-                        totalBuffDef *= 2.0f;
+                        player.BuffAtk = 20;
+                        player.BuffDef = 20;
                     }
                     else if (gold >= 3000)
                     {
-                        totalBuffATk *= 1.5f;
-                        totalBuffDef *= 1.5f;
+                        player.BuffAtk = 15;
+                        player.BuffDef = 15;
                     }
-                    player.TotalAtk += totalBuffATk;
-                    player.TotalDef += (int)totalBuffDef;
-
-                    buffAtkVelue += totalBuffATk;
-                    buffDefVelue += (int)totalBuffDef;
+                    else if(gold < 3000 && gold > 0)
+                    {
+                        player.BuffAtk = 10;
+                        player.BuffDef = 10;
+                    }
+                    else
+                    {
+                        player.BuffAtk = 0;
+                        player.BuffDef = 0;
+                    }
+                    buffAtkVelue += player.TotalAtk;
+                    buffDefVelue += player.BuffDef;
                 }
                 Console.WriteLine("버프를 받으셨습니다.\n");
                 return;
@@ -146,7 +151,7 @@ namespace TextRPG_Team23
         public float BuffAtk(Player player)
         {
             float buffATk = 0.0f;
-            if(player.buff)
+            if(player.BuffAtk > 0)
             {
                 buffATk = buffAtkVelue;
             }
@@ -155,7 +160,7 @@ namespace TextRPG_Team23
         public int BuffDef(Player player)
         {
             int buffDef = 0;
-            if (player.buff)
+            if (player.BuffDef > 0)
             {
                 buffDef = buffDefVelue;
             }
