@@ -68,8 +68,10 @@ public abstract class Job
         if(hp <= 0)
         {
             player.PlusKillMonsterCnt();
+            player.killCntForEnding++;
         }
     }
+
 }
 
 public class Warrior : Job

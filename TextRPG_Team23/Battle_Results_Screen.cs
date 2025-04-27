@@ -37,104 +37,134 @@ namespace TextRPG_Team23
 
             if (isVictory)
             {
-                switch(step)
+                if (monsters[0].Name == "일식의 폭군")
                 {
-                    case 1:
-                        if(isClear)
-                        {
-                            DungeonMaganer.isClearStep1 = true;
-                        }
-                        break;
+                    Console.Clear();
+                    Console.WriteLine("Battle!! - Result");
+                    Console.WriteLine("");
+                    Console.WriteLine("Victory!");
+                    Console.WriteLine("");
 
-                    case 2:
-                        if(isClear)
-                        {
-                            DungeonMaganer.isClearStep2 = true;
-                        }
-                        break;
+                    // 레벨, 경험치 
+                    int newLevel = LevelUp.NewLevel(oldLevel, player.Exp, player);
 
-                    case 3:
-                        if(isClear)
-                        {
-                            DungeonMaganer.isClearStep3 = true;
-                        }
-                        break;
+                    //플레이어 정보 업데이트
+                    player.Level = newLevel;
+
+
+                   /* Console.WriteLine("[캐릭터 정보]");
+                    Console.WriteLine($"Lv. {oldLevel} {player.Name} → Lv. {newLevel} {player.Name}");
+                    Console.WriteLine($"EXP: {oldExp} → {player.Exp}");
+                    Console.WriteLine($"HP: {hp} → {player.CurrentHp}"); // 던전을 들어가기전 hp가 있어야한다. {player.CurrentHp} 현재 체력
+                    Console.WriteLine("");*/
+                    player.PrintEndingStatus();
+
+                    //Console.WriteLine("\n>>>");
+                    Console.ReadLine();
+                    End.Eending();
                 }
-
-
-                //Console.Clear();
-                Console.WriteLine("Battle!! - Result");
-                Console.WriteLine("");
-                Console.WriteLine("Victory!");
-                Console.WriteLine("");
-
-
-
-                // 레벨, 경험치 
-                int newLevel = LevelUp.NewLevel(oldLevel, player.Exp, player);
-
-                //플레이어 정보 업데이트
-                player.Level = newLevel;
-
-
-
-                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
-                Console.WriteLine("");
-
-                Console.WriteLine("[캐릭터 정보]");
-
-                Console.WriteLine($"Lv. {oldLevel} {player.Name} → Lv. {newLevel} {player.Name}");
-
-                Console.WriteLine($"EXP: {oldExp} → {player.Exp}");
-
-                Console.WriteLine($"HP: {hp} → {player.CurrentHp}"); // 던전을 들어가기전 hp가 있어야한다. {player.CurrentHp} 현재 체력
-                Console.WriteLine("");
-
-                Console.WriteLine($"[획득 아이템]");
-                int goldGained = BattleReward.GoldReward(player, monsters);
-                Console.WriteLine($"획득 골드: {goldGained} G");
-
-
-                string[] itemNames = BattleReward.ItemReward(player, monsters);
-                List<string> itn = new List<string>();
-
-                foreach (string name in itemNames)
+                else
                 {
+                    switch (step)
+                    {
+                        case 1:
+                            if (isClear)
+                            {
+                                DungeonMaganer.isClearStep1 = true;
+                            }
+                            break;
 
-                    if (!itn.Contains(name))
+                        case 2:
+                            if (isClear)
+                            {
+                                DungeonMaganer.isClearStep2 = true;
+                            }
+                            break;
+
+                        case 3:
+                            if (isClear)
+                            {
+                                DungeonMaganer.isClearStep3 = true;
+                            }
+                            break;
+                    }
+
+
+                    Console.Clear();
+                    Console.WriteLine("Battle!! - Result");
+                    Console.WriteLine("");
+                    Console.WriteLine("Victory!");
+                    Console.WriteLine("");
+
+
+
+                    // 레벨, 경험치 
+                    int newLevel = LevelUp.NewLevel(oldLevel, player.Exp, player);
+
+                    //플레이어 정보 업데이트
+                    player.Level = newLevel;
+
+
+
+                    Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("[캐릭터 정보]");
+
+                    Console.WriteLine($"Lv. {oldLevel} {player.Name} → Lv. {newLevel} {player.Name}");
+
+                    Console.WriteLine($"EXP: {oldExp} → {player.Exp}");
+
+                    Console.WriteLine($"HP: {hp} → {player.CurrentHp}"); // 던전을 들어가기전 hp가 있어야한다. {player.CurrentHp} 현재 체력
+                    Console.WriteLine("");
+
+                    Console.WriteLine($"[획득 아이템]");
+                    int goldGained = BattleReward.GoldReward(player, monsters);
+                    Console.WriteLine($"획득 골드: {goldGained} G");
+
+
+                    string[] itemNames = BattleReward.ItemReward(player, monsters);
+                    List<string> itn = new List<string>();
+
+                    foreach (string name in itemNames)
                     {
 
-                        int count = 0;
-                        foreach (string n in itemNames)
+                        if (!itn.Contains(name))
                         {
-                            if (n == name)
 
-                                count++;
+                            int count = 0;
+                            foreach (string n in itemNames)
+                            {
+                                if (n == name)
+
+                                    count++;
+                            }
+
+
+                            Console.WriteLine($"{name} - {count}");
+
+
+                            itn.Add(name);
                         }
-
-
-                        Console.WriteLine($"{name} - {count}");
-
-
-                        itn.Add(name);
                     }
-                }
-                Console.WriteLine("");
+                    Console.WriteLine("");
 
-                if (step == 2 && isClear)
-                {
-                    Item hiddenItem = ItemDB.Items.FirstOrDefault(x => x.Name == "보스몬스터 완벽 공략집");
-                    if (hiddenItem != null && hiddenItem.IsHidden)
+                    if (step == 2 && isClear)
                     {
-                        hiddenItem.IsHidden = false;
-                        Console.WriteLine("\n[상점 신규 입고]");
-                        Console.WriteLine($"=> '보스몬스터 완벽 공략집'이 상점에 입고되었습니다!");
+                        Item hiddenItem = ItemDB.Items.FirstOrDefault(x => x.Name == "보스몬스터 완벽 공략집");
+                        if (hiddenItem != null && hiddenItem.IsHidden)
+                        {
+                            hiddenItem.IsHidden = false;
+                            Console.WriteLine("\n[상점 신규 입고]");
+                            Console.WriteLine($"=> '보스몬스터 완벽 공략집'이 상점에 입고되었습니다!");
+                        }
                     }
-                }
 
-                Console.WriteLine("\n 아무 키나 누르세요");
-                Console.ReadLine();
-                return;
+                    Console.WriteLine("\n 아무 키나 누르세요");
+                    Console.ReadLine();
+                    return;
+                }
+                    
             }
             else
             {
@@ -149,9 +179,9 @@ namespace TextRPG_Team23
                 Console.WriteLine("");
 
 
-                Console.WriteLine("\n 아무 키나 누르세요");
+                Console.WriteLine("\n 마을로 돌아가려면 아무 키나 누르세요");
                 Console.ReadLine();
-                End.Eending();
+                //End.Eending();
                 return;
 
 
@@ -233,8 +263,9 @@ namespace TextRPG_Team23
             Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
             Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
 
-            Console.WriteLine("\n\n" + "게임을 계속하려면 엔터를 눌러주세요.");
+            //Console.WriteLine("\n\n" + "게임을 계속하려면 엔터를 눌러주세요.");
             Console.ReadKey();
+            Environment.Exit(0); // 프로그램 즉시 종료
 
         }
 

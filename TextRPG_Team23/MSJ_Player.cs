@@ -19,6 +19,8 @@ namespace TextRPG_Team23
         private Job job;
         private string jobName;
         private int killingMonsterCnt = 0;
+        public int killCntForEnding = 0;
+
 
         public int Level { get => level; set => level = value; }
         public int Exp { get => exp; set => exp = value; }
@@ -78,6 +80,23 @@ namespace TextRPG_Team23
 
 
         }
+
+        public void PrintEndingStatus()
+        {
+            Console.WriteLine("\n===== 최종 캐릭터 상태 =====");
+            Console.WriteLine($"이름: {name}");
+            Console.WriteLine($"직업: {jobName}");
+            Console.WriteLine($"레벨: {level}");
+            Console.WriteLine($"체력: {currentHp}");
+            Console.WriteLine($"공격력: {TotalAtk} | 버프 공격력: {BuffAtk}");
+            Console.WriteLine($"방어력: {TotalDef} | 버프 방어력: {BuffDef}");
+            Console.WriteLine($"소지 골드: {gld} G");
+            Console.WriteLine($"몬스터 처치 수: {killCntForEnding} 마리 처치");
+            Console.WriteLine("======================\n");
+            Console.Write("\n>>>");
+
+        }
+
 
         private void PrintStatusInDungeon()
         {
@@ -246,13 +265,13 @@ namespace TextRPG_Team23
         {
             int realDamage = 0;
 
-            if (TotalDef > dmg)
+            if (TotalDef + BuffDef > dmg)
             {
                 realDamage = 0;
             }
             else
             {
-                realDamage = dmg - TotalDef;
+                realDamage = dmg - (TotalDef + BuffDef);
             }
 
             this.Inventory.CheckClothesDurability(this);
