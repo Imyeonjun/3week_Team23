@@ -10,13 +10,16 @@ namespace TextRPG_Team23
     {
         public void Selection(Player player, QuestMenu questMenu)
         {
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine(" == @@ 여관에 어서오세요 ==");
 
             bool re = false;
             do
             {
-                Console.WriteLine("\n1. 퀘스트 확인\n2. 휴식\n0. 나가기 \n선택 >> ");
+                Console.Write("\n1. 퀘스트 확인\n" +
+                              "2. 휴식\n" +
+                              "0. 나가기\n\n" +
+                              "선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)
@@ -24,11 +27,9 @@ namespace TextRPG_Team23
                     switch (input)
                     {
                         case 1:
-                            //Console.Clear();
                             QuestInfo(questMenu, player);
                             break;
                         case 2:
-                            //Console.Clear();
                             Rest(player);
                             break;
                     }
@@ -53,6 +54,7 @@ namespace TextRPG_Team23
         }
         private void Rest(Player player)
         {
+            Console.Clear();
             // 만약 day가 있으면 day ++ 
             // 플레이어의 체력이 30%미만 70%회복 60% 미만이면 80% 체력회복 이상이면 100%회복
             double hpRotio = (double)player.CurrentHp / player.MaxHp;
@@ -77,7 +79,7 @@ namespace TextRPG_Team23
         }
         private void QuestInfo(QuestMenu questMenu, Player player)
         {
-            //Console.Clear();
+            Console.Clear();
             questMenu.ShowAllQuests(player);
             return;
         }

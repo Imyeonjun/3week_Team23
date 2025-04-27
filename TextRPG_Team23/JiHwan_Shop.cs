@@ -16,7 +16,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                //Console.Clear();
+                Console.Clear();
                 Console.WriteLine("=== 상점 ===");
                 Console.WriteLine($"[보유 골드] {player.Gold}G\n");
                 Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
@@ -42,7 +42,9 @@ namespace TextRPG_Team23
                             return;
                         }
                     default:
-                        Console.WriteLine("잘못된 입력입니다.");
+                        Console.WriteLine("\n잘못된 입력입니다 돌아가려면 아무키나 입력하세요.");
+                        Console.Write("\n>>>");
+                        Console.ReadKey();
                         break;
 
                 }
@@ -52,7 +54,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                //Console.Clear();
+                Console.Clear();
                 Console.WriteLine($"\n[보유 골드] {player.Gold} G\n");
                 Console.WriteLine("[아이템 구매 목록]");
                 for (int i = 0; i < ItemDB.Items.Count; i++)
@@ -128,7 +130,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                //Console.Clear();
+                Console.Clear();
                 var items = player.Inventory.Items;
                 if (items.Count == 0)
                 {
@@ -156,7 +158,8 @@ namespace TextRPG_Team23
                     if (selected == 0)
                     {
                         Console.WriteLine("상점 판매 메뉴를 종료합니다.");
-                        //Console.ReadKey();
+                        Console.Write(">>>");
+                        Console.ReadKey();
                         return;
                     }
                     else if (selected > 0 && selected <= items.Count)
@@ -167,7 +170,8 @@ namespace TextRPG_Team23
                         if (player.Inventory.Slots.Contains(stack.Item))// 장비중인 아이템 이면
                         {
                             Console.WriteLine("장비중인 아이템 입니다. 판매할 수 없습니다.");
-                            //Console.ReadKey();
+                            Console.Write(">>>");
+                            Console.ReadKey();
                         }
                         else
                         {
@@ -179,7 +183,8 @@ namespace TextRPG_Team23
                             {
                                 items.Remove(stack);
                             }
-                            //Console.ReadKey();
+                            Console.Write(">>>");
+                            Console.ReadKey();
 
                         }
                     }
