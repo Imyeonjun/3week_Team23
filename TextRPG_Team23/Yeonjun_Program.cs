@@ -146,11 +146,11 @@ namespace TextRPG_Team23
                         break;
                     }
                 case 0:
-                    Console.WriteLine("마을로 돌아갑니다.");
+                    Console.WriteLine("\n마을로 돌아갑니다.");
                     Console.ReadKey();
                     break;
                 case -1:
-                    Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                    Console.WriteLine("\n잘못된 입력입니다. 다시 시도해주세요.");
                     Console.ReadKey();
                     break;
             }
