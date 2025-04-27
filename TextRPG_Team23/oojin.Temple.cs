@@ -111,37 +111,37 @@ namespace TextRPG_Team23
                     if (gold >= 16000)
                     {
                         player.BuffAtk = 50;
-                        player.BuffDef = 50;
+                        player.BuffDef = 40;
                         isBuff = true;
                     }
                     else if (gold >= 12000)
                     {
                         player.BuffAtk = 35;
-                        player.BuffDef = 35;
+                        player.BuffDef = 28;
                         isBuff = true;
                     }
                     else if (gold >= 8000)
                     {
                         player.BuffAtk = 25;
-                        player.BuffDef = 25;
+                        player.BuffDef = 18;
                         isBuff = true;
                     }
                     else if (gold >= 5000)
                     {
                         player.BuffAtk = 20;
-                        player.BuffDef = 20;
+                        player.BuffDef = 13;
                         isBuff = true;
                     }
                     else if (gold >= 3000)
                     {
                         player.BuffAtk = 15;
-                        player.BuffDef = 15;
+                        player.BuffDef = 10;
                         isBuff = true;
                     }
                     else if(gold < 3000 && gold >= 0)
                     {
                         player.BuffAtk = 10;
-                        player.BuffDef = 10;
+                        player.BuffDef = 5;
                         isBuff = true;
                     }
                 }

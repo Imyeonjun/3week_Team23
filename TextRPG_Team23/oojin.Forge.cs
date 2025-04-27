@@ -52,7 +52,7 @@ namespace TextRPG_Team23
             
             if (player.Inventory.CheckAllDurabilityIsFull())
             {
-                Console.WriteLine("\n수리할 아이템이 없습니다.\nEnter키를 눌러주세요.");
+                Console.WriteLine("\n수리할 아이템이 없습니다.");
                 if (!needGold)
                 {
                     Console.WriteLine("하지만 수리요정은 출장권을 환불해주지않았습니다.");
