@@ -49,7 +49,7 @@ namespace TextRPG_Team23
 
                 case 3: // 딜 타임 패턴
                     SolarBetrayal();
-                    LethalAttack(); //체력이 100일때 존나 쎈 데미지 한번 완성
+                    LethalAttack(); //체력이 100일때 쎈 데미지 한번 완성
                     break;
 
                 case 4: //이때 별폭발 패턴 && 만약 폭발 안하면 자신의 공격력 강화 완성

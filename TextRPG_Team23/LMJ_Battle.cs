@@ -319,7 +319,7 @@ namespace TextRPG_Team23
                 }
                 else
                 {
-                    Console.WriteLine("죽은몬스터");
+                    //Console.WriteLine("죽은몬스터");
                 }
             }
         }
