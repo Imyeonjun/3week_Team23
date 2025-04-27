@@ -38,7 +38,7 @@ namespace TextRPG_Team23
         {
             while (true)
             {
-                //Console.Clear();
+                Console.Clear();
 
                 var equipmentItems = player.Inventory.Items.Where(i => i.Item is Weapon || i.Item is Clothes).ToList(); // Weapon, Clothes 아이템이 equipmentitems에 저장
                 if (equipmentItems.Count > 0) // 아이템이 하나 이상 들어있다면
@@ -82,7 +82,7 @@ namespace TextRPG_Team23
                                 Console.WriteLine(" == 더 이상 강화할 수 없습니다, 다른 아이템을 골라 주세요 == \n");
                                 break;
                             }
-                            //Console.Clear();
+                            Console.Clear();
                             ItemUpgrade(forge);
 
                             break;
@@ -92,14 +92,14 @@ namespace TextRPG_Team23
                         }
                         else if (input == 0)
                         {
-                            Console.Write('\n');
+                            Console.WriteLine("Enter키를 눌러주세요");
                             return;
                         }
                     }
                     else
                     {
                         Console.WriteLine("\n == 잘못 입력했습니다, 다시 입력해주세요. == ");
-                        break;
+                        ItemSelection(forge);
                     }
                 }
             }
@@ -110,7 +110,6 @@ namespace TextRPG_Team23
             while (true)
             {
                 int deductedGold = (selectedItem.Upgrade * 50) + 100;
-                //Console.Clear();
                 if (selectedItem == null)
                 {
                     return;
@@ -126,7 +125,7 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
                 Console.WriteLine($"보유 골드 : {player.Gold} | 차감될 골드 : {deductedGold}");
-                Console.Write("\n1. [YES]\n2. [NO] \n\n 선택 >> ");
+                Console.Write("\n1. [YES]\n2. [NO] \n\n선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)
@@ -135,6 +134,7 @@ namespace TextRPG_Team23
                     {
                         case 1:
                             player.Gold -= (selectedItem.Upgrade * 50) + 100;
+                            Console.Clear();
                             ItemGamblig(forge);
                             break;
                         case 2:

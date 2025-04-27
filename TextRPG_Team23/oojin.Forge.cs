@@ -15,43 +15,40 @@ namespace TextRPG_Team23
         public void Selection(Forge forge)
         {
             UpGrade upGrade = new UpGrade(player);
-            Console.WriteLine("\n == @@ 대장간에 어서오세요 ==");
-            while (true)
-            {
-                //Console.Clear();
-               
-                Console.Write("\n1. 강화\n2. 수리\n0. 나가기 \n\n선택 >> ");
-                int.TryParse(Console.ReadLine(), out int input);
 
-                if (input > 0 && input <= 2)
+            Console.Clear();
+            Console.WriteLine("\n == @@ 대장간에 어서오세요 ==");
+            Console.Write("\n1. 강화\n2. 수리\n0. 나가기\n\n선택 >> ");
+            int.TryParse(Console.ReadLine(), out int input);
+
+            if (input > 0 && input <= 2)
+            {
+                switch (input)
                 {
-                    switch (input)
-                    {
-                        case 1:
-                            //Console.Clear();
-                            upGrade.ItemSelection(forge);
-                            break;
-                        case 2:
-                            bool needGold = true;
-                            Repair(player, needGold);
-                            break;
-                    }
+                    case 1:
+                        Console.Clear();
+                        upGrade.ItemSelection(forge);
+                        break;
+                    case 2:
+                        bool needGold = true;
+                        Repair(player, needGold);
+                        break;
                 }
-                else if (input ==  0)
-                {
-                    Console.WriteLine("\n마을로 돌아갑니다.");
-                    Console.WriteLine("Enter키를 눌러주세요");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\n잘못 입력했습니다, 다시 입력해 주세요");
-                }
+            }
+            else if (input == 0)
+            {
+                Console.WriteLine("\n마을로 돌아갑니다.");
+                Console.WriteLine("Enter키를 눌러주세요");
+            }
+            else
+            {
+                Console.WriteLine("\n잘못 입력했습니다, 다시 입력해 주세요");
+                Selection(forge);
             }
         }
         public static void Repair(Player player, bool needGold)
         {
-            //Console.Clear();
+            Console.Clear();
             
             if (player.Inventory.CheckAllDurabilityIsFull())
             {

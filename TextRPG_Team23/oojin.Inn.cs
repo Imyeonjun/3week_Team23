@@ -10,7 +10,7 @@ namespace TextRPG_Team23
     {
         public void Selection(Player player, QuestMenu questMenu)
         {
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine(" == @@ 여관에 어서오세요 ==");
 
             bool re = false;
@@ -24,11 +24,11 @@ namespace TextRPG_Team23
                     switch (input)
                     {
                         case 1:
-                            //Console.Clear();
+                            Console.Clear();
                             QuestInfo(questMenu, player);
                             break;
                         case 2:
-                            //Console.Clear();
+                            Console.Clear();
                             Rest(player);
                             break;
                     }
@@ -77,7 +77,7 @@ namespace TextRPG_Team23
         }
         private void QuestInfo(QuestMenu questMenu, Player player)
         {
-            //Console.Clear();
+            Console.Clear();
             questMenu.ShowAllQuests(player);
             return;
         }
