@@ -13,6 +13,10 @@ namespace TextRPG_Team23
 
         float buffAtkVelue = 0.0f;
         int buffDefVelue = 0;
+
+        public static bool isBuff = false;
+
+
         public void Selection(Player player)
         {
             // 기능 추가 수정
@@ -91,9 +95,9 @@ namespace TextRPG_Team23
             int.TryParse(Console.ReadLine(), out int input);
             if (input == 1)
             {
-                if (player.Gold < 1000)
+                if (player.Gold < 1000 && !isBuff)
                 {
-                    Console.WriteLine("돈이 부족하여 버프를 받을 수 없습니다.");
+                    Console.WriteLine("돈이 부족하거나 이미 버프가 있으셔서 버프를 받으실 수 없습니다.\n");
                     return;
                 }    
                 else
@@ -103,39 +107,38 @@ namespace TextRPG_Team23
                     {
                         player.BuffAtk = 50;
                         player.BuffDef = 50;
+                        isBuff = true;
                     }
                     else if (gold >= 12000)
                     {
                         player.BuffAtk = 35;
                         player.BuffDef = 35;
+                        isBuff = true;
                     }
                     else if (gold >= 8000)
                     {
                         player.BuffAtk = 25;
                         player.BuffDef = 25;
+                        isBuff = true;
                     }
                     else if (gold >= 5000)
                     {
                         player.BuffAtk = 20;
                         player.BuffDef = 20;
+                        isBuff = true;
                     }
                     else if (gold >= 3000)
                     {
                         player.BuffAtk = 15;
                         player.BuffDef = 15;
+                        isBuff = true;
                     }
-                    else if(gold < 3000 && gold > 0)
+                    else if(gold < 3000 && gold >= 0)
                     {
                         player.BuffAtk = 10;
                         player.BuffDef = 10;
+                        isBuff = true;
                     }
-                    else
-                    {
-                        player.BuffAtk = 0;
-                        player.BuffDef = 0;
-                    }
-                    buffAtkVelue += player.TotalAtk;
-                    buffDefVelue += player.BuffDef;
                 }
                 Console.WriteLine("버프를 받으셨습니다.\n");
                 return;
@@ -149,7 +152,7 @@ namespace TextRPG_Team23
                 Console.WriteLine("잘못 입력했습니다, 다시 입력해주세요");
             }
         }
-        public float BuffAtk(Player player)
+/*        public float BuffAtk(Player player)
         {
             float buffATk = 0.0f;
             if(player.BuffAtk > 0)
@@ -166,6 +169,6 @@ namespace TextRPG_Team23
                 buffDef = buffDefVelue;
             }
             return buffDef;
-        }
+        }*/
     }
 }

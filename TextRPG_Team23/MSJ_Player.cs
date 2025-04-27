@@ -62,15 +62,15 @@ namespace TextRPG_Team23
             RecalculateStats();
         }
 
-        public void PrintStatus(Player player, Temple temple)
+        public void PrintStatus()
         {
             Console.WriteLine("\n===== 캐릭터 상태 =====");
             Console.WriteLine($"이름: {name}");
             Console.WriteLine($"직업: {jobName}");
             Console.WriteLine($"레벨: {level}");
             Console.WriteLine($"체력: {currentHp}");
-            Console.WriteLine($"공격력: {TotalAtk} (+{ItemAttack()})(+{temple.BuffAtk(player)})");
-            Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})(+{temple.BuffDef(player)})");
+            Console.WriteLine($"공격력: {TotalAtk} | 버프 공격력: {BuffAtk}");
+            Console.WriteLine($"방어력: {TotalDef} | 버프 방어력: {BuffDef}");
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
             Console.WriteLine("\n메인 메뉴로 돌아가려면 아무키나 입력하세요.");
@@ -85,8 +85,8 @@ namespace TextRPG_Team23
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
             Console.WriteLine($"MP {currentMp}/{maxMp}");
-            Console.WriteLine($"ATK : {TotalAtk}");
-            Console.WriteLine($"DEF : {TotalDef}");
+            Console.WriteLine($"ATK : {TotalAtk} | BuffAtk: {BuffAtk}");
+            Console.WriteLine($"DEF : {TotalDef} | BuffDef: {BuffDef}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
@@ -101,8 +101,8 @@ namespace TextRPG_Team23
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
             Console.WriteLine($"HP {currentHp}/{maxHp}");
             Console.WriteLine($"MP {currentMp}/{maxMp}");
-            Console.WriteLine($"ATK : {TotalAtk}");
-            Console.WriteLine($"DEF : {TotalDef}");
+            Console.WriteLine($"ATK : {TotalAtk} | BuffAtk: {BuffAtk}");
+            Console.WriteLine($"DEF : {TotalDef} | BuffDef: {BuffDef}");
             Console.WriteLine();
             job.PrintSkillInfo();
         }
