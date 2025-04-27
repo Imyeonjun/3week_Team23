@@ -50,24 +50,27 @@ namespace TextRPG_Team23
                     Console.ReadLine();
                     break;
                 case 3:
+                    Console.Clear();
                     new Shop(player).ShopPhase();
                     Console.ReadLine();
                     break;
                 case 4:
                     // 던전 입장 코드 수정
-                    Console.WriteLine("디버그 : 던전 출력");
-                    Console.ReadLine();
+                    Console.Clear();
                     gate.Gate(dungeon);
                     break;
                 case 5:
+                    Console.Clear();
                     inn.Selection(player, quest);
                     Console.ReadLine();
                     break;
                 case 6:
+                    Console.Clear();
                     forge.Selection(forge);
                     Console.ReadLine();
                     break;
                 case 7:
+                    Console.Clear();
                     temple.Selection(player);
                     Console.ReadLine();
                     break;
