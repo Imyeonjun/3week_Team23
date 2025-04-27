@@ -31,21 +31,21 @@ namespace TextRPG_Team23
 
         public void MainMenu(Player player, QuestMenu quest, Inn inn, Forge forge, Temple temple, DungeonMaganer dungeon)
         {
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine("== 메인 메뉴 ==");
             int selected = BranchManager.ReturnSelect(mainMenuOptions, true, "게임 종료");
 
             switch (selected)
             {
                 case 1:
-                    //Console.WriteLine("디버그 : 상태창 출력");
+                    Console.Clear();
                     player.PrintStatus();
                     Console.ReadLine();
                     break;
                 case 2:
                     bool limitedUse = false;
                     bool alreadyUse = false;
-
+                    Console.Clear();
                     player.Inventory.PrintInventory(player, limitedUse, ref alreadyUse);
                     Console.ReadLine();
                     break;

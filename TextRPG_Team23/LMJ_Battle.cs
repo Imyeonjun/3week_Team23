@@ -217,6 +217,7 @@ namespace TextRPG_Team23
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBattle = false;
+                    condition.monsterBox.Clear();
                     BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox,condition.svainghp);
                     continue;
                 }
@@ -254,6 +255,7 @@ namespace TextRPG_Team23
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
                     isBossBattle = false;
+                    condition.monsterBox.Clear();
                     BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox, condition.svainghp);
                     continue;
                 }
@@ -262,13 +264,12 @@ namespace TextRPG_Team23
 
                 StartBossTurn();
                 turnCount++;
-
                 condition.player.PlayerDoing(condition.monsterBox, condition.player, condition.ui);
 
                 Console.ReadKey();
                 Console.Clear();
 
-                if (turnCount == 6)
+                if (turnCount == 7)
                 {
                     turnCount = 1;
                 }

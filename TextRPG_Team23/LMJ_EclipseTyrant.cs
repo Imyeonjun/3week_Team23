@@ -74,9 +74,6 @@ namespace TextRPG_Team23
                     SuperArmour = true;
                     DawnbreakerSlam();
                     break;
-                //case 0:
-                //    YouCanHit();
-                //    break;
             }
 
         }

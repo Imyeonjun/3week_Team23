@@ -54,6 +54,21 @@ namespace TextRPG_Team23
                 }
             }
             player = new Player(name, job);
+
+            Console.Clear();
+            
+            Console.Write($"[ 23 Loop Dungeon ]\n\n" +
+                          $"오랜 세월 평화를 지켜온 태양의 왕국은 한명의 폭군에 의해 그 빛을 영원히 잃고 말았다...\n\n" +
+                          $"하지만 눈을 가렸다고 한들 태양이 없어지지는 않는 법\n\n" +
+                          $"왕국을 구원할 용사가 폭군의 왕좌에 여정을 떠났으니\n\n" +
+                          $"왕국의 마지막 희망 그것은 바로 [ {job} {player.Name} ] 당신이다.\n\n\n" +
+                          $"게임을 진행하기 위해 아무키나 입력하세요.\n" +
+                          $">>>");
+
+            Console.ReadKey();
+            
+
+
         }
     }
 }

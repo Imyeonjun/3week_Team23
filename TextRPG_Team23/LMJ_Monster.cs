@@ -298,6 +298,7 @@ namespace TextRPG_Team23
                     realDamage = 1;
                 }
                 Hp -= realDamage;
+                poisonPower++;
             }
             else if (BuffDef > 0)
             {
@@ -308,6 +309,7 @@ namespace TextRPG_Team23
                     realDamage = 1;
                 }
                 Hp -= realDamage;
+                poisonPower++;
             }
         }
     }

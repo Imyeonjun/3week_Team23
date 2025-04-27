@@ -88,6 +88,7 @@
                 condition.ui.MonsterLog = $"\n▷{Name}은 또 다른 존재가 되었다.\n" +
                                           $"< [진화 성공] {temp} -> {newName} >";
                 isEvolution = true;
+                Name = newName;
             }
 
         }

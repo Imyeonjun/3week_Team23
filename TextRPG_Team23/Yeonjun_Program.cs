@@ -87,9 +87,9 @@ namespace TextRPG_Team23
     {
 
         public string[] gateOptions = {
-                "하급 던전",
-                "중급 던전",
-                "상급 던전",
+                $"1단계 던전 - 권장 능력치 Atk: ({12}) Def: ({8}) 이상",
+                $"2단계 던전 - 권장 능력치 Atk: ({24}) Def: ({20}) 이상",
+                $"보스 던전 - 권장 능력치 Atk: ({40}) Def: ({35}) 이상",
             };
 
         public void Gate(DungeonMaganer dungeon)
@@ -100,7 +100,7 @@ namespace TextRPG_Team23
             switch (selected)
             {
                 case 1:
-                    Console.WriteLine("디버그 : 하급 던전 입장");
+                    Console.WriteLine("디버그 : 1단계 던전 입장");
                     Console.ReadKey();
                     dungeon.WorkFactory("1단계던전");
                     dungeon.Start();    

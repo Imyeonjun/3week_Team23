@@ -70,7 +70,7 @@ namespace TextRPG_Team23
             Console.WriteLine($"방어력: {TotalDef} (+{ItemDefense()})");
             Console.WriteLine($"소지 골드: {gld} G");
             Console.WriteLine("======================\n");
-            Console.WriteLine("\n0. 나가기");
+            Console.WriteLine("\n메인 메뉴로 돌아가려면 아무키나 입력하세요.");
             Console.Write("\n>>>");
 
 
