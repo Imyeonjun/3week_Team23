@@ -49,37 +49,38 @@ namespace TextRPG_Team23
         }
         private void Offering(Player player)
         {
-            Console.Write("현재 가지고 있는 금액 : ");
-
-            Console.WriteLine($"{player.Gold}G");
-
-            Console.WriteLine(" == 헌금을 하시겠습니까? ==\n");
-            Console.WriteLine("헌금 했을 시 얻는 해택 정보");
-            Console.WriteLine("3000G : 공격력 / 방어력 15↑\n5000G : 공격력 / 방어력 20↑\n8000G : 공격력 / 방어력 25↑\n12000G : 공격력 / 방어력 35↑\n16000G : 공격력 / 방어력 50↑");
-            Console.Write("1. YES\n2. NO \n선택 >> ");
-
-            int.TryParse(Console.ReadLine(), out int input);
-            if (input > 0 && input <= 2)
+            while (true)
             {
-                if (input == 1)
+                Console.WriteLine(" == 헌금을 하시겠습니까? ==");
+                Console.WriteLine($"\"현재 가지고 있는 금액 :{player.Gold}G\n");
+                Console.WriteLine("헌금 했을 시 얻는 해택 정보");
+                Console.WriteLine("3000G : 공격력 / 방어력 15↑\n5000G : 공격력 / 방어력 20↑\n8000G : 공격력 / 방어력 25↑\n12000G : 공격력 / 방어력 35↑\n16000G : 공격력 / 방어력 50↑");
+                Console.Write("1. YES\n2. NO \n선택 >> ");
+
+                int.TryParse(Console.ReadLine(), out int input);
+                if (input > 0 && input <= 2)
                 {
-                    Console.WriteLine($" == 헌금 할 금액을 입력해주세요 ==\n>> ");
-                    int.TryParse(Console.ReadLine(), out int goldInput);
+                    if (input == 1)
+                    {
+                        Console.WriteLine($" == 헌금 할 금액을 입력해주세요 ==\n>> ");
+                        int.TryParse(Console.ReadLine(), out int goldInput);
 
-                    player.Gold -= goldInput;
+                        player.Gold -= goldInput;
 
-                    gold += goldInput;
-                    Console.WriteLine($"기부된 현재 금액 : {gold}");
+                        gold += goldInput;
+                        Console.WriteLine($"기부된 현재 금액 : {gold}");
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else
                 {
-                    return;
+                    Console.WriteLine("\n잘못 입력했습니다, 다시 입력해주세요\n");
                 }
             }
-            else
-            {
-                Console.WriteLine("잘못 입력했습니다, 다시 입력해주세요");
-            }
+           
         }
         private void Buff(Player player)
         {
