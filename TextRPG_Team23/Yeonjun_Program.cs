@@ -122,7 +122,7 @@ namespace TextRPG_Team23
                     if (!DungeonMaganer.isClearStep1 || player.CurrentHp <= 0)
                     {
                         Console.Write("\n1단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
-                                      "\n패배하여 체력이 0이 된 자 또한 자격없음이다.\n\n" +
+                                      "패배하여 체력이 0이 된 자 또한 자격없음이다.\n\n" +
                                       "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
                                       ">>>");
                         Console.ReadKey();
@@ -142,7 +142,7 @@ namespace TextRPG_Team23
                     if (!DungeonMaganer.isClearStep2 || player.CurrentHp <= 0)
                     {
                         Console.Write("\n2단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
-                                      "\n패배하여 체력이 0이 된 자 또한 자격없음이다.\n\n" +
+                                      "패배하여 체력이 0이 된 자 또한 자격없음이다.\n\n" +
                                       "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
                                       ">>>");
                         Console.ReadKey();

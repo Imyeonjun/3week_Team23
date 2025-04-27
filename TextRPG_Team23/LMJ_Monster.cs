@@ -83,8 +83,8 @@ namespace TextRPG_Team23
             Name = "모혈의 이끼거북";
             Atk = 4;
             Def = 10;
-            MaxHp = 34;
-            CurrentHp = 34;
+            MaxHp = 40;
+            CurrentHp = 40;
             IsDead = false;
         }
 
@@ -155,8 +155,8 @@ namespace TextRPG_Team23
             Name = "뿌리투구 수호자";
             Atk = 5;
             Def = 7;
-            MaxHp = 40;
-            CurrentHp = 40;
+            MaxHp = 52;
+            CurrentHp = 52;
             IsDead = false;
         }
 
@@ -224,8 +224,8 @@ namespace TextRPG_Team23
             Name = "부패의 턱";
             Atk = 7;
             Def = 2;
-            MaxHp = 27;
-            CurrentHp = 27;
+            MaxHp = 38;
+            CurrentHp = 38;
             IsDead = false;
             isPowerUp = false;
             poisonDamage = 3;
@@ -330,8 +330,8 @@ namespace TextRPG_Team23
             Name = "일몰 좀도둑";
             Atk = 15;
             Def = 0;
-            MaxHp = 14;
-            CurrentHp = 14;
+            MaxHp = 17;
+            CurrentHp = 17;
             IsDead = false;
         }
 
@@ -485,8 +485,8 @@ namespace TextRPG_Team23
             Name = "비안개 정령";
             Atk = 0;
             Def = 2;
-            MaxHp = 25;
-            CurrentHp = 25;
+            MaxHp = 30;
+            CurrentHp = 30;
             isDanger = false;
             IsDead = false;
         }
