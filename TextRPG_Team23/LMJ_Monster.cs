@@ -54,11 +54,11 @@ namespace TextRPG_Team23
         {
             if (!isAction) //플레이어가 타겟으로 지정하지 않을 때 / 번호출력x
             {
-                Console.WriteLine($"Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}/{MaxHp}] {(IsDead ? "Dead" : "Alive")}");
+                Console.WriteLine($"Lv: {Level}  {Name} \t[Atk: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}/{MaxHp}] {(IsDead ? "Dead" : "Alive")}");
             }
             else /*if (!IsDead)*///플레이어가 타겟으로 지정할 때 / 번호출력o
             {
-                Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Att: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}/{MaxHp}]  {(IsDead ? "Dead" : "Alive" )}");
+                Console.WriteLine($"{number}번 Lv: {Level}  {Name} \t[Atk: {Atk} (+{BuffAtk})]  [Def: {Def} (+{BuffDef})]  [Hp: {CurrentHp}/{MaxHp}]  {(IsDead ? "Dead" : "Alive" )}");
             }
         }
 
