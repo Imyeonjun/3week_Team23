@@ -121,12 +121,12 @@ public class Warrior : Job
         {
             player.Inventory.CheckWeaponDurability(player);
         }
-        int finalDamage = (int)finalAtkDmg;
+        int finalDamage = (int)finalAtkDmg + player.BuffAtk;
         int originalHp = enemy.CurrentHp;
         //enemy.CurrentHp -= finalDamage;
         if(enemy is TakeDamage a)
         {
-            a.TakeDamage(finalDamage + player.BuffAtk);
+            a.TakeDamage(finalDamage);
         }
         CheckKillQuest(enemy.CurrentHp, player);
         DisplayAttackResult(player, enemy, originalHp, finalDamage, isCritical, isMiss);
@@ -147,7 +147,7 @@ public class Warrior : Job
         int variation = rand.Next(-(int)offset, (int)offset + 1);
         float finalAtkDmg = (atkDmg + variation) * 2.0f;
 
-        int finalDamage = (int)finalAtkDmg;
+        int finalDamage = (int)finalAtkDmg + player.BuffAtk;
         int originalHp = enemy.CurrentHp;
         //enemy.CurrentHp -= finalDamage;
         if (enemy is TakeDamage a)
@@ -199,7 +199,7 @@ public class Warrior : Job
             int variation = rand.Next(-(int)offset, (int)offset + 1);
             float finalAtkDmg = (atkDmg + variation) * 1.5f;
 
-            int finalDamage = (int)finalAtkDmg;
+            int finalDamage = (int)finalAtkDmg + player.BuffAtk;
             int originalHp = enemy.CurrentHp;
             //enemy.CurrentHp -= finalDamage;
             if (enemy is TakeDamage a)
@@ -229,10 +229,10 @@ public class Magician : Job
 
     public override void PrintSkillInfo()
     {
-        Console.WriteLine("1. 알파 스트라이크 - MP 10\n공격력 * 2 로 하나의 적을 공격합니다."); // 추후 마법사에 맞게 변경
-        Console.WriteLine("2. 더블 스트라이크 - MP 10\n공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다."); // 추후 마법사에 맞게 변경
-
+        Console.WriteLine("1. 파이어볼 - MP 10\n공격력 * 2 로 하나의 적을 불태웁니다.");
+        Console.WriteLine("2. 체인 라이트닝 - MP 10\n공격력 * 1.5 로 2명의 랜덤한 적을 번개로 공격합니다.");
     }
+
 
     public override void Attack(Monster enemy, float atkDmg, Player player)
     {
@@ -273,7 +273,7 @@ public class Magician : Job
         //enemy.CurrentHp -= finalDamage;
         if (enemy is TakeDamage a)
         {
-            a.TakeDamage(finalDamage);
+            a.TakeDamage(finalDamage + player.BuffAtk);
         }
         CheckKillQuest(enemy.CurrentHp, player);
         DisplayAttackResult(player, enemy, originalHp, finalDamage, isCritical, isMiss);
@@ -298,7 +298,7 @@ public class Magician : Job
         enemy.CurrentHp -= finalDamage;
         if(enemy is TakeDamage a)
         {
-            a.TakeDamage(finalDamage);
+            a.TakeDamage(finalDamage + player.BuffAtk);
         }
         if (enemy.CurrentHp < 0) enemy.CurrentHp = 0;
         CheckKillQuest(enemy.CurrentHp, player);
@@ -350,7 +350,7 @@ public class Magician : Job
             //enemy.CurrentHp -= finalDamage;
             if (enemy is TakeDamage a)
             {
-                a.TakeDamage(finalDamage);
+                a.TakeDamage(finalDamage + player.BuffAtk);
             }
             CheckKillQuest(enemy.CurrentHp, player);
             originalHps.Add(originalHp);

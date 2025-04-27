@@ -45,6 +45,16 @@ namespace TextRPG_Team23
     {
         public List<ItemStack> Items { get; private set; } = new List<ItemStack>();
         public Item[] Slots = new Item[2]; // 무기, 방어구
+        public List<ItemStack> GetAllItems() => Items;
+        public Inventory()
+        {
+
+        }
+
+        public Inventory(List<ItemStack> newItems)
+        {
+            Items = newItems;
+        }
 
         public void AddItem(Item newItem) //아이템 추가 로직
         {
@@ -318,6 +328,5 @@ namespace TextRPG_Team23
             }
 
         }
-
     }
 }

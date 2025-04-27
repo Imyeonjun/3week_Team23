@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace TextRPG_Team23
 {
@@ -13,6 +14,10 @@ namespace TextRPG_Team23
 
         private Func<Player, bool> comepleteCheck;
 
+        public Quest()
+        {
+
+        }
         public Quest(string title, string description, int rewardGold, Func<Player, bool> comepleteCheck)
         {
             Title = title;
@@ -120,25 +125,41 @@ namespace TextRPG_Team23
                     }
 
                     // 입력 없을 때 예외처리 수정
-                    int answer = int.Parse(Console.ReadLine());
-
-                    switch (answer)
+                    try
                     {
-                        case 0:
-                            Console.WriteLine("나가기 입력");
-                            break;
-                        case 1:
-                            if(selectedQuest.Title == "마을을 위협하는 몬스터 처치")
-                            {
-                                player.MonsterQuest = true;
-                                Console.WriteLine("나이스\n");
-                            }
-                            player.AddQuest(selectedQuest); // 이미 있는지 확인하는 검사가 포함된 AddQuest 사용
-                            break;
-                        default:
-                            Console.WriteLine("잘못된 번호입니다.");
-                            break;
+                        Console.WriteLine("숫자를 입력하세요:");
+                        int answer = int.Parse(Console.ReadLine());
+
+                        switch (answer)
+                        {
+                            case 0:
+                                Console.WriteLine("나가기 입력");
+                                break;
+                            case 1:
+                                if (selectedQuest.Title == "마을을 위협하는 몬스터 처치")
+                                {
+                                    player.MonsterQuest = true;
+                                    Console.WriteLine("나이스\n");
+                                }
+                                player.AddQuest(selectedQuest); // 이미 있는지 확인하는 검사가 포함된 AddQuest 사용
+                                break;
+                            default:
+                                Console.WriteLine("잘못된 번호입니다.");
+                                break;
+                        }
                     }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("유효한 숫자를 입력해야 합니다.");
+                        ShowAllQuests(player);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        Console.WriteLine("입력이 비어있습니다. 숫자를 입력하세요.");
+                        ShowAllQuests(player);
+
+                    }
+
 
                 }
                 else
