@@ -102,8 +102,8 @@ namespace TextRPG_Team23
         {
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
-            Console.WriteLine($"HP {currentHp}/{maxHp}");
-            Console.WriteLine($"MP {currentMp}/{maxMp}");
+            Console.WriteLine($"HP: {currentHp}/{maxHp}");
+            Console.WriteLine($"MP: {currentMp}/{maxMp}");
             Console.WriteLine($"ATK : {TotalAtk} | BuffAtk: {BuffAtk}");
             Console.WriteLine($"DEF : {TotalDef} | BuffDef: {BuffDef}");
             Console.WriteLine();
@@ -118,8 +118,8 @@ namespace TextRPG_Team23
         {
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"LV.{level}   {name}  ({jobName})");
-            Console.WriteLine($"HP {currentHp}/{maxHp}");
-            Console.WriteLine($"MP {currentMp}/{maxMp}");
+            Console.WriteLine($"HP: {currentHp}/{maxHp}");
+            Console.WriteLine($"MP: {currentMp}/{maxMp}");
             Console.WriteLine($"ATK : {TotalAtk} | BuffAtk: {BuffAtk}");
             Console.WriteLine($"DEF : {TotalDef} | BuffDef: {BuffDef}");
             Console.WriteLine();
