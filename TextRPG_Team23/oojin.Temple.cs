@@ -81,7 +81,6 @@ namespace TextRPG_Team23
                     }
                     else if(input == 2)
                     {
-                        
                         return;
                     }
                 }
@@ -151,7 +150,7 @@ namespace TextRPG_Team23
             }            
             else if (input == 2)
             {
-                Selection(player);
+                return;
             }
             else
             {
