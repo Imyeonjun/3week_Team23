@@ -198,12 +198,12 @@ namespace TextRPG_Team23
         }
 
 
-        public void EnterBattle(bool isEnter)
+        public void EnterBattle(bool isEnter,int step)
         {
             turnCount = 1;
             condition.svainghp = condition.player.CurrentHp;
             bool isBattle = isEnter;
-
+            bool isClear = false;
             Console.Clear();
             Console.Write("몬스터가 등장했다!\n\n");
 
@@ -216,9 +216,17 @@ namespace TextRPG_Team23
 
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
+                    if(condition.player.CurrentHp <= 0)
+                    {
+                        isClear = false;
+                    }
+                    if(condition.monsterBox.Count <= 0)
+                    {
+                        isClear = true;
+                    }
                     isBattle = false;
                     condition.monsterBox.Clear();
-                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox,condition.svainghp);
+                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox,condition.svainghp,step,isClear);
                     continue;
                 }
 
@@ -235,11 +243,13 @@ namespace TextRPG_Team23
             }
         }
 
-        public void EnterBoss(bool isEnter)
+        public void EnterBoss(bool isEnter, int step)
         {
             turnCount = 1;
             condition.svainghp = condition.player.CurrentHp;
             bool isBossBattle = isEnter;
+            bool isClear = false;
+
 
             Console.Clear();
             Console.Write("당신은 태양이 가려진 왕성에 도달했다...\n\n" +
@@ -254,9 +264,17 @@ namespace TextRPG_Team23
 
                 if (condition.monsterBox.Count <= 0 || condition.player.CurrentHp <= 0)
                 {
+                    if (condition.player.CurrentHp <= 0)
+                    {
+                        isClear = false;
+                    }
+                    if (condition.monsterBox.Count <= 0)
+                    {
+                        isClear = true;
+                    }
                     isBossBattle = false;
                     condition.monsterBox.Clear();
-                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox, condition.svainghp);
+                    BattleResult.BattleResultUI(condition.player, condition.deadMonsterBox, condition.svainghp, step, isClear);
                     continue;
                 }
 

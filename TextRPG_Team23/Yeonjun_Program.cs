@@ -100,23 +100,51 @@ namespace TextRPG_Team23
             switch (selected)
             {
                 case 1:
-                    Console.WriteLine("디버그 : 1단계 던전 입장");
+                    Console.Write("\n당신은 어둠을 향해 몸을 던집니다.\n\n" +
+                                  "1단계 던전을 진행하려면 아무키나 입력하세요.\n\n" +
+                                  ">>>");
                     Console.ReadKey();
                     dungeon.WorkFactory("1단계던전");
-                    dungeon.Start();    
+                    dungeon.StartDungeonStep1();    
                     break;
                 case 2:
-                    Console.WriteLine("디버그 : 중급 던전 입장");
-                    Console.ReadKey();
-                    dungeon.WorkFactory("2단계던전");
-                    dungeon.Start();
-                    break;
+                    if (!DungeonMaganer.isClearStep1)
+                    {
+                        Console.Write("\n1단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
+                                      "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
+                                      ">>>");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("자격을 증명한 자에게 문이 열린다.\n" +
+                                      "2단계 던전을 진행하려면 아무키나 입력하세요.\n\n" +
+                                      ">>>");
+                        Console.ReadKey();
+                        dungeon.WorkFactory("2단계던전");
+                        dungeon.StartDungeonStep2();
+                        break;
+                    }
                 case 3:
-                    Console.WriteLine("디버그 : 상급 던전 입장");
-                    Console.ReadKey();
-                    dungeon.WorkFactory("보스던전");
-                    dungeon.BossBattleStart();
-                    break;
+                    if (!DungeonMaganer.isClearStep1 && !DungeonMaganer.isClearStep2)
+                    {
+                        Console.Write("\n2단계 던전을 클리어하지 못한자는 도전할 자격이 없다.\n\n" +
+                                      "메인 메뉴로 돌아가려면 아무키나 입력하세요.\n\n" +
+                                      ">>>");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("\n태양의 왕좌가 당신을 부른다.\n" +
+                                      "보스전을 진행하려면 아무키나 입력하세요.\n\n" +
+                                      ">>>");
+                        Console.ReadKey();
+                        dungeon.WorkFactory("보스던전");
+                        dungeon.BossBattleStart();
+                        break;
+                    }
                 case 0:
                     Console.WriteLine("마을로 돌아갑니다.");
                     Console.ReadKey();

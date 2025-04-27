@@ -16,7 +16,7 @@ namespace TextRPG_Team23
     {
 
 
-        public static void BattleResultUI(Player player, List<Monster> monsters, int hp)
+        public static void BattleResultUI(Player player, List<Monster> monsters, int hp, int step,bool isClear)
         {
             // 적용 전 
             int oldLevel = player.Level;
@@ -37,6 +37,31 @@ namespace TextRPG_Team23
 
             if (isVictory)
             {
+                switch(step)
+                {
+                    case 1:
+                        if(isClear)
+                        {
+                            DungeonMaganer.isClearStep1 = true;
+                        }
+                        break;
+
+                    case 2:
+                        if(isClear)
+                        {
+                            DungeonMaganer.isClearStep1 = true;
+                        }
+                        break;
+
+                    case 3:
+                        if(isClear)
+                        {
+                            DungeonMaganer.isClearStep1 = true;
+                        }
+                        break;
+                }
+
+
                 //Console.Clear();
                 Console.WriteLine("Battle!! - Result");
                 Console.WriteLine("");
