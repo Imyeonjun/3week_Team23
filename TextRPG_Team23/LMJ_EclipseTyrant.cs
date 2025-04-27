@@ -48,7 +48,12 @@ namespace TextRPG_Team23
 
                 case 3: // 개구라 패턴 이때 딜링타임 만들기 - 때릴 수 있게 하는 아이템을 사용하는 것 추가해야함
                     SolarBetrayal();
-
+                    
+                    if (condition.HasBossGuideItem()) //보스몹 무적 기믹 해제 판별
+                    {
+                        YouCanHit(); // 슈퍼아머 해제
+                    }
+                    
                     if (SuperAttack && Hp == 100) //체력이 100일때 존나 쎈 데미지 한번 미완
                     {
                         SuperAttack = false;
