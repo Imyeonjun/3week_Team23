@@ -61,7 +61,6 @@ namespace TextRPG_Team23
                                                          $"< 무적 활성화: ({SuperArmour}) >";
                         condition.ui.PrintBossMonsterLog();
                     }
-
                     SolarCoronation();
                     break;
 

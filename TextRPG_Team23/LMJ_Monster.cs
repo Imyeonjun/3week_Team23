@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team23
 {
-    interface Attack
-    {
-        void AttackPlayer();
-    }
-
     interface TakeDamage
     {
         void TakeDamage(int Damage);
@@ -21,19 +16,19 @@ namespace TextRPG_Team23
     {
         public static int NextCode;
         public int MobCode { get; set; } //고유번호
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int BuffAtk { get; set; }
-        public int BuffDef { get; set; }
+        public string Name { get; set; } //이름
+        public int Level { get; set; } //레벨
+        public int Atk { get; set; } //공격력
+        public int Def { get; set; } //방어력
+        public int BuffAtk { get; set; } //버프공격력
+        public int BuffDef { get; set; } //버프방어력
 
-        public int MaxHp { get; set; }
-        public int CurrentHp { get; set; }
+        public int MaxHp { get; set; } //최대체력
+        public int CurrentHp { get; set; } //현재체력
 
-        public bool IsDead { get; set; }
+        public bool IsDead { get; set; } // 생,사 상태값
 
-        public int Hp
+        public int Hp //체력 증,차감 판별프로퍼티
         {
             get { return CurrentHp; }
             set
