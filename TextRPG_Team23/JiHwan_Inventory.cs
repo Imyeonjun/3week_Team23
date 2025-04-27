@@ -88,6 +88,8 @@ namespace TextRPG_Team23
                 Console.WriteLine("\n1. 장착 관리");               
                 Console.WriteLine("2. 아이템 사용");
                 Console.WriteLine("0. 나가기");
+                Console.WriteLine("\n원하는 행동의 숫자를 입력해주세요");
+                Console.Write("\n>>>");
                 string input = Console.ReadLine();
 
                 if (input == "1")
@@ -138,7 +140,8 @@ namespace TextRPG_Team23
                 }
 
                 Console.WriteLine("0. 나가기");
-                Console.Write("장착하거나 해제할 아이템 번호를 입력하세요: ");
+                Console.Write("\n장착하거나 해제할 아이템 번호를 입력하세요.");
+                Console.Write("\n>>>");
                 string sel = Console.ReadLine();
 
                 if (int.TryParse(sel, out int selected))
@@ -203,7 +206,9 @@ namespace TextRPG_Team23
                 {
                     Console.WriteLine($"{i + 1}. {usableItems[i]}");
                 }
-                Console.WriteLine("0: 나가기\n사용할 아이템 번호를 선택하세요: ");
+                Console.WriteLine("0: 나가기");
+                Console.WriteLine("\n원하는 행동의 숫자를 입력해주세요");
+                Console.Write("\n>>>");
                 string input = Console.ReadLine();
                 if (int.TryParse(input, out int selected))
                 {
