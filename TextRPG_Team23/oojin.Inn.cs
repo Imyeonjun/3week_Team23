@@ -11,12 +11,12 @@ namespace TextRPG_Team23
         public void Selection(Player player, QuestMenu questMenu)
         {
             //Console.Clear();
-            Console.WriteLine(" == @@ 여관에 어서오세요 == \n");
+            Console.WriteLine(" == @@ 여관에 어서오세요 ==");
 
             bool re = false;
             do
             {
-                Console.WriteLine("1. 퀘스트 확인 2. 휴식 0. 나가기");
+                Console.WriteLine("\n1. 퀘스트 확인\n2. 휴식\n0. 나가기 \n선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)

@@ -56,12 +56,11 @@ namespace TextRPG_Team23
                         Console.WriteLine($"{i + 1}. {prefix}{itemList}");
                         i++;
                     }
-                    Console.Write("0. 나가기\n>>> ");
+                    Console.Write("0. 나가기\n\n선택 >> ");
                 }
                 else
                 {
-                    Console.WriteLine("강화할 장비 아이템이 없습니다.");
-                    Console.WriteLine("아무키를 누르고 Enter로 나가기");
+                    Console.WriteLine("\n강화할 장비 아이템이 없습니다.");
                     return;
                 }
 
@@ -73,14 +72,14 @@ namespace TextRPG_Team23
                         if (input == i + 1) // 입력한 숫자와 i값이 같다면
                         {
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
-                            Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) 선택되었습니다.\n");
+                            Console.WriteLine($"\n아이템 \"{selectedItem.Name}\" 이(가) 선택되었습니다.\n");
 
 
 
 
                             if (selectedItem.Upgrade == 10)
                             {
-                                Console.WriteLine("더 이상 강화할 수 없습니다, 다른 아이템을 골라 주세요\n");
+                                Console.WriteLine(" == 더 이상 강화할 수 없습니다, 다른 아이템을 골라 주세요 == \n");
                                 break;
                             }
                             //Console.Clear();
@@ -99,8 +98,7 @@ namespace TextRPG_Team23
                     }
                     else
                     {
-                        BranchManager.ErrorMessage("잘못된 번호입니다,  Enter를 누른 후 다시 입력해주세요.");
-                        //Console.WriteLine("잘못된 번호입니다");
+                        Console.WriteLine("\n == 잘못 입력했습니다, 다시 입력해주세요. == ");
                         break;
                     }
                 }
@@ -128,7 +126,7 @@ namespace TextRPG_Team23
                 }
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
                 Console.WriteLine($"보유 골드 : {player.Gold} | 차감될 골드 : {deductedGold}");
-                Console.Write(" 1. [YES] 2. [NO] \n>>> ");
+                Console.Write("\n1. [YES]\n2. [NO] \n\n 선택 >> ");
 
                 int.TryParse(Console.ReadLine(), out int input);
                 if (input > 0 && input <= 2)
@@ -145,8 +143,7 @@ namespace TextRPG_Team23
                 }
                 else
                 {
-                    BranchManager.ErrorMessage("잘못 입력했습니다, Enter를 누른 후 다시 입력해주세요");
-                    //Console.WriteLine("잘못 입력했습니다.");
+                    Console.WriteLine("\n잘못 입력했습니다, 다시 입력해주세요\n");
                 }
             }
         }
@@ -162,22 +159,22 @@ namespace TextRPG_Team23
             if (roll <= upGradeChance[selectedItem.Upgrade]) // 강화에 성공
             {
                 selectedItem.Upgrade++;
-                Console.WriteLine(" == Success == ");
+                Console.WriteLine("\n == Success == ");
                 Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) {selectedItem.Upgrade} + {selectedItem.Name} 되었습니다.\n");
             }
             else // 강화에 실패
             {
-                Console.WriteLine(" == failure == ");
+                Console.WriteLine("\n == failure == ");
                 Console.WriteLine($"강화에 실패 했습니다.\n");
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
                     selectedItem.Upgrade--;
-                    Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) \"+ {selectedItem.Upgrade}\" 되었습니다.\n");
+                    Console.WriteLine($"\n아이템 \"{selectedItem.Name}\" 이(가) \"+ {selectedItem.Upgrade}\" 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
 
-                    Console.WriteLine($"아이템 \"{selectedItem.Name}\"이(가) 파괴되었습니다.\n");
+                    Console.WriteLine($"\n아이템 \"{selectedItem.Name}\"이(가) 파괴되었습니다.\n");
                     player.Inventory.RemoveItem(selectedItem);
                     selectedItem = null;
 

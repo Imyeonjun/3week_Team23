@@ -15,15 +15,15 @@ namespace TextRPG_Team23
         public void Selection(Forge forge)
         {
             UpGrade upGrade = new UpGrade(player);
-            Console.WriteLine(" == @@ 대장간에 어서오세요 ==");
+            Console.WriteLine("\n == @@ 대장간에 어서오세요 ==");
             while (true)
             {
                 //Console.Clear();
                
-                Console.Write("\n1. 강화  2. 제작  3. 수리 0. 나가기 \n>>> ");
+                Console.Write("\n1. 강화\n2. 수리\n0. 나가기 \n\n선택 >> ");
                 int.TryParse(Console.ReadLine(), out int input);
 
-                if (input > 0 && input <= 3)
+                if (input > 0 && input <= 2)
                 {
                     switch (input)
                     {
@@ -32,11 +32,6 @@ namespace TextRPG_Team23
                             upGrade.ItemSelection(forge);
                             break;
                         case 2:
-                            Console.WriteLine("미구현");
-                            Console.WriteLine("Enter키를 눌러주세요");
-                            return;
-                            break;
-                        case 3:
                             bool needGold = true;
                             Repair(player, needGold);
                             break;
@@ -50,7 +45,7 @@ namespace TextRPG_Team23
                 }
                 else
                 {
-                    Console.WriteLine("잘못 입력했습니다, 다시 입력해 주세요\n");
+                    Console.WriteLine("\n잘못 입력했습니다, 다시 입력해 주세요");
                 }
             }
         }
@@ -60,7 +55,7 @@ namespace TextRPG_Team23
             
             if (player.Inventory.CheckAllDurabilityIsFull())
             {
-                Console.WriteLine("수리할 아이템이 없습니다.");
+                Console.WriteLine("\n수리할 아이템이 없습니다.");
                 if (!needGold)
                 {
                     Console.WriteLine("하지만 수리요정은 출장권을 환불해주지않았습니다.");
