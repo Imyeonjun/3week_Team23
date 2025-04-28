@@ -17,14 +17,14 @@ namespace TextRPG_Team23
             return new Dictionary<int, int>
             {
                 { 0, 100 },
-                { 1, 90 },
-                { 2, 80 },
-                { 3, 70 },
-                { 4, 60 },
-                { 5, 50 },
-                { 6, 40 },
-                { 7, 30 },
-                { 8, 20 },
+                { 1, 100 },
+                { 2, 100 },
+                { 3, 100 },
+                { 4, 100 },
+                { 5, 100 },
+                { 6, 100 },
+                { 7, 100 },
+                { 8, 100 },
                 { 9, 10 },
             };
         }
@@ -64,18 +64,15 @@ namespace TextRPG_Team23
                     return;
                 }
 
-                int.TryParse(Console.ReadLine(), out int input);
+                int.TryParse(Console.ReadLine(), out int input1);
                 for (int i = 0; i < equipmentItems.Count; i++)
                 {
-                    if (input >= 0 && input <= equipmentItems.Count)
+                    if (input1 >= 0 && input1 <= equipmentItems.Count)
                     {
-                        if (input == i + 1) // 입력한 숫자와 i값이 같다면
+                        if (input1 == i + 1) // 입력한 숫자와 i값이 같다면
                         {
                             selectedItem = equipmentItems[i].Item; // 입력한 숫자와 같은 인덱스에 있는 아이템을 selecteditem에 저장
                             Console.WriteLine($"\n아이템 \"{selectedItem.Name}\" 이(가) 선택되었습니다.\n");
-
-
-
 
                             if (selectedItem.Upgrade == 10)
                             {
@@ -84,18 +81,18 @@ namespace TextRPG_Team23
                             }
                             Console.Clear();
                             ItemUpgrade(forge);
-
+                            Console.ReadKey();
                             break;
 
 
 
                         }
-                        else if (input == 0)
+                        else if (input1 == 0)
                         {
                             Console.WriteLine("Enter키를 눌러주세요");
                             return;
                         }
-                        if (input > equipmentItems.Count)
+                        if (input1 > equipmentItems.Count)
                         {
                             Console.WriteLine("\n == 잘못 입력했습니다, 다시 입력해주세요. == ");
                             ItemSelection(forge);
@@ -109,7 +106,7 @@ namespace TextRPG_Team23
            
             while (true)
             {
-                int deductedGold = (selectedItem.Upgrade * 50) + 100;
+ 
                 if (selectedItem == null)
                 {
                     return;
@@ -118,11 +115,7 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
-                if (player.Gold < deductedGold)
-                {
-                    Console.WriteLine("돈이 부족합니다.");
-                    return;
-                }
+                int deductedGold = (selectedItem.Upgrade * 50) + 100;
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
                 Console.WriteLine($"보유 골드 : {player.Gold} | 차감될 골드 : {deductedGold}");
                 Console.Write("\n1. [YES]\n2. [NO] \n\n선택 >> ");
@@ -133,9 +126,15 @@ namespace TextRPG_Team23
                     switch (input)
                     {
                         case 1:
+                            if (player.Gold < deductedGold)
+                            {
+                                Console.WriteLine("\n돈이 부족합니다. Enter를 눌러주세요");
+                                return;
+                            }
                             player.Gold -= (selectedItem.Upgrade * 50) + 100;
                             Console.Clear();
                             ItemGamblig(forge);
+                            Console.ReadKey();
                             break;
                         case 2:
                             return;
@@ -169,11 +168,10 @@ namespace TextRPG_Team23
                 if (selectedItem.Upgrade >= 6 && selectedItem.Upgrade <= 8)
                 {
                     selectedItem.Upgrade--;
-                    Console.WriteLine($"\n아이템 \"{selectedItem.Name}\" 이(가) \"+ {selectedItem.Upgrade}\" 되었습니다.\n");
+                    Console.WriteLine($"아이템 \"{selectedItem.Name}\" 이(가) \"+ {selectedItem.Upgrade}\" 되었습니다.\n");
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
-
                     Console.WriteLine($"\n아이템 \"{selectedItem.Name}\"이(가) 파괴되었습니다.\n");
                     player.Inventory.RemoveItem(selectedItem);
                     selectedItem = null;
