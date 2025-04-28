@@ -256,12 +256,12 @@ namespace TextRPG_Team23
             Console.WriteLine("");
             Console.WriteLine("                       제작 ");
             Console.WriteLine("");
-            Console.WriteLine("메인 메뉴, 세이브 로드                : 임연준 (팀장)");
-            Console.WriteLine("던전, 몬스터, 전투시스템              : 이명준");
-            Console.WriteLine("Player 클래스, 상태보기, Quest 클래스 : 문승준");
-            Console.WriteLine("아이템, 인벤토리, 상점                : 박지환");
-            Console.WriteLine("아이템 강화, 여관, 신전               : 차우진");
-            Console.WriteLine("레벨업기능, 보상추가, 전투결과        : 이창선");
+            Console.WriteLine("메인 메뉴, 세이브 로드                              : 임연준 (팀장)");
+            Console.WriteLine("던전, 몬스터, 전투시스템                            : 이명준");
+            Console.WriteLine("Player 클래스, 상태보기, Quest 클래스, 세이브 로드  : 문승준");
+            Console.WriteLine("아이템, 인벤토리, 상점                              : 박지환");
+            Console.WriteLine("아이템 강화, 여관, 신전                             : 차우진");
+            Console.WriteLine("레벨업기능, 보상추가, 전투결과                      : 이창선");
 
             //Console.WriteLine("\n\n" + "게임을 계속하려면 엔터를 눌러주세요.");
             Console.ReadKey();
