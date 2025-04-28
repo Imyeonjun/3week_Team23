@@ -85,6 +85,7 @@ namespace TextRPG_Team23
             this.gld = gld;
 
             Inventory = new Inventory();
+            Quests = new List<Quest>();
 
             RecalculateStats();
         }
