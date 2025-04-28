@@ -36,10 +36,12 @@ namespace TextRPG_Team23
                         case 1:
                             Console.Clear();
                             Offering(player);
+                            Console.ReadKey();
                             break;
                         case 2:
                             Console.Clear();
                             Buff(player);
+                            Console.ReadKey();
                             break;
                     }
                 }
@@ -101,7 +103,7 @@ namespace TextRPG_Team23
             int.TryParse(Console.ReadLine(), out int input);
             if (input == 1)
             {
-                if (player.Gold < 1000 && !isBuff)
+                if (player.Gold < 1000 || isBuff == true)
                 {
                     Console.WriteLine("돈이 부족하거나 이미 버프가 있으셔서 버프를 받으실 수 없습니다.\n");
                     return;
