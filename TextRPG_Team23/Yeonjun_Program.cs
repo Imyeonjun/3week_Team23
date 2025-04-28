@@ -83,18 +83,20 @@ namespace TextRPG_Team23
             isRunning = false;
         }
 
-        public void SaveGame(Player pl, Inventory inv)
+        public void SaveGame(Player pl, Inventory inv, Temple tmp)
         {
-            SaveSystem.SaveGame(pl,inv);
+            SaveSystem.SaveGame(pl,inv, tmp);
         }
 
         public void LoadGame()
         {
-            SaveSystem.LoadGame(out _player, out inven);
+            int tmpGold;
+            SaveSystem.LoadGame(out _player, out inven, out tmpGold);
             _player.Inventory = inven;
 
             Forge = new Forge(_player);
-
+            Temple = new Temple();
+            Temple.Gold = tmpGold;
             // BattleCondition 다시 세팅
             List<Monster> monsterBox = new List<Monster>();
             Battlecondition condition = new Battlecondition();
