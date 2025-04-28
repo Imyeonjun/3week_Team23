@@ -18,13 +18,14 @@ public class SaveData
     public bool d1 { get; set; }
     public bool d2 { get; set; }
     public bool d3 { get; set; }
+    public int TempleGold { get; set; }
 }
 
 public static class SaveSystem
 {
     private static string savePath = "Mysave.json";
 
-    public static void SaveGame(Player status, Inventory inventory)
+    public static void SaveGame(Player status, Inventory inventory, Temple temple)
     {
         var saveData = new SaveData
         {
@@ -40,7 +41,9 @@ public static class SaveSystem
             InventoryItems = inventory.GetAllItems(),
             d1 = DungeonMaganer.isClearStep1,
             d2 = DungeonMaganer.isClearStep2,
-            d3 = DungeonMaganer.isClearStep3
+            d3 = DungeonMaganer.isClearStep3,
+            TempleGold = temple.Gold
+            
         };
 
         string json = JsonConvert.SerializeObject(saveData, Formatting.Indented, new JsonSerializerSettings
@@ -52,12 +55,13 @@ public static class SaveSystem
         Console.WriteLine("게임 저장 완료!");
     }
 
-    public static bool LoadGame(out Player status, out Inventory inventory)
+    public static bool LoadGame(out Player status, out Inventory inventory, out int tmpGld)
     {
         if (!File.Exists(savePath))
         {
             status = null;
             inventory = null;
+            tmpGld = -1;
             Console.WriteLine("저장된 데이터가 없습니다.");
             return false;
         }
@@ -87,6 +91,7 @@ public static class SaveSystem
         DungeonMaganer.isClearStep1 = saveData.d1;
         DungeonMaganer.isClearStep2 = saveData.d2;
         DungeonMaganer.isClearStep3 = saveData.d3;
+        tmpGld = saveData.TempleGold;
         Console.WriteLine("게임 불러오기 완료!");
         return true;
     }

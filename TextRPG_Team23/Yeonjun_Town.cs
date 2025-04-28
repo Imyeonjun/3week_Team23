@@ -78,7 +78,7 @@ namespace TextRPG_Team23
                     break;
                 case 8: // 게임 저장
                     Console.Clear();
-                    gameManager.SaveGame(player, player.Inventory);
+                    gameManager.SaveGame(player, player.Inventory, temple);
                     Console.ReadLine();
                     break;
                 case 9: // 게임 불러오기

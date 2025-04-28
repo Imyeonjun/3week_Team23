@@ -10,6 +10,7 @@ namespace TextRPG_Team23
     public class Temple
     {
         private int gold;
+        public int Gold { get { return gold; } set { gold = value; } }
 
         float buffAtkVelue = 0.0f;
         int buffDefVelue = 0;
