@@ -304,15 +304,15 @@ namespace TextRPG_Team23
                         break;
                     case "부패의 턱":
                         drops.Add(ItemDB.Items[3]);
-                        drops.Add(ItemDB.Items[4]);
+                        drops.Add(ItemDB.Items[9]);
                         break;
                     case "뿌리투구 수호자":
-                        drops.Add(ItemDB.Items[4]);
-                        drops.Add(ItemDB.Items[3]);
+                        drops.Add(ItemDB.Items[11]);
+                        drops.Add(ItemDB.Items[11]);
                         break;
                     case "일몰 좀도둑":
-                        drops.Add(ItemDB.Items[7]);
-                        drops.Add(ItemDB.Items[8]);
+                        drops.Add(ItemDB.Items[13]);
+                        drops.Add(ItemDB.Items[13]);
                         break;
                     case "어스름 예언자":
                         drops.Add(ItemDB.Items[9]);
@@ -323,20 +323,20 @@ namespace TextRPG_Team23
                         drops.Add(ItemDB.Items[11]);
                         break;
                     case "그림자 짐승":
-                        drops.Add(ItemDB.Items[5]);
+                        drops.Add(ItemDB.Items[12]);
                         drops.Add(ItemDB.Items[12]);
                         break;
                     case "공허를 부르는 자":
-                        drops.Add(ItemDB.Items[7]);
-                        drops.Add(ItemDB.Items[8]);
+                        drops.Add(ItemDB.Items[10]);
+                        drops.Add(ItemDB.Items[10]);
                         break;
                     case "흡혈 파수병":
                         drops.Add(ItemDB.Items[10]);
                         drops.Add(ItemDB.Items[12]);
                         break;
                     case "공허 송곳니 추적자":
-                        drops.Add(ItemDB.Items[12]);
-                        drops.Add(ItemDB.Items[10]);
+                        drops.Add(ItemDB.Items[14]);
+                        drops.Add(ItemDB.Items[14]);
                         break;
                 }
             }
