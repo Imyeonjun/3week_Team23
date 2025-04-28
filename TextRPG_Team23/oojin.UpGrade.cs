@@ -17,14 +17,14 @@ namespace TextRPG_Team23
             return new Dictionary<int, int>
             {
                 { 0, 100 },
-                { 1, 90 },
-                { 2, 80 },
-                { 3, 70 },
-                { 4, 60 },
-                { 5, 50 },
-                { 6, 40 },
-                { 7, 30 },
-                { 8, 20 },
+                { 1, 100 },
+                { 2, 100 },
+                { 3, 100 },
+                { 4, 100 },
+                { 5, 100 },
+                { 6, 100 },
+                { 7, 100 },
+                { 8, 100 },
                 { 9, 10 },
             };
         }
@@ -106,7 +106,7 @@ namespace TextRPG_Team23
            
             while (true)
             {
-                int deductedGold = (selectedItem.Upgrade * 50) + 100;
+ 
                 if (selectedItem == null)
                 {
                     return;
@@ -115,6 +115,7 @@ namespace TextRPG_Team23
                 {
                     return;
                 }
+                int deductedGold = (selectedItem.Upgrade * 50) + 100;
                 Console.WriteLine($" == 아이템\"{selectedItem.Name}\" 을(를) 강화하시겠습니까? == ");
                 Console.WriteLine($"보유 골드 : {player.Gold} | 차감될 골드 : {deductedGold}");
                 Console.Write("\n1. [YES]\n2. [NO] \n\n선택 >> ");
@@ -171,7 +172,6 @@ namespace TextRPG_Team23
                 }
                 else if (selectedItem.Upgrade == 9)
                 {
-
                     Console.WriteLine($"\n아이템 \"{selectedItem.Name}\"이(가) 파괴되었습니다.\n");
                     player.Inventory.RemoveItem(selectedItem);
                     selectedItem = null;
