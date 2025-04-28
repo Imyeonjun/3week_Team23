@@ -17,14 +17,14 @@ namespace TextRPG_Team23
             return new Dictionary<int, int>
             {
                 { 0, 100 },
-                { 1, 100 },
-                { 2, 100 },
-                { 3, 100 },
-                { 4, 100 },
-                { 5, 100 },
-                { 6, 100 },
-                { 7, 100 },
-                { 8, 100 },
+                { 1, 90 },
+                { 2, 80 },
+                { 3, 70 },
+                { 4, 60 },
+                { 5, 50 },
+                { 6, 40 },
+                { 7, 30 },
+                { 8, 20 },
                 { 9, 10 },
             };
         }
@@ -83,9 +83,6 @@ namespace TextRPG_Team23
                             ItemUpgrade(forge);
                             Console.ReadKey();
                             break;
-
-
-
                         }
                         else if (input1 == 0)
                         {
@@ -106,7 +103,6 @@ namespace TextRPG_Team23
            
             while (true)
             {
- 
                 if (selectedItem == null)
                 {
                     return;
