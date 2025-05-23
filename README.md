@@ -1,4 +1,4 @@
-# 3weak_Team23 - LoopDungeon
+# 3weak_Team23 - 23 LoopDungeon
 
 내일배움캠프 Unity 9기 3주차 팀 과제 (23조)
 
